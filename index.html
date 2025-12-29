@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtered - Peaceful Co-Parent Communication</title>
+    <meta name="description" content="AI-powered SMS filtering that protects your peace while keeping you connected with your co-parent. Filter hostile messages, get smart alerts, and communicate calmly.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-50: #F0FDFA;
+            --primary-100: #CCFBF1;
+            --primary-200: #99F6E4;
+            --primary-400: #2DD4BF;
+            --primary-500: #14B8A6;
+            --primary-600: #0D9488;
+            --primary-700: #0F766E;
+            --primary-800: #115E59;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--gray-900);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-600);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-600);
+        }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary-50) 0%, white 100%);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--gray-900);
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            color: var(--primary-600);
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--gray-600);
+            margin-bottom: 32px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--primary-600);
+            color: white;
+            padding: 16px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            transition: background 0.2s;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-700);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background: var(--gray-900);
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 32px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .phone-header {
+            background: var(--primary-600);
+            padding: 40px 20px 20px;
+            color: white;
+        }
+
+        .phone-header h3 {
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .phone-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .phone-content {
+            flex: 1;
+            padding: 16px;
+            background: var(--gray-50);
+        }
+
+        .message-bubble {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .message-bubble.filtered {
+            border-left: 4px solid var(--primary-500);
+        }
+
+        .message-label {
+            font-size: 11px;
+            color: var(--primary-600);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .message-text {
+            font-size: 14px;
+            color: var(--gray-700);
+        }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 32px;
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--primary-100);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .feature-icon svg {
+            width: 32px;
+            height: 32px;
+            color: var(--primary-600);
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--gray-600);
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 0;
+            background: var(--gray-50);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-600);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 auto 16px;
+        }
+
+        .step h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        /* SMS Consent */
+        .sms-consent {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .consent-box {
+            background: var(--primary-50);
+            border: 2px solid var(--primary-200);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .consent-box h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .consent-box h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin: 24px 0 12px;
+        }
+
+        .consent-box p, .consent-box li {
+            color: var(--gray-600);
+            margin-bottom: 8px;
+        }
+
+        .consent-box ul {
+            padding-left: 24px;
+        }
+
+        /* Legal Sections */
+        .legal {
+            padding: 80px 0;
+            background: var(--gray-50);
+        }
+
+        .legal-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .legal h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--primary-500);
+        }
+
+        .legal h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin: 32px 0 16px;
+        }
+
+        .legal p {
+            color: var(--gray-600);
+            margin-bottom: 16px;
+        }
+
+        .legal ul {
+            padding-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        .legal li {
+            color: var(--gray-600);
+            margin-bottom: 8px;
+        }
+
+        /* Contact */
+        .contact {
+            padding: 80px 0;
+            background: var(--primary-600);
+            color: white;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .contact p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .contact a {
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-900);
+            color: var(--gray-400);
+            padding: 40px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .phone-mockup {
+                width: 250px;
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-content">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                </div>
+                <span class="logo-text">Filtered</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#privacy">Privacy</a></li>
+                <li><a href="#terms">Terms</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div>
+                <h1>Protect Your Peace.<br><span>Stay Connected.</span></h1>
+                <p>Filtered uses AI to shield you from hostile co-parent messages while ensuring you never miss what matters. Communicate calmly, respond thoughtfully.</p>
+                <a href="#how-it-works" class="cta-button">See How It Works</a>
+            </div>
+            <div class="hero-image">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="phone-header">
+                            <h3>Messages</h3>
+                            <p>2 new filtered</p>
+                        </div>
+                        <div class="phone-content">
+                            <div class="message-bubble filtered">
+                                <div class="message-label">FILTERED - Original Hidden</div>
+                                <div class="message-text">"Request to pick up kids at 3pm Saturday for soccer practice."</div>
+                            </div>
+                            <div class="message-bubble filtered">
+                                <div class="message-label">FILTERED - Original Hidden</div>
+                                <div class="message-text">"Reminder: School conference is Tuesday at 4pm."</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Communication Without Conflict</h2>
+                <p>Filtered transforms hostile messages into calm, actionable information so you can focus on what matters: your children.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3>AI-Filtered Messages</h3>
+                    <p>Hostile, manipulative, or emotionally charged content is automatically detected and filtered before reaching you.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                    </div>
+                    <h3>Smart Alerts</h3>
+                    <p>Get notified only for truly urgent matters like emergencies or time-sensitive requests. Skip the noise.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                        </svg>
+                    </div>
+                    <h3>Response Suggestions</h3>
+                    <p>AI helps you craft calm, effective replies that keep conversations productive and child-focused.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How Filtered Works</h2>
+                <p>Simple setup, powerful protection. Start filtering in minutes.</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Sign Up</h3>
+                    <p>Create your account and consent to receive SMS messages through Filtered.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Get Your Number</h3>
+                    <p>Receive a dedicated phone number that your co-parent will text.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Share It</h3>
+                    <p>Give your co-parent your Filtered number for all communication.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Stay Protected</h3>
+                    <p>Messages are filtered by AI before you see them. Respond when ready.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SMS Consent Section -->
+    <section class="sms-consent" id="sms-consent">
+        <div class="container">
+            <div class="consent-box">
+                <h2>SMS Messaging Terms</h2>
+
+                <h3>Opt-In Process</h3>
+                <p>When you sign up for Filtered, you explicitly consent to receive SMS messages by:</p>
+                <ul>
+                    <li>Creating an account and agreeing to our Terms of Service</li>
+                    <li>Completing the onboarding process and accepting a dedicated phone number</li>
+                    <li>Providing your co-parent with your Filtered number for communication</li>
+                </ul>
+
+                <h3>Message Types</h3>
+                <p>You may receive the following types of SMS messages:</p>
+                <ul>
+                    <li>Forwarded messages from your co-parent (filtered for hostile content)</li>
+                    <li>Emergency alerts for time-sensitive matters</li>
+                    <li>Service notifications about your account</li>
+                </ul>
+
+                <h3>Message Frequency</h3>
+                <p>Message frequency varies based on your co-parent communication. You control notification settings within the app.</p>
+
+                <h3>Opt-Out</h3>
+                <p>You can opt out of SMS messages at any time by:</p>
+                <ul>
+                    <li>Texting STOP to your Filtered number</li>
+                    <li>Disabling SMS notifications in app settings</li>
+                    <li>Contacting us at alec@kleinmanventures.com</li>
+                </ul>
+
+                <h3>Costs</h3>
+                <p>Message and data rates may apply based on your mobile carrier plan. Filtered does not charge per-message fees to users.</p>
+
+                <h3>Help</h3>
+                <p>For help, text HELP to your Filtered number or contact alec@kleinmanventures.com</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy Policy -->
+    <section class="legal" id="privacy">
+        <div class="container">
+            <div class="legal-content">
+                <h2>Privacy Policy</h2>
+                <p><strong>Last Updated:</strong> December 29, 2025</p>
+
+                <h3>Information We Collect</h3>
+                <p>Filtered collects the following information to provide our service:</p>
+                <ul>
+                    <li><strong>Account Information:</strong> Email address, name, and authentication credentials</li>
+                    <li><strong>Messages:</strong> SMS messages sent to and from your Filtered number are encrypted and stored to enable our filtering service</li>
+                    <li><strong>Usage Data:</strong> App usage patterns to improve our service</li>
+                    <li><strong>Device Information:</strong> Device type and push notification tokens for alerts</li>
+                </ul>
+
+                <h3>How We Use Your Information</h3>
+                <ul>
+                    <li>Provide AI-powered message filtering and analysis</li>
+                    <li>Deliver SMS messages between you and your co-parent</li>
+                    <li>Send notifications about important messages</li>
+                    <li>Improve our filtering algorithms and service quality</li>
+                    <li>Communicate with you about your account</li>
+                </ul>
+
+                <h3>Data Security</h3>
+                <p>All messages are encrypted at rest using AES-256 encryption. We use industry-standard security practices to protect your data. Messages are stored on secure servers and access is strictly limited.</p>
+
+                <h3>Data Sharing</h3>
+                <p>We do not sell your personal information. We may share data with:</p>
+                <ul>
+                    <li><strong>Service Providers:</strong> Twilio (SMS delivery), cloud hosting providers</li>
+                    <li><strong>Legal Requirements:</strong> When required by law or to protect rights and safety</li>
+                </ul>
+
+                <h3>Data Retention</h3>
+                <p>Messages are retained for 2 years to support potential legal documentation needs common in co-parenting situations. You may request data deletion by contacting us.</p>
+
+                <h3>Your Rights</h3>
+                <p>You have the right to:</p>
+                <ul>
+                    <li>Access your personal data</li>
+                    <li>Request correction of inaccurate data</li>
+                    <li>Request deletion of your data</li>
+                    <li>Export your data</li>
+                    <li>Opt out of marketing communications</li>
+                </ul>
+
+                <h3>Contact</h3>
+                <p>For privacy questions, contact us at: <a href="mailto:alec@kleinmanventures.com">alec@kleinmanventures.com</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terms of Service -->
+    <section class="legal" id="terms" style="background: white;">
+        <div class="container">
+            <div class="legal-content">
+                <h2>Terms of Service</h2>
+                <p><strong>Last Updated:</strong> December 29, 2025</p>
+
+                <h3>Acceptance of Terms</h3>
+                <p>By using Filtered, you agree to these Terms of Service. If you do not agree, do not use our service.</p>
+
+                <h3>Service Description</h3>
+                <p>Filtered provides an AI-powered SMS filtering service for co-parent communication. We provide you with a dedicated phone number that filters incoming messages for hostile or harmful content before presenting them to you.</p>
+
+                <h3>User Responsibilities</h3>
+                <ul>
+                    <li>Provide accurate account information</li>
+                    <li>Maintain the security of your account credentials</li>
+                    <li>Use the service only for legitimate co-parenting communication</li>
+                    <li>Not use the service to harass, threaten, or harm others</li>
+                    <li>Comply with all applicable laws</li>
+                </ul>
+
+                <h3>SMS Consent</h3>
+                <p>By creating an account and accepting a Filtered phone number, you consent to receive SMS messages. See our SMS Messaging Terms section for details on opting out.</p>
+
+                <h3>AI Filtering Disclaimer</h3>
+                <p>Our AI filtering is designed to identify hostile content but is not perfect. We do not guarantee that all harmful content will be filtered or that filtered content summaries will be completely accurate. You can always view original messages if needed.</p>
+
+                <h3>Limitation of Liability</h3>
+                <p>Filtered is provided "as is" without warranties. We are not liable for:</p>
+                <ul>
+                    <li>Messages that were not properly filtered</li>
+                    <li>Any decisions you make based on filtered content</li>
+                    <li>Service interruptions or technical issues</li>
+                    <li>Third-party actions or content</li>
+                </ul>
+
+                <h3>Subscription and Billing</h3>
+                <p>Filtered offers a 14-day free trial. Continued use requires a paid subscription. Subscription details and pricing are available in the app. You may cancel at any time.</p>
+
+                <h3>Termination</h3>
+                <p>We reserve the right to suspend or terminate accounts that violate these terms. You may terminate your account at any time through the app or by contacting us.</p>
+
+                <h3>Changes to Terms</h3>
+                <p>We may update these terms. Continued use after changes constitutes acceptance of new terms.</p>
+
+                <h3>Governing Law</h3>
+                <p>These terms are governed by the laws of the State of California, USA.</p>
+
+                <h3>Contact</h3>
+                <p>For questions about these terms, contact: <a href="mailto:alec@kleinmanventures.com">alec@kleinmanventures.com</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Questions?</h2>
+            <p>We're here to help you communicate peacefully.</p>
+            <a href="mailto:alec@kleinmanventures.com">alec@kleinmanventures.com</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 Filtered. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="#privacy">Privacy Policy</a></li>
+                <li><a href="#terms">Terms of Service</a></li>
+                <li><a href="#sms-consent">SMS Terms</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>
