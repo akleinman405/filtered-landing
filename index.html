@@ -2126,9 +2126,7 @@
                     <h2>Be the First to Know</h2>
                     <p>Join our waitlist to get early access when Filtered launches on iOS and Android. We'll also send you tips on peaceful co-parenting.</p>
                 </div>
-                <form class="waitlist-form" id="waitlist-form" name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-                    <input type="hidden" name="form-name" value="waitlist">
-                    <p class="hidden" style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+                <form class="waitlist-form" id="waitlist-form">
                     <div class="input-group">
                         <input type="email" name="email" id="waitlist-email" placeholder="Enter your email" required>
                         <button type="submit" id="waitlist-btn">Join Waitlist</button>
@@ -2143,7 +2141,6 @@
                 <script>
                 document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
                     e.preventDefault();
-                    const form = e.target;
                     const btn = document.getElementById('waitlist-btn');
                     const email = document.getElementById('waitlist-email').value;
 
@@ -2151,22 +2148,24 @@
                     btn.disabled = true;
 
                     try {
-                        const response = await fetch('/', {
+                        const response = await fetch('/.netlify/functions/waitlist', {
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            body: new URLSearchParams(new FormData(form)).toString()
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email })
                         });
 
-                        if (response.ok) {
-                            form.style.display = 'none';
+                        const data = await response.json();
+
+                        if (response.ok && data.success) {
+                            document.getElementById('waitlist-form').style.display = 'none';
                             document.getElementById('waitlist-success').style.display = 'block';
                         } else {
-                            throw new Error('Form submission failed');
+                            throw new Error(data.error || 'Form submission failed');
                         }
                     } catch (error) {
                         btn.textContent = 'Join Waitlist';
                         btn.disabled = false;
-                        alert('Something went wrong. Please try again.');
+                        alert(error.message || 'Something went wrong. Please try again.');
                     }
                 });
                 </script>

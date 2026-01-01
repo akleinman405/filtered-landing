@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You're on the list! - Filtered</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%);
+            padding: 20px;
+        }
+        .success-box {
+            background: white;
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        .check-icon {
+            width: 80px;
+            height: 80px;
+            background: #0D9488;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+        .check-icon svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+        h1 {
+            font-size: 32px;
+            color: #111827;
+            margin-bottom: 16px;
+        }
+        p {
+            font-size: 18px;
+            color: #6B7280;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        .back-link {
+            display: inline-block;
+            background: #0D9488;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .back-link:hover {
+            background: #0F766E;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-box">
+        <div class="check-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+            </svg>
+        </div>
+        <h1>You're on the list!</h1>
+        <p>Thanks for joining the Filtered waitlist. Check your email for confirmation. We'll notify you as soon as we launch.</p>
+        <a href="/" class="back-link">Back to Home</a>
+    </div>
+</body>
+</html>
