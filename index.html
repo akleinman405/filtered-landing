@@ -3,9 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filtered - Peaceful Co-Parent Communication</title>
-    <meta name="description" content="AI-powered SMS filtering that protects your peace while keeping you connected with your co-parent. Filter hostile messages, get smart alerts, and communicate calmly.">
+    <title>Filtered - AI-Powered Co-Parent Communication | Protect Your Peace</title>
+    <meta name="description" content="Filtered uses AI to shield you from hostile co-parent messages while keeping you connected. Smart SMS filtering, emergency alerts, and response suggestions. Start your free trial today.">
+
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="co-parent communication, co-parenting app, divorce communication, custody communication, parenting app, hostile message filter, AI message filter, co-parent messaging, separated parents app, family communication">
+    <meta name="author" content="Filtered">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://filteredmessaging.com/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://filteredmessaging.com/">
+    <meta property="og:title" content="Filtered - AI-Powered Co-Parent Communication">
+    <meta property="og:description" content="Protect your peace while staying connected. AI filters hostile messages from your co-parent so you can focus on what matters: your children.">
+    <meta property="og:image" content="https://filteredmessaging.com/og-image.png">
+    <meta property="og:site_name" content="Filtered">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://filteredmessaging.com/">
+    <meta name="twitter:title" content="Filtered - AI-Powered Co-Parent Communication">
+    <meta name="twitter:description" content="Protect your peace while staying connected. AI filters hostile messages from your co-parent.">
+    <meta name="twitter:image" content="https://filteredmessaging.com/og-image.png">
+
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#0D9488">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Filtered">
+
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Filtered",
+        "applicationCategory": "CommunicationApplication",
+        "operatingSystem": "iOS, Android, Web",
+        "description": "AI-powered SMS filtering for co-parent communication. Protect your peace while staying connected with your children.",
+        "offers": {
+            "@type": "Offer",
+            "price": "9.00",
+            "priceCurrency": "USD",
+            "priceValidUntil": "2026-12-31"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "150"
+        }
+    }
+    </script>
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -110,6 +163,60 @@
 
         .nav-links a:hover {
             color: var(--primary-600);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-cta {
+            background: var(--primary-600);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .nav-cta:hover {
+            background: var(--primary-700);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 32px;
+            height: 32px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--gray-700);
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
         }
 
         /* Hero */
@@ -257,11 +364,40 @@
             color: var(--gray-600);
         }
 
+        .section-cta {
+            text-align: center;
+            margin-top: 48px;
+        }
+
+        .cta-button-outline {
+            display: inline-block;
+            padding: 14px 32px;
+            border: 2px solid var(--primary-600);
+            color: var(--primary-600);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .cta-button-outline:hover {
+            background: var(--primary-600);
+            color: white;
+        }
+
+        .cta-subtext {
+            color: var(--gray-500);
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+
         /* App Preview */
         .app-preview {
-            padding: 80px 0;
+            padding: 80px 0 60px;
             background: var(--gray-900);
             color: white;
+            overflow: hidden;
         }
 
         .app-preview .section-header h2 {
@@ -272,52 +408,100 @@
             color: var(--gray-400);
         }
 
-        .preview-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            margin-top: 48px;
+        .carousel-hint {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--gray-400);
+            font-size: 14px;
+            margin-top: 24px;
+            animation: bounce-right 1.5s ease-in-out infinite;
+        }
+
+        @keyframes bounce-right {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(8px); }
+        }
+
+        .preview-carousel {
+            margin-top: 32px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 20px 0;
+        }
+
+        .preview-carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .preview-track {
+            display: flex;
+            gap: 24px;
+            padding: 0 max(24px, calc((100vw - 320px) / 2));
+            width: max-content;
         }
 
         .preview-card {
+            flex: 0 0 300px;
             background: var(--gray-800);
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
+            scroll-snap-align: center;
             transition: transform 0.3s;
         }
 
         .preview-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-4px);
         }
 
         .preview-screen {
             background: white;
-            margin: 16px;
-            border-radius: 12px;
+            margin: 12px;
+            border-radius: 16px;
             overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .screen-header {
             background: var(--primary-600);
-            padding: 16px;
+            padding: 12px 16px;
             color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .screen-header h4 {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
         }
 
+        .shield-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .warning-header {
+            background: #F59E0B;
+        }
+
         .screen-content {
-            padding: 16px;
-            min-height: 200px;
+            padding: 12px;
+            min-height: 220px;
         }
 
         .mock-message {
-            background: var(--gray-100);
+            background: var(--gray-50);
             padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
             border-left: 3px solid var(--primary-500);
         }
 
@@ -326,112 +510,543 @@
         }
 
         .mock-message.outgoing {
-            border-left-color: var(--gray-400);
+            border-left-color: transparent;
             background: var(--primary-50);
+            border-right: 3px solid var(--primary-400);
+            border-left: none;
         }
 
-        .mock-label {
-            font-size: 10px;
-            color: var(--primary-600);
-            font-weight: 600;
-            margin-bottom: 4px;
+        .mock-category {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .mock-category.request {
+            background: #DBEAFE;
+            color: #1D4ED8;
+        }
+
+        .mock-category.question {
+            background: #FEF3C7;
+            color: #B45309;
         }
 
         .mock-text {
-            font-size: 13px;
-            color: var(--gray-700);
-        }
-
-        .mock-contact {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .mock-avatar {
-            width: 40px;
-            height: 40px;
-            background: var(--primary-100);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-600);
-            font-weight: 600;
-        }
-
-        .mock-contact-info {
-            flex: 1;
-        }
-
-        .mock-contact-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--gray-800);
-        }
-
-        .mock-contact-preview {
             font-size: 12px;
+            color: var(--gray-700);
+            line-height: 1.5;
+        }
+
+        .mock-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .mock-time {
+            font-size: 10px;
+            color: var(--gray-400);
+        }
+
+        .mock-view-btn {
+            font-size: 10px;
+            color: var(--primary-600);
+            background: none;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .mock-sent {
+            font-size: 10px;
+            color: var(--primary-600);
+            font-weight: 500;
+        }
+
+        .mock-message-detail {
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .mock-summary-label {
+            font-size: 9px;
+            color: var(--gray-500);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .mock-divider {
+            height: 1px;
+            background: var(--gray-200);
+            margin: 12px 0;
+        }
+
+        .mock-action-section {
+            margin-bottom: 12px;
+        }
+
+        .mock-action-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--gray-600);
+            margin-bottom: 6px;
+        }
+
+        .mock-action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--gray-700);
+            margin-bottom: 4px;
+        }
+
+        .mock-checkbox {
+            color: var(--primary-500);
+        }
+
+        .mock-deadline {
+            font-size: 10px;
+            color: #DC2626;
+            font-weight: 500;
+            margin-top: 6px;
+        }
+
+        .mock-original-btn {
+            width: 100%;
+            background: var(--gray-200);
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-600);
+            cursor: pointer;
+        }
+
+        .mock-warning-banner {
+            background: #FEF3C7;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 11px;
+            color: #92400E;
+        }
+
+        .mock-original-message {
+            background: #FEE2E2;
+            padding: 14px;
+            border-radius: 12px;
+            border-left: 3px solid #DC2626;
+            margin-bottom: 12px;
+        }
+
+        .original-text {
+            color: var(--gray-700);
+            font-style: italic;
+        }
+
+        .mock-hide-btn {
+            width: 100%;
+            background: var(--primary-600);
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+        }
+
+        .mock-stats-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .mock-stat-box {
+            flex: 1;
+            background: var(--primary-50);
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .mock-stat-box.urgent {
+            background: #FEE2E2;
+        }
+
+        .mock-stat-box.urgent .mock-stat-num {
+            color: #DC2626;
+        }
+
+        .mock-stat-num {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-600);
+        }
+
+        .mock-stat-text {
+            font-size: 9px;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        .mock-task {
+            background: white;
+            border: 1px solid var(--gray-200);
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .mock-task-text {
+            font-size: 12px;
+            color: var(--gray-700);
+            margin: 6px 0;
+        }
+
+        .mock-task-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mock-task-deadline {
+            font-size: 10px;
+            color: #DC2626;
+        }
+
+        .mock-task-from {
+            font-size: 10px;
             color: var(--gray-500);
         }
 
-        .mock-badge {
-            background: var(--primary-500);
+        .mock-respond-btn {
+            background: var(--primary-600);
             color: white;
-            font-size: 11px;
-            padding: 2px 8px;
-            border-radius: 10px;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 10px;
             font-weight: 600;
+            cursor: pointer;
         }
 
         .mock-setting {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 0;
+            padding: 12px 0;
             border-bottom: 1px solid var(--gray-200);
         }
 
+        .mock-setting-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
         .mock-setting-label {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--gray-700);
+            font-weight: 500;
+        }
+
+        .mock-setting-desc {
+            font-size: 10px;
+            color: var(--gray-500);
         }
 
         .mock-toggle {
-            width: 44px;
-            height: 24px;
+            width: 40px;
+            height: 22px;
             background: var(--primary-500);
-            border-radius: 12px;
+            border-radius: 11px;
             position: relative;
+            flex-shrink: 0;
         }
 
         .mock-toggle::after {
             content: '';
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             background: white;
             border-radius: 50%;
             top: 2px;
             right: 2px;
+            transition: 0.2s;
+        }
+
+        .mock-toggle.off {
+            background: var(--gray-300);
+        }
+
+        .mock-toggle.off::after {
+            right: auto;
+            left: 2px;
+        }
+
+        .mock-confirm-dialog {
+            background: white;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .mock-dialog-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 6px;
+        }
+
+        .mock-dialog-text {
+            font-size: 11px;
+            color: var(--gray-600);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .mock-dialog-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .mock-cancel {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid var(--gray-300);
+            background: white;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--gray-600);
+            cursor: pointer;
+        }
+
+        .mock-confirm {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background: #DC2626;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
         }
 
         .preview-label {
             padding: 16px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .preview-step {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-600);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
         .preview-label h4 {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             margin-bottom: 4px;
         }
 
         .preview-label p {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--gray-400);
+        }
+
+        .mock-stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .mock-stat {
+            background: var(--primary-50);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .mock-stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-600);
+        }
+
+        .mock-stat-label {
+            font-size: 10px;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        .mock-alert {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #FEF3C7;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .mock-alert-icon {
+            width: 24px;
+            height: 24px;
+            background: #F59E0B;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .mock-alert-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mock-alert-text strong {
+            font-size: 12px;
+            color: var(--gray-800);
+        }
+
+        .mock-alert-text span {
+            font-size: 10px;
+            color: var(--gray-500);
+        }
+
+        .mock-recent {
+            background: var(--gray-50);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .mock-recent-label {
+            font-size: 10px;
+            color: var(--gray-500);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .mock-recent-item {
+            font-size: 11px;
+            color: var(--gray-600);
+            padding: 4px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .mock-recent-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Waitlist */
+        .waitlist {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%);
+        }
+
+        .waitlist-box {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .waitlist-content h2 {
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .waitlist-content p {
+            color: rgba(255,255,255,0.9);
+            font-size: 18px;
+            margin-bottom: 32px;
+        }
+
+        .waitlist-form .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .waitlist-form input[type="email"] {
+            flex: 1;
+            padding: 16px 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            font-size: 16px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .waitlist-form input[type="email"]::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .waitlist-form input[type="email"]:focus {
+            border-color: white;
+            background: rgba(255,255,255,0.15);
+        }
+
+        .waitlist-form button {
+            padding: 16px 32px;
+            background: white;
+            color: var(--primary-700);
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            white-space: nowrap;
+        }
+
+        .waitlist-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .waitlist-note {
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
         }
 
         /* How It Works */
@@ -548,6 +1163,85 @@
             list-style: none;
         }
 
+        /* FAQ */
+        .faq {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--gray-50);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary-300);
+        }
+
+        .faq-item[open] {
+            border-color: var(--primary-500);
+            background: white;
+            box-shadow: 0 4px 12px rgba(13, 148, 136, 0.1);
+        }
+
+        .faq-item summary {
+            padding: 20px 24px;
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--gray-900);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary::after {
+            content: '+';
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--primary-600);
+            flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+
+        .faq-item[open] summary::after {
+            content: '−';
+        }
+
+        .faq-item summary:hover {
+            color: var(--primary-700);
+        }
+
+        .faq-item p {
+            padding: 0 24px 20px;
+            font-size: 15px;
+            color: var(--gray-600);
+            line-height: 1.7;
+            margin: 0;
+            border-top: 1px solid var(--gray-200);
+            padding-top: 16px;
+            margin-top: -4px;
+        }
+
+        .faq-item a {
+            color: var(--primary-600);
+        }
+
         /* SMS Consent */
         .sms-consent {
             padding: 80px 0;
@@ -585,6 +1279,63 @@
 
         .consent-box ul {
             padding-left: 24px;
+        }
+
+        .sms-link-box {
+            text-align: center;
+        }
+
+        .sms-link-box h2 {
+            margin-bottom: 16px;
+        }
+
+        .sms-link-box p {
+            max-width: 500px;
+            margin: 0 auto 24px;
+        }
+
+        .sms-quick-info {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-bottom: 24px;
+        }
+
+        .sms-info-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .sms-info-item strong {
+            background: var(--primary-600);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .sms-info-item span {
+            color: var(--gray-500);
+            font-size: 14px;
+        }
+
+        .sms-link-button {
+            display: inline-block;
+            color: var(--primary-600);
+            font-weight: 600;
+            text-decoration: none;
+            padding: 12px 24px;
+            border: 2px solid var(--primary-600);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .sms-link-button:hover {
+            background: var(--primary-600);
+            color: white;
         }
 
         /* Contact */
@@ -642,11 +1393,12 @@
             color: white;
         }
 
-        /* Responsive */
+        /* Responsive - Tablet */
         @media (max-width: 968px) {
             .hero-content {
                 grid-template-columns: 1fr;
                 text-align: center;
+                gap: 40px;
             }
 
             .hero-buttons {
@@ -667,6 +1419,11 @@
 
             .features-grid {
                 grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .feature-card {
+                padding: 24px;
             }
 
             .preview-grid {
@@ -681,6 +1438,47 @@
 
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 16px 24px;
+                gap: 0;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                border-top: 1px solid var(--gray-200);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                border-bottom: 1px solid var(--gray-100);
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 12px 0;
+                font-size: 16px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                position: relative;
+            }
+
+            .nav-cta {
+                padding: 8px 16px;
+                font-size: 13px;
             }
 
             .footer-content {
@@ -690,9 +1488,303 @@
             }
         }
 
-        @media (max-width: 480px) {
+        /* Responsive - Mobile */
+        @media (max-width: 640px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            /* Hero Mobile */
+            .hero {
+                padding: 40px 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+                line-height: 1.15;
+                margin-bottom: 16px;
+            }
+
+            .hero p {
+                font-size: 17px;
+                margin-bottom: 24px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .cta-button {
+                width: 100%;
+                text-align: center;
+                padding: 18px 32px;
+            }
+
+            .price-tag {
+                text-align: center;
+            }
+
+            .hero-photo {
+                height: 280px;
+                border-radius: 20px;
+            }
+
+            /* Sections Mobile */
+            .features,
+            .how-it-works,
+            .pricing,
+            .sms-consent {
+                padding: 60px 0;
+            }
+
+            .section-header {
+                margin-bottom: 40px;
+            }
+
+            .section-header h2 {
+                font-size: 28px;
+                line-height: 1.2;
+            }
+
+            .section-header p {
+                font-size: 16px;
+            }
+
+            /* Features Mobile */
+            .feature-card {
+                padding: 20px;
+                background: var(--gray-50);
+                border-radius: 16px;
+            }
+
+            .feature-icon {
+                width: 56px;
+                height: 56px;
+                margin-bottom: 16px;
+            }
+
+            .feature-icon svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            .feature-card h3 {
+                font-size: 18px;
+            }
+
+            .feature-card p {
+                font-size: 15px;
+            }
+
+            /* App Preview Mobile */
+            .app-preview {
+                padding: 60px 0;
+            }
+
+            .preview-grid {
+                max-width: 100%;
+                gap: 24px;
+            }
+
+            .preview-card {
+                border-radius: 20px;
+            }
+
+            .preview-screen {
+                margin: 12px;
+                border-radius: 16px;
+            }
+
+            .screen-content {
+                min-height: 180px;
+            }
+
+            .preview-label h4 {
+                font-size: 15px;
+            }
+
+            /* Waitlist Mobile */
+            .waitlist {
+                padding: 60px 0;
+            }
+
+            .waitlist-content h2 {
+                font-size: 26px;
+            }
+
+            .waitlist-content p {
+                font-size: 16px;
+            }
+
+            .waitlist-form .input-group {
+                flex-direction: column;
+            }
+
+            .waitlist-form button {
+                width: 100%;
+            }
+
+            /* How It Works Mobile */
             .steps {
                 grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .step {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .step-number {
+                width: 44px;
+                height: 44px;
+                font-size: 18px;
+            }
+
+            .step h3 {
+                font-size: 17px;
+            }
+
+            /* FAQ Mobile */
+            .faq {
+                padding: 60px 0;
+            }
+
+            .faq-item summary {
+                padding: 16px 20px;
+                font-size: 15px;
+            }
+
+            .faq-item summary::after {
+                font-size: 20px;
+            }
+
+            .faq-item p {
+                padding: 0 20px 16px;
+                font-size: 14px;
+            }
+
+            /* Pricing Mobile */
+            .pricing-card {
+                padding: 32px 24px;
+                border-radius: 20px;
+            }
+
+            .pricing-card h3 {
+                font-size: 20px;
+            }
+
+            .pricing-card .price {
+                font-size: 48px;
+            }
+
+            .pricing-card .price span {
+                font-size: 18px;
+            }
+
+            .pricing-features li {
+                font-size: 15px;
+                padding: 10px 0;
+            }
+
+            /* SMS Terms Mobile */
+            .consent-box {
+                padding: 28px 20px;
+                border-radius: 16px;
+            }
+
+            .consent-box h2 {
+                font-size: 24px;
+            }
+
+            .sms-quick-info {
+                gap: 24px;
+            }
+
+            .sms-info-item strong {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+
+            .sms-link-button {
+                display: block;
+                text-align: center;
+            }
+
+            /* Contact Mobile */
+            .contact {
+                padding: 60px 0;
+            }
+
+            .contact h2 {
+                font-size: 26px;
+            }
+
+            .contact p {
+                font-size: 16px;
+            }
+
+            .contact a {
+                font-size: 18px;
+                word-break: break-all;
+            }
+
+            /* Footer Mobile */
+            footer {
+                padding: 32px 0;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 16px;
+            }
+
+            .footer-links a {
+                font-size: 14px;
+            }
+        }
+
+        /* Responsive - Small Mobile */
+        @media (max-width: 380px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .section-header h2 {
+                font-size: 24px;
+            }
+
+            .pricing-card .price {
+                font-size: 42px;
+            }
+
+            .sms-quick-info {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+
+        /* Touch-friendly interactions */
+        @media (hover: none) {
+            .cta-button:active {
+                background: var(--primary-700);
+                transform: scale(0.98);
+            }
+
+            .preview-card:hover {
+                transform: none;
+            }
+
+            .preview-card:active {
+                transform: scale(0.98);
+            }
+
+            .sms-link-button:active {
+                background: var(--primary-600);
+                color: white;
             }
         }
     </style>
@@ -709,16 +1801,35 @@
                 </div>
                 <span class="logo-text">Filtered</span>
             </a>
-            <ul class="nav-links">
+            <ul class="nav-links" id="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#app-preview">App Preview</a></li>
+                <li><a href="#faq">FAQ</a></li>
                 <li><a href="#pricing">Pricing</a></li>
-                <li><a href="/privacy.html">Privacy</a></li>
-                <li><a href="/terms.html">Terms</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="nav-right">
+                <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
     </nav>
+    <script>
+        document.getElementById('hamburger').addEventListener('click', function() {
+            document.getElementById('nav-links').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+        document.querySelectorAll('#nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('nav-links').classList.remove('active');
+                document.getElementById('hamburger').classList.remove('active');
+            });
+        });
+    </script>
 
     <!-- Hero -->
     <section class="hero">
@@ -727,9 +1838,9 @@
                 <h1>Protect Your Peace.<br><span>Stay Connected.</span></h1>
                 <p>Filtered uses AI to shield you from hostile co-parent messages while ensuring you never miss what matters. Communicate calmly, respond thoughtfully.</p>
                 <div class="hero-buttons">
-                    <a href="#pricing" class="cta-button">Start Free Trial</a>
+                    <a href="#waitlist" class="cta-button">Join the Waitlist</a>
                     <div class="price-tag">
-                        <strong>$9</strong>/month after trial
+                        Coming soon to iOS & Android
                     </div>
                 </div>
             </div>
@@ -779,6 +1890,9 @@
                     <p>AI helps you craft calm, effective replies that keep conversations productive and child-focused.</p>
                 </div>
             </div>
+            <div class="section-cta">
+                <a href="#waitlist" class="cta-button-outline">Join the Waitlist</a>
+            </div>
         </div>
     </section>
 
@@ -787,101 +1901,185 @@
         <div class="container">
             <div class="section-header">
                 <h2>See Filtered in Action</h2>
-                <p>A clean, intuitive interface designed to reduce stress and keep communication focused.</p>
+                <p>Swipe through to see how Filtered protects your peace while keeping you informed.</p>
             </div>
-            <div class="preview-grid">
-                <!-- Conversation Screen -->
+            <div class="carousel-hint">
+                <span>Swipe to explore</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </div>
+        </div>
+        <div class="preview-carousel">
+            <div class="preview-track">
+                <!-- Screen 1: Filtered Message -->
                 <div class="preview-card">
                     <div class="preview-screen">
                         <div class="screen-header">
-                            <h4>Conversation</h4>
+                            <h4>Messages from Alex</h4>
+                            <span class="shield-badge">Shield On</span>
                         </div>
                         <div class="screen-content">
                             <div class="mock-message incoming">
-                                <div class="mock-label">FILTERED MESSAGE</div>
-                                <div class="mock-text">"Request to pick up kids at 3pm Saturday for soccer practice."</div>
+                                <div class="mock-category request">REQUEST</div>
+                                <div class="mock-text">"Asking to switch pickup from Saturday 3pm to Sunday 10am due to a work conflict."</div>
+                                <div class="mock-meta">
+                                    <span class="mock-time">Today, 2:34 PM</span>
+                                    <button class="mock-view-btn">View Original</button>
+                                </div>
                             </div>
                             <div class="mock-message outgoing">
-                                <div class="mock-label">YOUR REPLY</div>
-                                <div class="mock-text">"That works for me. I'll have them ready by 2:45."</div>
-                            </div>
-                            <div class="mock-message incoming">
-                                <div class="mock-label">FILTERED MESSAGE</div>
-                                <div class="mock-text">"Confirmed. Thank you."</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="preview-label">
-                        <h4>Filtered Conversations</h4>
-                        <p>See only what matters, respond on your terms</p>
-                    </div>
-                </div>
-
-                <!-- Contacts Screen -->
-                <div class="preview-card">
-                    <div class="preview-screen">
-                        <div class="screen-header">
-                            <h4>Contacts</h4>
-                        </div>
-                        <div class="screen-content" style="padding: 0;">
-                            <div class="mock-contact">
-                                <div class="mock-avatar">JD</div>
-                                <div class="mock-contact-info">
-                                    <div class="mock-contact-name">John D.</div>
-                                    <div class="mock-contact-preview">Saturday pickup confirmed...</div>
-                                </div>
-                                <div class="mock-badge">2</div>
-                            </div>
-                            <div class="mock-contact">
-                                <div class="mock-avatar">SK</div>
-                                <div class="mock-contact-info">
-                                    <div class="mock-contact-name">Sarah K.</div>
-                                    <div class="mock-contact-preview">School forms need signature</div>
-                                </div>
-                            </div>
-                            <div class="mock-contact">
-                                <div class="mock-avatar">MR</div>
-                                <div class="mock-contact-info">
-                                    <div class="mock-contact-name">Mike R.</div>
-                                    <div class="mock-contact-preview">No new messages</div>
+                                <div class="mock-text">"Sunday at 10am works for me. I'll have them ready."</div>
+                                <div class="mock-meta">
+                                    <span class="mock-time">Today, 3:15 PM</span>
+                                    <span class="mock-sent">Sent ✓</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="preview-label">
-                        <h4>Contact Overview</h4>
-                        <p>Unread counts and message previews</p>
+                        <div class="preview-step">1</div>
+                        <h4>Filtered Messages</h4>
+                        <p>AI removes hostility, shows just the facts</p>
                     </div>
                 </div>
 
-                <!-- Settings Screen -->
+                <!-- Screen 2: View Original Option -->
                 <div class="preview-card">
                     <div class="preview-screen">
                         <div class="screen-header">
-                            <h4>Settings</h4>
+                            <h4>Message Details</h4>
+                        </div>
+                        <div class="screen-content">
+                            <div class="mock-message-detail">
+                                <div class="mock-category request">REQUEST</div>
+                                <div class="mock-summary-label">AI Summary</div>
+                                <div class="mock-text">"Asking to switch pickup from Saturday 3pm to Sunday 10am due to a work conflict."</div>
+                                <div class="mock-divider"></div>
+                                <div class="mock-action-section">
+                                    <div class="mock-action-label">Action Required</div>
+                                    <div class="mock-action-item">
+                                        <span class="mock-checkbox">☐</span>
+                                        <span>Confirm or decline schedule change</span>
+                                    </div>
+                                    <div class="mock-deadline">Deadline: Saturday 3pm</div>
+                                </div>
+                                <button class="mock-original-btn">View Original Message</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-label">
+                        <div class="preview-step">2</div>
+                        <h4>Tap for Details</h4>
+                        <p>See action items and choose to view original</p>
+                    </div>
+                </div>
+
+                <!-- Screen 3: Original Revealed with Warning -->
+                <div class="preview-card">
+                    <div class="preview-screen">
+                        <div class="screen-header warning-header">
+                            <h4>Original Message</h4>
+                        </div>
+                        <div class="screen-content">
+                            <div class="mock-warning-banner">
+                                <span class="warning-icon">⚠️</span>
+                                <span>Unfiltered content may be upsetting</span>
+                            </div>
+                            <div class="mock-original-message">
+                                <div class="mock-text original-text">"I NEED to switch Saturday to Sunday because ONCE AGAIN my work scheduled me and you always make everything so difficult. It's not like you have anything important to do anyway. Just have them ready at 10. This shouldn't even be a discussion."</div>
+                            </div>
+                            <button class="mock-hide-btn">Hide Original</button>
+                        </div>
+                    </div>
+                    <div class="preview-label">
+                        <div class="preview-step">3</div>
+                        <h4>Original If Needed</h4>
+                        <p>Always available for context or legal records</p>
+                    </div>
+                </div>
+
+                <!-- Screen 4: Dashboard with Tasks -->
+                <div class="preview-card">
+                    <div class="preview-screen">
+                        <div class="screen-header">
+                            <h4>Dashboard</h4>
+                        </div>
+                        <div class="screen-content" style="padding: 12px;">
+                            <div class="mock-stats-row">
+                                <div class="mock-stat-box">
+                                    <div class="mock-stat-num">2</div>
+                                    <div class="mock-stat-text">Unread</div>
+                                </div>
+                                <div class="mock-stat-box urgent">
+                                    <div class="mock-stat-num">1</div>
+                                    <div class="mock-stat-text">Due Today</div>
+                                </div>
+                                <div class="mock-stat-box">
+                                    <div class="mock-stat-num">3</div>
+                                    <div class="mock-stat-text">Open</div>
+                                </div>
+                            </div>
+                            <div class="mock-task">
+                                <div class="mock-category request">REQUEST</div>
+                                <div class="mock-task-text">Confirm schedule change to Sunday 10am</div>
+                                <div class="mock-task-meta">
+                                    <span class="mock-task-deadline">⏰ Due: Saturday</span>
+                                    <button class="mock-respond-btn">Respond</button>
+                                </div>
+                            </div>
+                            <div class="mock-task">
+                                <div class="mock-category question">QUESTION</div>
+                                <div class="mock-task-text">Which doctor for Emma's checkup?</div>
+                                <div class="mock-task-meta">
+                                    <span class="mock-task-from">From Alex</span>
+                                    <button class="mock-respond-btn">Respond</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-label">
+                        <div class="preview-step">4</div>
+                        <h4>Task Dashboard</h4>
+                        <p>Requests & questions that need your response</p>
+                    </div>
+                </div>
+
+                <!-- Screen 5: Settings -->
+                <div class="preview-card">
+                    <div class="preview-screen">
+                        <div class="screen-header">
+                            <h4>Message Display</h4>
                         </div>
                         <div class="screen-content">
                             <div class="mock-setting">
-                                <span class="mock-setting-label">Shield Mode</span>
+                                <div class="mock-setting-info">
+                                    <span class="mock-setting-label">Shield Mode</span>
+                                    <span class="mock-setting-desc">Hide mood indicators</span>
+                                </div>
                                 <div class="mock-toggle"></div>
                             </div>
                             <div class="mock-setting">
-                                <span class="mock-setting-label">Emergency Alerts</span>
-                                <div class="mock-toggle"></div>
+                                <div class="mock-setting-info">
+                                    <span class="mock-setting-label">Show Original Messages</span>
+                                    <span class="mock-setting-desc">Display unfiltered content</span>
+                                </div>
+                                <div class="mock-toggle off"></div>
                             </div>
-                            <div class="mock-setting">
-                                <span class="mock-setting-label">Daily Digest</span>
-                                <div class="mock-toggle" style="background: var(--gray-300);"></div>
-                            </div>
-                            <div class="mock-setting">
-                                <span class="mock-setting-label">Push Notifications</span>
-                                <div class="mock-toggle"></div>
+                            <div class="mock-confirm-dialog">
+                                <div class="mock-dialog-title">Are you sure?</div>
+                                <div class="mock-dialog-text">Original messages may contain hostile, manipulative, or upsetting content.</div>
+                                <div class="mock-dialog-buttons">
+                                    <button class="mock-cancel">Cancel</button>
+                                    <button class="mock-confirm">Enable</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="preview-label">
-                        <h4>Your Controls</h4>
-                        <p>Customize notifications and filtering</p>
+                        <div class="preview-step">5</div>
+                        <h4>You're In Control</h4>
+                        <p>Choose how much you want to see</p>
                     </div>
                 </div>
             </div>
@@ -916,6 +2114,62 @@
                     <h3>Stay Protected</h3>
                     <p>Messages are filtered by AI before you see them. Respond when ready.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Email Signup / Waitlist -->
+    <section class="waitlist" id="waitlist">
+        <div class="container">
+            <div class="waitlist-box">
+                <div class="waitlist-content">
+                    <h2>Be the First to Know</h2>
+                    <p>Join our waitlist to get early access when Filtered launches on iOS and Android. We'll also send you tips on peaceful co-parenting.</p>
+                </div>
+                <form class="waitlist-form" id="waitlist-form" name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                    <input type="hidden" name="form-name" value="waitlist">
+                    <p class="hidden" style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
+                    <div class="input-group">
+                        <input type="email" name="email" id="waitlist-email" placeholder="Enter your email" required>
+                        <button type="submit" id="waitlist-btn">Join Waitlist</button>
+                    </div>
+                    <p class="waitlist-note">No spam. Unsubscribe anytime.</p>
+                </form>
+                <div class="waitlist-success" id="waitlist-success" style="display: none;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">&#10003;</div>
+                    <h3 style="color: white; font-size: 24px; margin-bottom: 12px;">You're on the list!</h3>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 16px;">Check your email for confirmation. We'll notify you when Filtered launches.</p>
+                </div>
+                <script>
+                document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const btn = document.getElementById('waitlist-btn');
+                    const email = document.getElementById('waitlist-email').value;
+
+                    btn.textContent = 'Joining...';
+                    btn.disabled = true;
+
+                    try {
+                        const response = await fetch('/', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: new URLSearchParams(new FormData(form)).toString()
+                        });
+
+                        if (response.ok) {
+                            form.style.display = 'none';
+                            document.getElementById('waitlist-success').style.display = 'block';
+                        } else {
+                            throw new Error('Form submission failed');
+                        }
+                    } catch (error) {
+                        btn.textContent = 'Join Waitlist';
+                        btn.disabled = false;
+                        alert('Something went wrong. Please try again.');
+                    }
+                });
+                </script>
             </div>
         </div>
     </section>
@@ -969,49 +2223,76 @@
                         Cancel anytime
                     </li>
                 </ul>
-                <a href="#how-it-works" class="cta-button" style="width: 100%; text-align: center;">Start Free Trial</a>
+                <a href="#waitlist" class="cta-button" style="width: 100%; text-align: center;">Get Early Access</a>
             </div>
         </div>
     </section>
 
-    <!-- SMS Consent Section -->
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Everything you need to know about Filtered.</p>
+            </div>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>How does the AI filtering work?</summary>
+                    <p>Our AI analyzes incoming messages and removes hostile, manipulative, or emotionally charged language while preserving the essential information. You always have the option to view the original message if needed.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Will my co-parent know I'm using Filtered?</summary>
+                    <p>They'll text a different phone number (your Filtered number), but they won't see any indication that messages are being filtered. Your replies appear to come from your Filtered number.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Can I use the original messages in court?</summary>
+                    <p>Yes. All original messages are stored and accessible. You can view, export, and use them for legal documentation. We retain messages for 2 years specifically for this purpose.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>What if there's an emergency?</summary>
+                    <p>Our AI detects urgent and emergency messages and alerts you immediately, even if the message contains hostile language. You'll never miss something important about your children's safety.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>How is this different from blocking them?</summary>
+                    <p>Blocking cuts off communication entirely. Filtered keeps you connected and informed while protecting your mental health. You stay in the loop without the emotional toll.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Can I turn off filtering?</summary>
+                    <p>Yes. You have full control. You can view individual original messages, or turn on "Show Original Messages" in settings to see everything unfiltered. It's your choice.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>What happens after the free trial?</summary>
+                    <p>After 14 days, your subscription continues at $9/month. You can cancel anytime before the trial ends and won't be charged. No commitments, no contracts.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Is my data secure?</summary>
+                    <p>Absolutely. All messages are encrypted at rest (AES-256) and in transit (TLS 1.3). We never sell your data. See our <a href="/privacy.html">Privacy Policy</a> for details.</p>
+                </details>
+            </div>
+            <div class="section-cta">
+                <p class="cta-subtext">Ready to protect your peace?</p>
+                <a href="#waitlist" class="cta-button">Join the Waitlist</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SMS Terms Link Section -->
     <section class="sms-consent" id="sms-consent">
         <div class="container">
-            <div class="consent-box">
+            <div class="consent-box sms-link-box">
                 <h2>SMS Messaging Terms</h2>
-
-                <h3>Opt-In Process</h3>
-                <p>When you sign up for Filtered, you explicitly consent to receive SMS messages by:</p>
-                <ul>
-                    <li>Creating an account and agreeing to our Terms of Service</li>
-                    <li>Completing the onboarding process and accepting a dedicated phone number</li>
-                    <li>Providing your co-parent with your Filtered number for communication</li>
-                </ul>
-
-                <h3>Message Types</h3>
-                <p>You may receive the following types of SMS messages:</p>
-                <ul>
-                    <li>Forwarded messages from your co-parent (filtered for hostile content)</li>
-                    <li>Emergency alerts for time-sensitive matters</li>
-                    <li>Service notifications about your account</li>
-                </ul>
-
-                <h3>Message Frequency</h3>
-                <p>Message frequency varies based on your co-parent communication. You control notification settings within the app.</p>
-
-                <h3>Opt-Out</h3>
-                <p>You can opt out of SMS messages at any time by:</p>
-                <ul>
-                    <li>Texting STOP to your Filtered number</li>
-                    <li>Disabling SMS notifications in app settings</li>
-                    <li>Contacting us at alec@kleinmanventures.com</li>
-                </ul>
-
-                <h3>Costs</h3>
-                <p>Message and data rates may apply based on your mobile carrier plan. Filtered does not charge per-message fees to users.</p>
-
-                <h3>Help</h3>
-                <p>For help, text HELP to your Filtered number or contact alec@kleinmanventures.com</p>
+                <p>Filtered uses SMS to deliver filtered communications directly to your phone. By using our service, you consent to receive text messages.</p>
+                <div class="sms-quick-info">
+                    <div class="sms-info-item">
+                        <strong>STOP</strong>
+                        <span>to opt out</span>
+                    </div>
+                    <div class="sms-info-item">
+                        <strong>HELP</strong>
+                        <span>for support</span>
+                    </div>
+                </div>
+                <a href="/sms-terms.html" class="sms-link-button">Read Full SMS Terms &rarr;</a>
             </div>
         </div>
     </section>
@@ -1032,7 +2313,7 @@
             <ul class="footer-links">
                 <li><a href="/privacy.html">Privacy Policy</a></li>
                 <li><a href="/terms.html">Terms of Service</a></li>
-                <li><a href="#sms-consent">SMS Terms</a></li>
+                <li><a href="/sms-terms.html">SMS Terms</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
