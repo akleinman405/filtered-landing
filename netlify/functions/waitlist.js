@@ -1,8 +1,7 @@
 // Netlify Function: Handle waitlist form submissions
-// Saves to a local JSON file (synced via GitHub) and sends confirmation email
+// Sends confirmation email via Resend and logs to Google Sheets
 
-const fs = require('fs');
-const path = require('path');
+const { google } = require('googleapis');
 
 exports.handler = async (event, context) => {
   // Only allow POST
@@ -49,6 +48,33 @@ exports.handler = async (event, context) => {
     // Log the submission (Netlify Functions logs are viewable in dashboard)
     console.log('New waitlist signup:', JSON.stringify(submission));
 
+    // Log to Google Sheets if configured
+    const GOOGLE_SHEETS_CREDENTIALS = process.env.GOOGLE_SHEETS_CREDENTIALS;
+    const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID;
+
+    if (GOOGLE_SHEETS_CREDENTIALS && GOOGLE_SHEET_ID) {
+      try {
+        const credentials = JSON.parse(GOOGLE_SHEETS_CREDENTIALS);
+        const auth = new google.auth.GoogleAuth({
+          credentials,
+          scopes: ['https://www.googleapis.com/auth/spreadsheets']
+        });
+        const sheets = google.sheets({ version: 'v4', auth });
+
+        await sheets.spreadsheets.values.append({
+          spreadsheetId: GOOGLE_SHEET_ID,
+          range: 'Sheet1!A:C',
+          valueInputOption: 'USER_ENTERED',
+          requestBody: {
+            values: [[email, timestamp, 'website']]
+          }
+        });
+        console.log('Added to Google Sheet:', email);
+      } catch (sheetError) {
+        console.error('Google Sheets error:', sheetError.message);
+      }
+    }
+
     // Send confirmation email via Resend if configured
     const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
@@ -78,7 +104,7 @@ exports.handler = async (event, context) => {
       }
     }
 
-    // Try to notify you of new signups (optional - uses Resend)
+    // Notify you of new signups
     if (RESEND_API_KEY) {
       try {
         await fetch('https://api.resend.com/emails', {
@@ -125,7 +151,6 @@ function getEmailTemplate() {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Filtered</title>
 </head>
 <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #F9FAFB;">
     <table role="presentation" style="width: 100%; border-collapse: collapse;">
@@ -159,7 +184,7 @@ function getEmailTemplate() {
                                     </td>
                                 </tr>
                             </table>
-                            <p style="margin: 0; color: #6B7280; font-size: 14px; line-height: 1.6;">
+                            <p style="margin: 0; color: #6B7280; font-size: 14px;">
                                 We'll email you as soon as Filtered is ready. Take care of yourself!
                             </p>
                         </td>
