@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Version History - Filtered App</title>
+    <meta name="description" content="View the version history and changelog for the Filtered app.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-50: #F0FDFA;
+            --primary-100: #CCFBF1;
+            --primary-500: #14B8A6;
+            --primary-600: #0D9488;
+            --primary-700: #0F766E;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, var(--primary-50) 0%, white 50%, var(--gray-50) 100%);
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-600);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--gray-500);
+            margin-bottom: 2rem;
+        }
+
+        .version-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary-500);
+        }
+
+        .version-card.current {
+            border-left-color: var(--primary-600);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .version-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .version-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .version-number {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .current-badge {
+            background: var(--primary-100);
+            color: var(--primary-700);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .version-date {
+            color: var(--gray-500);
+            font-size: 0.875rem;
+        }
+
+        .version-build {
+            color: var(--gray-500);
+            font-size: 0.75rem;
+            font-family: monospace;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        .feature-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.85rem;
+            width: 6px;
+            height: 6px;
+            background: var(--primary-500);
+            border-radius: 50%;
+        }
+
+        .feature-list li strong {
+            color: var(--gray-800);
+        }
+
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: var(--primary-600);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .download-link:hover {
+            text-decoration: underline;
+        }
+
+        .download-link svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .expired-notice {
+            color: var(--gray-500);
+            font-size: 0.8rem;
+            font-style: italic;
+            margin-top: 0.75rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--gray-500);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--primary-600);
+            text-decoration: none;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+            .version-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/download.html" class="back-link">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Download
+        </a>
+
+        <h1>Version History</h1>
+        <p class="subtitle">Changelog and past releases for Filtered</p>
+
+        <!-- Current Version -->
+        <div class="version-card current">
+            <div class="version-header">
+                <div class="version-title">
+                    <span class="version-number">v1.0.0</span>
+                    <span class="current-badge">Current</span>
+                </div>
+                <div style="text-align: right;">
+                    <div class="version-date">January 5, 2026</div>
+                    <div class="version-build">Build 14d3913f</div>
+                </div>
+            </div>
+            <ul class="feature-list">
+                <li><strong>WhatsApp Support</strong> - Enable WhatsApp sandbox for dev testing directly from Settings</li>
+                <li><strong>Toll-Free Number Switch</strong> - Request upgrade to toll-free number for better deliverability</li>
+                <li><strong>Improved Urgency Display</strong> - Better visual indicators for time-sensitive messages</li>
+                <li><strong>TypeScript Fixes</strong> - Resolved compilation errors for more stable builds</li>
+                <li><strong>Build System Fix</strong> - Fixed .gitignore issue that was blocking EAS builds</li>
+            </ul>
+            <a href="https://expo.dev/artifacts/eas/3zajKn6nT7UP8w1RwZdKLZ.apk" class="download-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download this version
+            </a>
+        </div>
+
+        <!-- Previous Version -->
+        <div class="version-card">
+            <div class="version-header">
+                <div class="version-title">
+                    <span class="version-number">v1.0.0</span>
+                </div>
+                <div style="text-align: right;">
+                    <div class="version-date">December 28, 2025</div>
+                    <div class="version-build">Build 33602fc5</div>
+                </div>
+            </div>
+            <ul class="feature-list">
+                <li><strong>Initial Release</strong> - First public preview build</li>
+                <li><strong>AI Message Filtering</strong> - Claude-powered analysis of co-parent messages</li>
+                <li><strong>Mood Detection</strong> - Visual indicators for message tone (calm, tense, hostile)</li>
+                <li><strong>Action Items Extraction</strong> - Automatic detection of requests and deadlines</li>
+                <li><strong>Response Suggestions</strong> - AI-generated neutral reply options</li>
+                <li><strong>Shielded View</strong> - See summary without reading hostile content</li>
+                <li><strong>Contact Management</strong> - Add and manage co-parent contacts</li>
+                <li><strong>Push Notifications</strong> - Alerts for new messages and emergencies</li>
+            </ul>
+            <a href="https://expo.dev/artifacts/eas/7kXwSK1upHG2bEVoKLD8V7.apk" class="download-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download this version
+            </a>
+            <p class="expired-notice">Note: APK download links expire after 14 days from build date.</p>
+        </div>
+
+    </div>
+
+    <footer>
+        <a href="/">Home</a> &bull;
+        <a href="/download.html">Download</a> &bull;
+        <a href="/privacy.html">Privacy</a> &bull;
+        <a href="/terms.html">Terms</a>
+    </footer>
+</body>
+</html>
