@@ -2408,25 +2408,5 @@
         </div>
     </footer>
 
-    <!-- Carousel mouse wheel scroll support -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const carousel = document.querySelector('.preview-carousel');
-            if (carousel) {
-                carousel.addEventListener('wheel', function(e) {
-                    // Check if we're scrolling horizontally (some trackpads do this)
-                    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-                        return; // Let native horizontal scroll work
-                    }
-
-                    // Convert vertical scroll to horizontal
-                    if (e.deltaY !== 0) {
-                        e.preventDefault();
-                        carousel.scrollLeft += e.deltaY * 2; // Multiply for faster scrolling
-                    }
-                }, { passive: false });
-            }
-        });
-    </script>
 </body>
 </html>
