@@ -2308,7 +2308,7 @@
     <!-- Footer -->
     <footer>
         <div class="container footer-content">
-            <p>&copy; 2025 Filtered. All rights reserved.</p>
+            <p>&copy; 2025 Filtered. All rights reserved. Filtered is a DBA of Alec Kleinman.</p>
             <ul class="footer-links">
                 <li><a href="/privacy.html">Privacy Policy</a></li>
                 <li><a href="/terms.html">Terms of Service</a></li>
@@ -2317,5 +2317,26 @@
             </ul>
         </div>
     </footer>
+
+    <!-- Carousel mouse wheel scroll support -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.querySelector('.preview-carousel');
+            if (carousel) {
+                carousel.addEventListener('wheel', function(e) {
+                    // Check if we're scrolling horizontally (some trackpads do this)
+                    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                        return; // Let native horizontal scroll work
+                    }
+
+                    // Convert vertical scroll to horizontal
+                    if (e.deltaY !== 0) {
+                        e.preventDefault();
+                        carousel.scrollLeft += e.deltaY * 2; // Multiply for faster scrolling
+                    }
+                }, { passive: false });
+            }
+        });
+    </script>
 </body>
 </html>
