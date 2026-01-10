@@ -2151,7 +2151,7 @@
         </div>
     </section>
     <script>
-        // Carousel navigation
+        // Carousel navigation with loop
         document.addEventListener('DOMContentLoaded', function() {
             const carousel = document.getElementById('preview-carousel');
             const prevBtn = document.getElementById('carousel-prev');
@@ -2159,11 +2159,22 @@
             const cardWidth = 324; // 300px card + 24px gap
 
             prevBtn.addEventListener('click', function() {
-                carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                // If at start, go to end
+                if (carousel.scrollLeft <= 10) {
+                    carousel.scrollTo({ left: carousel.scrollWidth, behavior: 'smooth' });
+                } else {
+                    carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                }
             });
 
             nextBtn.addEventListener('click', function() {
-                carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                // If at or near end, go back to start
+                const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+                if (carousel.scrollLeft >= maxScroll - 10) {
+                    carousel.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                }
             });
         });
     </script>
