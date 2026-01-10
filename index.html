@@ -416,12 +416,68 @@
             color: var(--gray-400);
             font-size: 14px;
             margin-top: 24px;
-            animation: bounce-right 1.5s ease-in-out infinite;
         }
 
-        @keyframes bounce-right {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(8px); }
+        .carousel-wrapper {
+            position: relative;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 10;
+            transition: all 0.2s;
+        }
+
+        .carousel-nav:hover {
+            background: var(--primary-100);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-nav:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .carousel-nav svg {
+            width: 24px;
+            height: 24px;
+            color: var(--primary-600);
+        }
+
+        .carousel-nav.prev {
+            left: 16px;
+        }
+
+        .carousel-nav.next {
+            right: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .carousel-nav {
+                width: 40px;
+                height: 40px;
+            }
+            .carousel-nav svg {
+                width: 20px;
+                height: 20px;
+            }
+            .carousel-nav.prev {
+                left: 8px;
+            }
+            .carousel-nav.next {
+                right: 8px;
+            }
         }
 
         .preview-carousel {
@@ -1904,13 +1960,21 @@
                 <p>Swipe through to see how Filtered protects your peace while keeping you informed.</p>
             </div>
             <div class="carousel-hint">
-                <span>Swipe to explore</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 18l6-6-6-6"/>
-                </svg>
+                <span>Use arrows or swipe to explore</span>
             </div>
         </div>
-        <div class="preview-carousel">
+        <div class="carousel-wrapper">
+            <button class="carousel-nav prev" id="carousel-prev" aria-label="Previous slide">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <button class="carousel-nav next" id="carousel-next" aria-label="Next slide">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+            <div class="preview-carousel" id="preview-carousel">
             <div class="preview-track">
                 <!-- Screen 1: Filtered Message -->
                 <div class="preview-card">
@@ -2084,7 +2148,25 @@
                 </div>
             </div>
         </div>
+        </div>
     </section>
+    <script>
+        // Carousel navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.getElementById('preview-carousel');
+            const prevBtn = document.getElementById('carousel-prev');
+            const nextBtn = document.getElementById('carousel-next');
+            const cardWidth = 324; // 300px card + 24px gap
+
+            prevBtn.addEventListener('click', function() {
+                carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+            });
+
+            nextBtn.addEventListener('click', function() {
+                carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            });
+        });
+    </script>
 
     <!-- How It Works -->
     <section class="how-it-works" id="how-it-works">
