@@ -482,16 +482,8 @@
 
         .preview-carousel {
             margin-top: 32px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
+            overflow: hidden;
             padding: 20px 0;
-        }
-
-        .preview-carousel::-webkit-scrollbar {
-            display: none;
         }
 
         .preview-track {
@@ -499,6 +491,7 @@
             gap: 24px;
             padding: 0 max(24px, calc((100vw - 320px) / 2));
             width: max-content;
+            transition: transform 0.3s ease;
         }
 
         .preview-card {
@@ -506,7 +499,6 @@
             background: var(--gray-800);
             border-radius: 20px;
             overflow: hidden;
-            scroll-snap-align: center;
             transition: transform 0.3s;
         }
 
@@ -2151,30 +2143,35 @@
         </div>
     </section>
     <script>
-        // Carousel navigation with loop
+        // Carousel navigation with loop (using transform)
         document.addEventListener('DOMContentLoaded', function() {
-            const carousel = document.getElementById('preview-carousel');
+            const track = document.querySelector('.preview-track');
             const prevBtn = document.getElementById('carousel-prev');
             const nextBtn = document.getElementById('carousel-next');
             const cardWidth = 324; // 300px card + 24px gap
+            const totalCards = 5;
+            let currentIndex = 0;
+
+            function updatePosition() {
+                track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+            }
 
             prevBtn.addEventListener('click', function() {
-                // If at start, go to end
-                if (carousel.scrollLeft <= 10) {
-                    carousel.scrollTo({ left: carousel.scrollWidth, behavior: 'smooth' });
+                if (currentIndex <= 0) {
+                    currentIndex = totalCards - 1; // Loop to end
                 } else {
-                    carousel.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+                    currentIndex--;
                 }
+                updatePosition();
             });
 
             nextBtn.addEventListener('click', function() {
-                // If at or near end, go back to start
-                const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-                if (carousel.scrollLeft >= maxScroll - 10) {
-                    carousel.scrollTo({ left: 0, behavior: 'smooth' });
+                if (currentIndex >= totalCards - 1) {
+                    currentIndex = 0; // Loop to start
                 } else {
-                    carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                    currentIndex++;
                 }
+                updatePosition();
             });
         });
     </script>
