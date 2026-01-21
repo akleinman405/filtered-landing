@@ -1,0 +1,65 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F766E"/>
+      <stop offset="100%" style="stop-color:#0D9488"/>
+    </linearGradient>
+
+    <!-- Subtle pattern overlay -->
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1.5" fill="white" opacity="0.1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Decorative shapes -->
+  <circle cx="1100" cy="100" r="200" fill="white" opacity="0.05"/>
+  <circle cx="100" cy="530" r="150" fill="white" opacity="0.05"/>
+
+  <!-- Shield Icon -->
+  <g transform="translate(480, 120)">
+    <path d="M120 0L240 45V135C240 225 120 270 120 270S0 225 0 135V45L120 0Z"
+          fill="white" opacity="0.95"/>
+    <path d="M120 20L220 58V135C220 210 120 248 120 248S20 210 20 135V58L120 20Z"
+          fill="#0D9488"/>
+    <!-- Checkmark inside shield -->
+    <path d="M85 135L110 160L160 100"
+          stroke="white" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </g>
+
+  <!-- App Name -->
+  <text x="600" y="440"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="72"
+        font-weight="700"
+        fill="white"
+        text-anchor="middle">
+    Filtered
+  </text>
+
+  <!-- Tagline -->
+  <text x="600" y="500"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="28"
+        font-weight="400"
+        fill="white"
+        opacity="0.9"
+        text-anchor="middle">
+    Protect your peace while staying connected
+  </text>
+
+  <!-- Subtitle -->
+  <text x="600" y="545"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="20"
+        font-weight="500"
+        fill="white"
+        opacity="0.7"
+        text-anchor="middle">
+    AI-Powered Co-Parent Communication
+  </text>
+</svg>
