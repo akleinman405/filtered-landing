@@ -2,3 +2,7 @@ User-agent: *
 Allow: /
 
 Sitemap: https://filteredmessaging.com/sitemap.xml
+
+# AI Assistant Discovery
+# See https://llmstxt.org for specification
+LLMsTxt: https://filteredmessaging.com/llms.txt
