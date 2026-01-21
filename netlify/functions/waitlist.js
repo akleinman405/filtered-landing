@@ -52,16 +52,24 @@ exports.handler = async (event, context) => {
     const GOOGLE_SHEETS_CREDENTIALS = process.env.GOOGLE_SHEETS_CREDENTIALS;
     const GOOGLE_SHEET_ID = process.env.GOOGLE_SHEET_ID;
 
+    console.log('GOOGLE_SHEET_ID exists:', !!GOOGLE_SHEET_ID);
+    console.log('GOOGLE_SHEETS_CREDENTIALS exists:', !!GOOGLE_SHEETS_CREDENTIALS);
+    console.log('GOOGLE_SHEETS_CREDENTIALS length:', GOOGLE_SHEETS_CREDENTIALS ? GOOGLE_SHEETS_CREDENTIALS.length : 0);
+
     if (GOOGLE_SHEETS_CREDENTIALS && GOOGLE_SHEET_ID) {
       try {
+        console.log('Parsing credentials...');
         const credentials = JSON.parse(GOOGLE_SHEETS_CREDENTIALS);
+        console.log('Credentials parsed, client_email:', credentials.client_email);
+
         const auth = new google.auth.GoogleAuth({
           credentials,
           scopes: ['https://www.googleapis.com/auth/spreadsheets']
         });
         const sheets = google.sheets({ version: 'v4', auth });
 
-        await sheets.spreadsheets.values.append({
+        console.log('Appending to sheet:', GOOGLE_SHEET_ID);
+        const result = await sheets.spreadsheets.values.append({
           spreadsheetId: GOOGLE_SHEET_ID,
           range: 'Sheet1!A:C',
           valueInputOption: 'USER_ENTERED',
@@ -69,10 +77,13 @@ exports.handler = async (event, context) => {
             values: [[email, timestamp, 'website']]
           }
         });
-        console.log('Added to Google Sheet:', email);
+        console.log('Added to Google Sheet:', email, 'Result:', JSON.stringify(result.data));
       } catch (sheetError) {
         console.error('Google Sheets error:', sheetError.message);
+        console.error('Full error:', JSON.stringify(sheetError, Object.getOwnPropertyNames(sheetError)));
       }
+    } else {
+      console.log('Skipping Google Sheets - credentials or sheet ID missing');
     }
 
     // Send confirmation email via Resend if configured

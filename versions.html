@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8WVQ32HLGS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8WVQ32HLGS');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Version History - Filtered App</title>
@@ -236,22 +245,73 @@
         <div class="version-card current">
             <div class="version-header">
                 <div class="version-title">
-                    <span class="version-number">v1.0.2</span>
+                    <span class="version-number">v1.0.6</span>
                     <span class="current-badge">Current</span>
                 </div>
                 <div style="text-align: right;">
-                    <div class="version-date">January 11, 2026</div>
-                    <div class="version-build">Build 9975653e</div>
+                    <div class="version-date">January 12, 2026</div>
+                    <div class="version-build">Local Build</div>
                 </div>
             </div>
             <ul class="feature-list">
-                <li><strong>Compact Task Dashboard</strong> - Redesigned as grouped to-do list by category (Requests, Questions, Proposals)</li>
-                <li><strong>Swipe to Complete</strong> - Swipe left on tasks to mark them done</li>
-                <li><strong>Accept Tasks</strong> - Tap checkbox to acknowledge/accept tasks</li>
-                <li><strong>Reply to Messages</strong> - Long-press to reply to specific messages with threading</li>
-                <li><strong>Task Summary Bar</strong> - See New/Accepted/Due Today counts at a glance</li>
+                <li><strong>Filter Toggle</strong> - Toggle filtering on/off per conversation from chat header</li>
+                <li><strong>Instant Messages</strong> - Messages appear immediately (shows "Processing..." until AI completes)</li>
+                <li><strong>Push Notifications Fix</strong> - Notifications now register properly on app launch</li>
+                <li><strong>Filter 2.0</strong> - Improved detection of gaslighting, manipulation, and hostile patterns</li>
+                <li><strong>Bug Fixes</strong> - Fixed error handling and state sync issues</li>
             </ul>
-            <a href="https://expo.dev/artifacts/eas/m8nd5egB1PXtQKxYgd3UZ1.apk" class="download-link">
+            <a href="/filtered-v1.0.6.apk" class="download-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download this version
+            </a>
+        </div>
+
+        <!-- Previous Version v1.0.5 -->
+        <div class="version-card">
+            <div class="version-header">
+                <div class="version-title">
+                    <span class="version-number">v1.0.5</span>
+                </div>
+                <div style="text-align: right;">
+                    <div class="version-date">January 11, 2026</div>
+                    <div class="version-build">Local Build</div>
+                </div>
+            </div>
+            <ul class="feature-list">
+                <li><strong>Add to Tasks</strong> - Long-press any message to add it to your task list</li>
+                <li><strong>Custom Task Text</strong> - Edit the task description when adding</li>
+                <li><strong>Smarter Tasks</strong> - Tasks show questions, requests, proposals, and manually added items</li>
+                <li><strong>Bug Fix</strong> - Fixed loading loop in chat</li>
+                <li><strong>Text Size Controls</strong> - Adjust message text size with +/- buttons</li>
+            </ul>
+            <a href="/filtered-v1.0.5.apk" class="download-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download this version
+            </a>
+        </div>
+
+        <!-- Previous Version v1.0.4 -->
+        <div class="version-card">
+            <div class="version-header">
+                <div class="version-title">
+                    <span class="version-number">v1.0.4</span>
+                </div>
+                <div style="text-align: right;">
+                    <div class="version-date">January 11, 2026</div>
+                    <div class="version-build">Local Build</div>
+                </div>
+            </div>
+            <ul class="feature-list">
+                <li><strong>In-App Messaging</strong> - Full chat experience within the app</li>
+                <li><strong>Compact Task Dashboard</strong> - Redesigned as grouped to-do list</li>
+                <li><strong>Swipe to Complete</strong> - Swipe left on tasks to mark them done</li>
+                <li><strong>Reply to Messages</strong> - Long-press to reply to specific messages</li>
+            </ul>
+            <a href="/filtered-v1.0.4.apk" class="download-link">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
