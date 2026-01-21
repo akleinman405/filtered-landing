@@ -543,636 +543,6 @@
             font-size: 16px;
         }
 
-        /* App Preview */
-        .app-preview {
-            padding: 80px 0 60px;
-            background: var(--gray-900);
-            color: white;
-            overflow: hidden;
-        }
-
-        .app-preview .section-header h2 {
-            color: white;
-        }
-
-        .app-preview .section-header p {
-            color: var(--gray-400);
-        }
-
-        .carousel-hint {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            color: var(--gray-400);
-            font-size: 14px;
-            margin-top: 24px;
-        }
-
-        .carousel-wrapper {
-            position: relative;
-        }
-
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 48px;
-            height: 48px;
-            background: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            z-index: 10;
-            transition: all 0.2s;
-        }
-
-        .carousel-nav:hover {
-            background: var(--primary-100);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .carousel-nav:active {
-            transform: translateY(-50%) scale(0.95);
-        }
-
-        .carousel-nav svg {
-            width: 24px;
-            height: 24px;
-            color: var(--primary-600);
-        }
-
-        .carousel-nav.prev {
-            left: 16px;
-        }
-
-        .carousel-nav.next {
-            right: 16px;
-        }
-
-        @media (max-width: 640px) {
-            .carousel-nav {
-                width: 44px;
-                height: 44px;
-            }
-            .carousel-nav svg {
-                width: 22px;
-                height: 22px;
-            }
-            .carousel-nav.prev {
-                left: 8px;
-            }
-            .carousel-nav.next {
-                right: 8px;
-            }
-        }
-
-        .preview-carousel {
-            margin-top: 32px;
-            overflow: hidden;
-            padding: 20px 0;
-        }
-
-        .preview-track {
-            display: flex;
-            gap: 24px;
-            padding: 0 max(24px, calc((100vw - 320px) / 2));
-            width: max-content;
-            transition: transform 0.3s ease;
-        }
-
-        .preview-card {
-            flex: 0 0 300px;
-            background: var(--gray-800);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: transform 0.3s;
-        }
-
-        .preview-card:hover {
-            transform: translateY(-4px);
-        }
-
-        .preview-screen {
-            background: white;
-            margin: 12px;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .screen-header {
-            background: var(--primary-600);
-            padding: 12px 16px;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .screen-header h4 {
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .shield-badge {
-            background: rgba(255,255,255,0.2);
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: 600;
-        }
-
-        .warning-header {
-            background: #F59E0B;
-        }
-
-        .screen-content {
-            padding: 12px;
-            min-height: 220px;
-        }
-
-        .mock-message {
-            background: var(--gray-50);
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            border-left: 3px solid var(--primary-500);
-        }
-
-        .mock-message.incoming {
-            border-left-color: var(--primary-500);
-        }
-
-        .mock-message.outgoing {
-            border-left-color: transparent;
-            background: var(--primary-50);
-            border-right: 3px solid var(--primary-400);
-            border-left: none;
-        }
-
-        .mock-category {
-            display: inline-block;
-            font-size: 9px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 4px;
-            margin-bottom: 6px;
-            letter-spacing: 0.5px;
-        }
-
-        .mock-category.request {
-            background: #DBEAFE;
-            color: #1D4ED8;
-        }
-
-        .mock-category.question {
-            background: #FEF3C7;
-            color: #B45309;
-        }
-
-        .mock-text {
-            font-size: 12px;
-            color: var(--gray-700);
-            line-height: 1.5;
-        }
-
-        .mock-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 8px;
-        }
-
-        .mock-time {
-            font-size: 10px;
-            color: var(--gray-400);
-        }
-
-        .mock-view-btn {
-            font-size: 10px;
-            color: var(--primary-600);
-            background: none;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .mock-sent {
-            font-size: 10px;
-            color: var(--primary-600);
-            font-weight: 500;
-        }
-
-        .mock-message-detail {
-            background: var(--gray-50);
-            border-radius: 12px;
-            padding: 14px;
-        }
-
-        .mock-summary-label {
-            font-size: 9px;
-            color: var(--gray-500);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 6px;
-        }
-
-        .mock-divider {
-            height: 1px;
-            background: var(--gray-200);
-            margin: 12px 0;
-        }
-
-        .mock-action-section {
-            margin-bottom: 12px;
-        }
-
-        .mock-action-label {
-            font-size: 10px;
-            font-weight: 600;
-            color: var(--gray-600);
-            margin-bottom: 6px;
-        }
-
-        .mock-action-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 6px;
-            font-size: 11px;
-            color: var(--gray-700);
-            margin-bottom: 4px;
-        }
-
-        .mock-checkbox {
-            color: var(--primary-500);
-        }
-
-        .mock-deadline {
-            font-size: 10px;
-            color: #DC2626;
-            font-weight: 500;
-            margin-top: 6px;
-        }
-
-        .mock-original-btn {
-            width: 100%;
-            background: var(--gray-200);
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--gray-600);
-            cursor: pointer;
-        }
-
-        .mock-warning-banner {
-            background: #FEF3C7;
-            padding: 10px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            font-size: 11px;
-            color: #92400E;
-        }
-
-        .mock-original-message {
-            background: #FEE2E2;
-            padding: 14px;
-            border-radius: 12px;
-            border-left: 3px solid #DC2626;
-            margin-bottom: 12px;
-        }
-
-        .original-text {
-            color: var(--gray-700);
-            font-style: italic;
-        }
-
-        .mock-hide-btn {
-            width: 100%;
-            background: var(--primary-600);
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-        }
-
-        .mock-stats-row {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .mock-stat-box {
-            flex: 1;
-            background: var(--primary-50);
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .mock-stat-box.urgent {
-            background: #FEE2E2;
-        }
-
-        .mock-stat-box.urgent .mock-stat-num {
-            color: #DC2626;
-        }
-
-        .mock-stat-num {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--primary-600);
-        }
-
-        .mock-stat-text {
-            font-size: 9px;
-            color: var(--gray-500);
-            margin-top: 2px;
-        }
-
-        .mock-task {
-            background: white;
-            border: 1px solid var(--gray-200);
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 8px;
-        }
-
-        .mock-task-text {
-            font-size: 12px;
-            color: var(--gray-700);
-            margin: 6px 0;
-        }
-
-        .mock-task-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .mock-task-deadline {
-            font-size: 10px;
-            color: #DC2626;
-        }
-
-        .mock-task-from {
-            font-size: 10px;
-            color: var(--gray-500);
-        }
-
-        .mock-respond-btn {
-            background: var(--primary-600);
-            color: white;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .mock-setting {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .mock-setting-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .mock-setting-label {
-            font-size: 13px;
-            color: var(--gray-700);
-            font-weight: 500;
-        }
-
-        .mock-setting-desc {
-            font-size: 10px;
-            color: var(--gray-500);
-        }
-
-        .mock-toggle {
-            width: 40px;
-            height: 22px;
-            background: var(--primary-500);
-            border-radius: 11px;
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .mock-toggle::after {
-            content: '';
-            position: absolute;
-            width: 18px;
-            height: 18px;
-            background: white;
-            border-radius: 50%;
-            top: 2px;
-            right: 2px;
-            transition: 0.2s;
-        }
-
-        .mock-toggle.off {
-            background: var(--gray-300);
-        }
-
-        .mock-toggle.off::after {
-            right: auto;
-            left: 2px;
-        }
-
-        .mock-confirm-dialog {
-            background: white;
-            border: 1px solid var(--gray-200);
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .mock-dialog-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--gray-800);
-            margin-bottom: 6px;
-        }
-
-        .mock-dialog-text {
-            font-size: 11px;
-            color: var(--gray-600);
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-
-        .mock-dialog-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .mock-cancel {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid var(--gray-300);
-            background: white;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 500;
-            color: var(--gray-600);
-            cursor: pointer;
-        }
-
-        .mock-confirm {
-            flex: 1;
-            padding: 8px;
-            border: none;
-            background: #DC2626;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-        }
-
-        .preview-label {
-            padding: 16px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .preview-step {
-            width: 28px;
-            height: 28px;
-            background: var(--primary-600);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .preview-label h4 {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .preview-label p {
-            font-size: 12px;
-            color: var(--gray-400);
-        }
-
-        .mock-stat-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .mock-stat {
-            background: var(--primary-50);
-            padding: 12px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .mock-stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-600);
-        }
-
-        .mock-stat-label {
-            font-size: 10px;
-            color: var(--gray-500);
-            margin-top: 2px;
-        }
-
-        .mock-alert {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #FEF3C7;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-
-        .mock-alert-icon {
-            width: 24px;
-            height: 24px;
-            background: #F59E0B;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .mock-alert-text {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .mock-alert-text strong {
-            font-size: 12px;
-            color: var(--gray-800);
-        }
-
-        .mock-alert-text span {
-            font-size: 10px;
-            color: var(--gray-500);
-        }
-
-        .mock-recent {
-            background: var(--gray-50);
-            padding: 10px;
-            border-radius: 8px;
-        }
-
-        .mock-recent-label {
-            font-size: 10px;
-            color: var(--gray-500);
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .mock-recent-item {
-            font-size: 11px;
-            color: var(--gray-600);
-            padding: 4px 0;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .mock-recent-item:last-child {
-            border-bottom: none;
-        }
-
         /* Waitlist */
         .waitlist {
             padding: 80px 0;
@@ -1246,108 +616,6 @@
         .waitlist-note {
             color: rgba(255,255,255,0.7);
             font-size: 13px;
-        }
-
-        /* How It Works */
-        .how-it-works {
-            padding: 80px 0;
-            background: var(--gray-50);
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 32px;
-        }
-
-        .step {
-            text-align: center;
-        }
-
-        .step-number {
-            width: 48px;
-            height: 48px;
-            background: var(--primary-600);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: 700;
-            margin: 0 auto 16px;
-        }
-
-        .step h3 {
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--gray-900);
-            margin-bottom: 8px;
-        }
-
-        .step p {
-            font-size: 14px;
-            color: var(--gray-600);
-        }
-
-        /* Security Section */
-        .security {
-            padding: 80px 0;
-            background: var(--gray-900);
-            color: white;
-        }
-
-        .security .section-header h2 {
-            color: white;
-        }
-
-        .security .section-header p {
-            color: var(--gray-300);
-        }
-
-        .security-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            margin-top: 48px;
-        }
-
-        .security-card {
-            background: var(--gray-800);
-            border-radius: 16px;
-            padding: 32px;
-            text-align: center;
-            border: 1px solid var(--gray-700);
-        }
-
-        .security-card .security-icon {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 24px;
-            background: var(--primary-600);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .security-card .security-icon svg {
-            width: 32px;
-            height: 32px;
-            color: white;
-        }
-
-        .security-card h3 {
-            font-size: 20px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 12px;
-        }
-
-        .security-card p {
-            font-size: 15px;
-            color: var(--gray-400);
-            line-height: 1.6;
         }
 
         /* Pricing */
@@ -2013,60 +1281,10 @@
                 gap: 24px;
             }
 
-            .security-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
-        /* Responsive - Mobile */
-        @media (max-width: 640px) {
-            .features-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-
-            .feature-card {
-                padding: 24px;
-            }
-
-            .security-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-
-            .security-card {
-                padding: 24px;
-            }
-
-            .security-card .security-icon {
-                width: 56px;
-                height: 56px;
-                margin-bottom: 20px;
-            }
-
-            .security-card .security-icon svg {
-                width: 28px;
-                height: 28px;
-            }
-
-            .security-card h3 {
-                font-size: 18px;
-            }
-
-            .security-card p {
-                font-size: 14px;
-            }
-
-            .preview-grid {
-                grid-template-columns: 1fr;
-                max-width: 350px;
-                margin: 48px auto 0;
-            }
-
-            .steps {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
+        /* Responsive - Tablet/Mobile Navigation (1024px breakpoint for cleaner tablet experience) */
+        @media (max-width: 1024px) {
             .nav-links {
                 display: none;
                 position: absolute;
@@ -2105,6 +1323,18 @@
 
             nav {
                 position: relative;
+            }
+        }
+
+        /* Responsive - Mobile */
+        @media (max-width: 640px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .feature-card {
+                padding: 24px;
             }
 
             .nav-cta {
@@ -2172,7 +1402,6 @@
 
             /* Sections Mobile */
             .features,
-            .how-it-works,
             .pricing,
             .sms-consent {
                 padding: 60px 0;
@@ -2217,33 +1446,6 @@
                 font-size: 15px;
             }
 
-            /* App Preview Mobile */
-            .app-preview {
-                padding: 60px 0;
-            }
-
-            .preview-grid {
-                max-width: 100%;
-                gap: 24px;
-            }
-
-            .preview-card {
-                border-radius: 20px;
-            }
-
-            .preview-screen {
-                margin: 12px;
-                border-radius: 16px;
-            }
-
-            .screen-content {
-                min-height: 180px;
-            }
-
-            .preview-label h4 {
-                font-size: 15px;
-            }
-
             /* Waitlist Mobile */
             .waitlist {
                 padding: 60px 0;
@@ -2263,28 +1465,6 @@
 
             .waitlist-form button {
                 width: 100%;
-            }
-
-            /* How It Works Mobile */
-            .steps {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-
-            .step {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .step-number {
-                width: 44px;
-                height: 44px;
-                font-size: 18px;
-            }
-
-            .step h3 {
-                font-size: 17px;
             }
 
             /* FAQ Mobile */
@@ -2459,14 +1639,6 @@
                 transform: scale(0.98);
             }
 
-            .preview-card:hover {
-                transform: none;
-            }
-
-            .preview-card:active {
-                transform: scale(0.98);
-            }
-
             .sms-link-button:active {
                 background: var(--primary-600);
                 color: white;
@@ -2515,6 +1687,34 @@
             width: 20px;
             height: 20px;
             color: var(--primary-600);
+        }
+
+        .demo-shield-badge {
+            margin-left: auto;
+            background: var(--primary-100);
+            color: var(--primary-700);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        .demo-result-panel .demo-panel-header {
+            background: var(--primary-600);
+            border-bottom: none;
+        }
+
+        .demo-result-panel .demo-panel-header h3 {
+            color: white;
+        }
+
+        .demo-result-panel .demo-panel-header h3 svg {
+            color: white;
+        }
+
+        .demo-result-panel .demo-shield-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
         }
 
         .demo-panel-content {
@@ -2721,26 +1921,33 @@
             display: block;
         }
 
-        /* Idle State */
+        /* Idle State - App-like styling */
+        .demo-result-panel .demo-result-idle {
+            background: #F5F1EB;
+            border-radius: 12px;
+            margin: 0;
+        }
+
         .demo-idle-content {
             text-align: center;
             padding: 48px 24px;
         }
 
         .demo-idle-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--primary-100);
+            width: 72px;
+            height: 72px;
+            background: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         }
 
         .demo-idle-icon svg {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             color: var(--primary-600);
         }
 
@@ -2754,34 +1961,42 @@
         .demo-idle-content p {
             font-size: 14px;
             color: var(--gray-500);
+            max-width: 280px;
+            margin: 0 auto;
         }
 
-        /* Loading State */
+        /* Loading State - App-like styling */
+        .demo-result-panel .demo-result-loading {
+            background: #F5F1EB;
+            border-radius: 12px;
+        }
+
         .demo-loading-content {
             text-align: center;
             padding: 48px 24px;
         }
 
         .demo-loading-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--primary-100);
+            width: 72px;
+            height: 72px;
+            background: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             animation: shieldPulse 1.5s ease-in-out infinite;
         }
 
         @keyframes shieldPulse {
             0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 0.9; }
         }
 
         .demo-loading-icon svg {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             color: var(--primary-600);
         }
 
@@ -2822,9 +2037,18 @@
             height: 16px;
         }
 
-        /* Result Display */
+        /* Result Display - App-like styling */
+        .demo-result-panel .demo-panel-content {
+            background: #F5F1EB; /* Cream background like the app */
+            padding: 20px;
+        }
+
         .demo-result-card {
             animation: fadeInUp 0.4s ease-out;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
         }
 
         @keyframes fadeInUp {
@@ -2838,44 +2062,75 @@
             }
         }
 
-        /* Badges Row */
+        /* Badges Row - Category first, then mood */
         .demo-badges-row {
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 12px;
             margin-bottom: 16px;
         }
 
-        /* Mood Badge */
-        .demo-mood-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
+        /* Category Badge - Prominent like the app */
+        .demo-category-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            order: -1; /* Category comes first */
         }
 
-        .demo-mood-badge.hostile {
-            background: #FEE2E2;
-            color: #DC2626;
+        .demo-category-badge.request {
+            background-color: #DBEAFE;
+            color: #1D4ED8;
         }
 
-        .demo-mood-badge.tense {
-            background: #FEF3C7;
+        .demo-category-badge.question {
+            background-color: #F0FDFA;
+            color: #0F766E;
+        }
+
+        .demo-category-badge.proposal {
+            background-color: #FFFBEB;
             color: #B45309;
         }
 
-        .demo-mood-badge.neutral {
-            background: #E0F2FE;
-            color: #0369A1;
+        .demo-category-badge.statement {
+            background-color: #E5E7EB;
+            color: #374151;
         }
 
-        .demo-mood-badge.calm {
-            background: #D1FAE5;
-            color: #047857;
+        .demo-category-badge.personal {
+            background-color: #F3E8FF;
+            color: #7C3AED;
+        }
+
+        .demo-category-badge.emergency {
+            background-color: #FEE2E2;
+            color: #DC2626;
+            font-weight: 700;
+            animation: emergency-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes emergency-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Mood Badge - Smaller, with colored dot like app */
+        .demo-mood-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            background: white;
+            border: 1px solid var(--gray-200);
         }
 
         .demo-mood-icon {
@@ -2886,71 +2141,40 @@
         }
 
         .demo-mood-badge.hostile .demo-mood-icon {
-            background-color: #DC2626;
+            background-color: #EF4444;
+        }
+        .demo-mood-badge.hostile .demo-mood-text {
+            color: #EF4444;
         }
 
-        .demo-mood-badge.tense .demo-mood-icon {
+        .demo-mood-badge.tense .demo-mood-icon,
+        .demo-mood-badge.frustrated .demo-mood-icon {
             background-color: #F59E0B;
+        }
+        .demo-mood-badge.tense .demo-mood-text,
+        .demo-mood-badge.frustrated .demo-mood-text {
+            color: #D97706;
         }
 
         .demo-mood-badge.neutral .demo-mood-icon {
-            background-color: #9CA3AF;
+            background-color: #10B981;
+        }
+        .demo-mood-badge.neutral .demo-mood-text {
+            color: #059669;
         }
 
         .demo-mood-badge.calm .demo-mood-icon {
             background-color: #10B981;
         }
-
-        /* Category Badge */
-        .demo-category-badge {
-            display: inline-block;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 4px;
-            margin-left: 12px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            border-width: 1px;
-            border-style: solid;
+        .demo-mood-badge.calm .demo-mood-text {
+            color: #059669;
         }
 
-        .demo-category-badge.request {
-            background-color: var(--primary-50);
-            color: var(--primary-700);
-            border-color: var(--primary-200);
+        .demo-mood-badge.abusive .demo-mood-icon {
+            background-color: #DC2626;
         }
-
-        .demo-category-badge.question {
-            background-color: #F0FDFA;
-            color: #0F766E;
-            border-color: #CCFBF1;
-        }
-
-        .demo-category-badge.proposal {
-            background-color: #FFFBEB;
-            color: #B45309;
-            border-color: #FEF3C7;
-        }
-
-        .demo-category-badge.statement,
-        .demo-category-badge.personal {
-            background-color: var(--gray-100);
-            color: var(--gray-600);
-            border-color: var(--gray-200);
-        }
-
-        .demo-category-badge.emergency {
-            background-color: #FEE2E2;
+        .demo-mood-badge.abusive .demo-mood-text {
             color: #DC2626;
-            border-color: #FECACA;
-            font-weight: 700;
-            animation: emergency-pulse 1.5s ease-in-out infinite;
-        }
-
-        @keyframes emergency-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
         }
 
         /* Summary Section */
@@ -2960,7 +2184,7 @@
 
         .demo-section-label {
             font-size: 11px;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--gray-500);
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -2968,10 +2192,9 @@
         }
 
         .demo-summary-text {
-            background: var(--gray-50);
+            background: #F9FAFB;
             padding: 16px;
-            border-radius: 16px 16px 16px 4px;
-            border-left: 4px solid var(--primary-500);
+            border-radius: 12px;
             font-size: 15px;
             line-height: 1.6;
             color: var(--gray-700);
@@ -2982,18 +2205,17 @@
             list-style: none;
             margin: 0;
             padding: 16px;
-            background: var(--gray-50);
-            border-radius: 16px 16px 16px 4px;
-            border-left: 4px solid var(--primary-500);
+            background: #F9FAFB;
+            border-radius: 12px;
         }
 
         .demo-bullet-item {
             display: flex;
             align-items: flex-start;
             gap: 10px;
-            padding: 10px 0;
+            padding: 8px 0;
             font-size: 15px;
-            line-height: 1.6;
+            line-height: 1.5;
             color: var(--gray-700);
         }
 
@@ -3059,38 +2281,42 @@
             margin-left: 8px;
         }
 
-        /* Suggested Responses */
+        /* Suggested Responses - App-like chips */
         .demo-responses-section {
             margin-bottom: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #E5E7EB;
         }
 
         .demo-response-options {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
         .demo-response-option {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 10px;
-            padding: 12px 16px;
-            background: var(--primary-50);
-            border: 2px solid var(--primary-200);
-            border-radius: 10px;
+            padding: 14px 16px;
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .demo-response-option:hover {
-            background: var(--primary-100);
+            background: #F0FDFA;
             border-color: var(--primary-400);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(13, 148, 136, 0.1);
         }
 
         .demo-response-option:focus {
             outline: none;
             border-color: var(--primary-500);
-            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
         }
 
         .demo-response-icon {
@@ -3100,72 +2326,79 @@
         .demo-ai-badge {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            padding: 4px 8px;
+            gap: 3px;
+            padding: 3px 8px;
             background: var(--primary-600);
             color: white;
-            border-radius: 6px;
-            font-size: 11px;
+            border-radius: 4px;
+            font-size: 10px;
             font-weight: 700;
             flex-shrink: 0;
+            letter-spacing: 0.3px;
         }
 
         .demo-ai-badge svg {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
         }
 
         .demo-response-text {
             font-size: 14px;
             color: var(--gray-700);
-            line-height: 1.4;
+            line-height: 1.5;
+            flex: 1;
         }
 
-        /* Original Message Toggle */
+        /* Original Message Toggle - App-like styling */
         .demo-original-section {
-            border-top: 1px solid var(--gray-200);
-            padding-top: 20px;
+            padding-top: 16px;
+            margin-top: 16px;
+            border-top: 1px solid #E5E7EB;
         }
 
         .demo-original-toggle {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 8px;
             width: 100%;
             padding: 12px 16px;
-            background: var(--gray-100);
-            border: 1px solid var(--gray-200);
-            border-radius: 10px;
+            background: white;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
         }
 
         .demo-original-toggle:hover {
-            background: var(--gray-200);
+            background: #F9FAFB;
+            border-color: var(--gray-400);
         }
 
         .demo-original-toggle:focus {
             outline: none;
             border-color: var(--primary-500);
-            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
         }
 
         .demo-original-toggle-text {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--gray-600);
         }
 
         .demo-original-toggle-text svg {
             width: 18px;
             height: 18px;
+            color: var(--gray-500);
         }
 
         .demo-original-toggle-arrow {
             transition: transform 0.2s;
+            color: var(--gray-400);
         }
 
         .demo-original-toggle[aria-expanded="true"] .demo-original-toggle-arrow {
@@ -3187,11 +2420,12 @@
             align-items: center;
             gap: 8px;
             background: #FEF3C7;
-            padding: 10px 14px;
+            padding: 12px 14px;
             border-radius: 8px;
             margin-bottom: 12px;
             font-size: 13px;
             color: #92400E;
+            font-weight: 500;
         }
 
         .demo-original-message {
@@ -3376,11 +2610,8 @@
             <ul class="nav-links" id="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#demo">Try Demo</a></li>
-                <li><a href="#app-preview">App Preview</a></li>
-                <li><a href="/blog/">Blog</a></li>
-                <li><a href="#faq">FAQ</a></li>
                 <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#faq">FAQ</a></li>
             </ul>
             <div class="nav-right">
                 <a href="#waitlist" class="nav-cta">Get Early Access</a>
@@ -3479,9 +2710,6 @@
                     <p>All messages are timestamped and stored for 2 years. Export to PDF anytime for legal proceedings or custody disputes.</p>
                 </div>
             </div>
-            <div class="section-cta">
-                <a href="#waitlist" class="cta-button-outline">Get Early Access</a>
-            </div>
         </div>
     </section>
 
@@ -3568,7 +2796,8 @@
                             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                             </svg>
-                            Filtered Result
+                            Your Phone
+                            <span class="demo-shield-badge">Shield On</span>
                         </h3>
                     </div>
                     <div class="demo-panel-content">
@@ -3741,309 +2970,6 @@
         </div>
     </section>
 
-    <!-- App Preview -->
-    <section class="app-preview" id="app-preview">
-        <div class="container">
-            <div class="section-header">
-                <h2>See Filtered in Action</h2>
-                <p>Swipe through to see how Filtered protects your peace while keeping you informed.</p>
-            </div>
-            <div class="carousel-hint">
-                <span>Use arrows to explore</span>
-            </div>
-        </div>
-        <div class="carousel-wrapper">
-            <button class="carousel-nav prev" id="carousel-prev" aria-label="Previous slide">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M15 18l-6-6 6-6"/>
-                </svg>
-            </button>
-            <button class="carousel-nav next" id="carousel-next" aria-label="Next slide">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 18l6-6-6-6"/>
-                </svg>
-            </button>
-            <div class="preview-carousel" id="preview-carousel">
-            <div class="preview-track">
-                <!-- Screen 1: Filtered Message -->
-                <div class="preview-card">
-                    <div class="preview-screen">
-                        <div class="screen-header">
-                            <h4>Messages from Alex</h4>
-                            <span class="shield-badge">Shield On</span>
-                        </div>
-                        <div class="screen-content">
-                            <div class="mock-message incoming">
-                                <div class="mock-category request">REQUEST</div>
-                                <div class="mock-text">"Asking to switch pickup from Saturday 3pm to Sunday 10am due to a work conflict."</div>
-                                <div class="mock-meta">
-                                    <span class="mock-time">Today, 2:34 PM</span>
-                                    <button class="mock-view-btn">View Original</button>
-                                </div>
-                            </div>
-                            <div class="mock-message outgoing">
-                                <div class="mock-text">"Sunday at 10am works for me. I'll have them ready."</div>
-                                <div class="mock-meta">
-                                    <span class="mock-time">Today, 3:15 PM</span>
-                                    <span class="mock-sent">Sent ✓</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="preview-label">
-                        <div class="preview-step">1</div>
-                        <h4>Filtered Messages</h4>
-                        <p>AI removes hostility, shows just the facts</p>
-                    </div>
-                </div>
-
-                <!-- Screen 2: View Original Option -->
-                <div class="preview-card">
-                    <div class="preview-screen">
-                        <div class="screen-header">
-                            <h4>Message Details</h4>
-                        </div>
-                        <div class="screen-content">
-                            <div class="mock-message-detail">
-                                <div class="mock-category request">REQUEST</div>
-                                <div class="mock-summary-label">AI Summary</div>
-                                <div class="mock-text">"Asking to switch pickup from Saturday 3pm to Sunday 10am due to a work conflict."</div>
-                                <div class="mock-divider"></div>
-                                <div class="mock-action-section">
-                                    <div class="mock-action-label">Action Required</div>
-                                    <div class="mock-action-item">
-                                        <span class="mock-checkbox">☐</span>
-                                        <span>Confirm or decline schedule change</span>
-                                    </div>
-                                    <div class="mock-deadline">Deadline: Saturday 3pm</div>
-                                </div>
-                                <button class="mock-original-btn">View Original Message</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="preview-label">
-                        <div class="preview-step">2</div>
-                        <h4>Tap for Details</h4>
-                        <p>See action items and choose to view original</p>
-                    </div>
-                </div>
-
-                <!-- Screen 3: Original Revealed with Warning -->
-                <div class="preview-card">
-                    <div class="preview-screen">
-                        <div class="screen-header warning-header">
-                            <h4>Original Message</h4>
-                        </div>
-                        <div class="screen-content">
-                            <div class="mock-warning-banner">
-                                <span class="warning-icon">⚠️</span>
-                                <span>Unfiltered content may be upsetting</span>
-                            </div>
-                            <div class="mock-original-message">
-                                <div class="mock-text original-text">"I NEED to switch Saturday to Sunday because ONCE AGAIN my work scheduled me and you always make everything so difficult. It's not like you have anything important to do anyway. Just have them ready at 10. This shouldn't even be a discussion."</div>
-                            </div>
-                            <button class="mock-hide-btn">Hide Original</button>
-                        </div>
-                    </div>
-                    <div class="preview-label">
-                        <div class="preview-step">3</div>
-                        <h4>Original If Needed</h4>
-                        <p>Always available for context or legal records</p>
-                    </div>
-                </div>
-
-                <!-- Screen 4: Dashboard with Tasks -->
-                <div class="preview-card">
-                    <div class="preview-screen">
-                        <div class="screen-header">
-                            <h4>Dashboard</h4>
-                        </div>
-                        <div class="screen-content" style="padding: 12px;">
-                            <div class="mock-stats-row">
-                                <div class="mock-stat-box">
-                                    <div class="mock-stat-num">2</div>
-                                    <div class="mock-stat-text">Unread</div>
-                                </div>
-                                <div class="mock-stat-box urgent">
-                                    <div class="mock-stat-num">1</div>
-                                    <div class="mock-stat-text">Due Today</div>
-                                </div>
-                                <div class="mock-stat-box">
-                                    <div class="mock-stat-num">3</div>
-                                    <div class="mock-stat-text">Open</div>
-                                </div>
-                            </div>
-                            <div class="mock-task">
-                                <div class="mock-category request">REQUEST</div>
-                                <div class="mock-task-text">Confirm schedule change to Sunday 10am</div>
-                                <div class="mock-task-meta">
-                                    <span class="mock-task-deadline">⏰ Due: Saturday</span>
-                                    <button class="mock-respond-btn">Respond</button>
-                                </div>
-                            </div>
-                            <div class="mock-task">
-                                <div class="mock-category question">QUESTION</div>
-                                <div class="mock-task-text">Which doctor for Emma's checkup?</div>
-                                <div class="mock-task-meta">
-                                    <span class="mock-task-from">From Alex</span>
-                                    <button class="mock-respond-btn">Respond</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="preview-label">
-                        <div class="preview-step">4</div>
-                        <h4>Task Dashboard</h4>
-                        <p>Requests & questions that need your response</p>
-                    </div>
-                </div>
-
-                <!-- Screen 5: Settings -->
-                <div class="preview-card">
-                    <div class="preview-screen">
-                        <div class="screen-header">
-                            <h4>Message Display</h4>
-                        </div>
-                        <div class="screen-content">
-                            <div class="mock-setting">
-                                <div class="mock-setting-info">
-                                    <span class="mock-setting-label">Shield Mode</span>
-                                    <span class="mock-setting-desc">Hide mood indicators</span>
-                                </div>
-                                <div class="mock-toggle"></div>
-                            </div>
-                            <div class="mock-setting">
-                                <div class="mock-setting-info">
-                                    <span class="mock-setting-label">Show Original Messages</span>
-                                    <span class="mock-setting-desc">Display unfiltered content</span>
-                                </div>
-                                <div class="mock-toggle off"></div>
-                            </div>
-                            <div class="mock-confirm-dialog">
-                                <div class="mock-dialog-title">Are you sure?</div>
-                                <div class="mock-dialog-text">Original messages may contain hostile, manipulative, or upsetting content.</div>
-                                <div class="mock-dialog-buttons">
-                                    <button class="mock-cancel">Cancel</button>
-                                    <button class="mock-confirm">Enable</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="preview-label">
-                        <div class="preview-step">5</div>
-                        <h4>You're In Control</h4>
-                        <p>Choose how much you want to see</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </section>
-    <script>
-        // Carousel navigation with loop (using transform)
-        document.addEventListener('DOMContentLoaded', function() {
-            const track = document.querySelector('.preview-track');
-            const prevBtn = document.getElementById('carousel-prev');
-            const nextBtn = document.getElementById('carousel-next');
-            const cardWidth = 324; // 300px card + 24px gap
-            const totalCards = 5;
-            let currentIndex = 0;
-
-            function updatePosition() {
-                track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-            }
-
-            prevBtn.addEventListener('click', function() {
-                if (currentIndex <= 0) {
-                    currentIndex = totalCards - 1; // Loop to end
-                } else {
-                    currentIndex--;
-                }
-                updatePosition();
-            });
-
-            nextBtn.addEventListener('click', function() {
-                if (currentIndex >= totalCards - 1) {
-                    currentIndex = 0; // Loop to start
-                } else {
-                    currentIndex++;
-                }
-                updatePosition();
-            });
-        });
-    </script>
-
-    <!-- How It Works -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <div class="section-header">
-                <h2>How Filtered Works</h2>
-                <p>Simple setup, powerful protection. Start filtering in minutes.</p>
-            </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Sign Up</h3>
-                    <p>Create your account and set up your profile in the Filtered app.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Connect</h3>
-                    <p>Invite your co-parent to join Filtered. They'll create their own account.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Communicate</h3>
-                    <p>All messages go through the app. Your view is filtered; theirs is normal.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>Stay Protected</h3>
-                    <p>AI filters hostile content before you see it. Respond when ready.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Security & Privacy -->
-    <section class="security" id="security">
-        <div class="container">
-            <div class="section-header">
-                <h2>Your Privacy, Protected</h2>
-                <p>Enterprise-grade security designed for sensitive family communications.</p>
-            </div>
-            <div class="security-grid">
-                <div class="security-card">
-                    <div class="security-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <h3>End-to-End Encrypted</h3>
-                    <p>All messages are encrypted using AES-256, the same standard used by banks and governments. Your conversations stay private.</p>
-                </div>
-                <div class="security-card">
-                    <div class="security-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                    </div>
-                    <h3>Private by Design</h3>
-                    <p>We never sell your data. You control who sees your messages. Messages are stored encrypted and only you can access them.</p>
-                </div>
-                <div class="security-card">
-                    <div class="security-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                    </div>
-                    <h3>2-Year Legal Hold</h3>
-                    <p>All original messages are retained for 2 years for court documentation. Export to PDF with timestamps anytime you need them.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Pricing -->
     <section class="pricing" id="pricing">
         <div class="container">
@@ -4164,48 +3090,6 @@
         </div>
     </section>
 
-    <!-- Key Concerns / Objection Handling -->
-    <section class="concerns" id="concerns">
-        <div class="container">
-            <div class="section-header">
-                <h2>Your Questions, Answered</h2>
-                <p>We know you have important concerns. Here's what you need to know.</p>
-            </div>
-            <div class="concerns-grid">
-                <div class="concern-card">
-                    <div class="concern-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                    </div>
-                    <h3>Can I Use Messages in Court?</h3>
-                    <p>Absolutely. All original messages are securely stored and accessible anytime. Export them as timestamped PDFs for legal documentation. We retain messages for 2 years for custody proceedings.</p>
-                    <div class="concern-highlight">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Court-Ready Documentation
-                    </div>
-                </div>
-                <div class="concern-card">
-                    <div class="concern-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                        </svg>
-                    </div>
-                    <h3>What About Emergencies?</h3>
-                    <p>Our AI is trained to detect urgent situations involving your children's safety, health, or immediate needs. Emergency messages are flagged and delivered immediately, even if they contain hostile language.</p>
-                    <div class="concern-highlight">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Never Miss What Matters
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- FAQ Section -->
     <section class="faq" id="faq">
         <div class="container">
@@ -4246,10 +3130,6 @@
                     <summary>Is my data secure?</summary>
                     <p>Absolutely. All messages are encrypted at rest (AES-256) and in transit (TLS 1.3). We never sell your data. See our <a href="/privacy.html">Privacy Policy</a> for details.</p>
                 </details>
-            </div>
-            <div class="section-cta">
-                <p class="cta-subtext">Ready to protect your peace?</p>
-                <a href="#waitlist" class="cta-button">Get Early Access</a>
             </div>
         </div>
     </section>
