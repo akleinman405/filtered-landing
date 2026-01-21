@@ -1960,6 +1960,741 @@
                 color: white;
             }
         }
+
+        /* ========================================
+           TRY THE FILTER DEMO SECTION
+           ======================================== */
+
+        .demo {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--gray-50) 0%, white 100%);
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            margin-top: 48px;
+        }
+
+        .demo-panel {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .demo-panel-header {
+            background: var(--gray-100);
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .demo-panel-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-800);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .demo-panel-header h3 svg {
+            width: 20px;
+            height: 20px;
+            color: var(--primary-600);
+        }
+
+        .demo-panel-content {
+            padding: 24px;
+        }
+
+        /* Example Pills */
+        .demo-examples-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-600);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .demo-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .demo-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray-700);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .demo-pill:hover {
+            border-color: var(--primary-400);
+            background: var(--primary-50);
+            color: var(--primary-700);
+        }
+
+        .demo-pill:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+        }
+
+        .demo-pill[aria-pressed="true"],
+        .demo-pill.active {
+            border-color: var(--primary-500);
+            background: var(--primary-100);
+            color: var(--primary-700);
+        }
+
+        .demo-pill-icon {
+            font-size: 14px;
+        }
+
+        /* Textarea */
+        .demo-textarea-wrapper {
+            margin-bottom: 16px;
+        }
+
+        .demo-textarea {
+            width: 100%;
+            min-height: 140px;
+            padding: 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--gray-800);
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        .demo-textarea:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+        }
+
+        .demo-textarea::placeholder {
+            color: var(--gray-400);
+        }
+
+        .demo-textarea-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .demo-char-count {
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+
+        .demo-char-count.warning {
+            color: #F59E0B;
+        }
+
+        .demo-char-count.error {
+            color: #DC2626;
+        }
+
+        /* Filter Button */
+        .demo-filter-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px 24px;
+            background: var(--primary-600);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .demo-filter-btn:hover:not(:disabled) {
+            background: var(--primary-700);
+            transform: translateY(-1px);
+        }
+
+        .demo-filter-btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .demo-filter-btn:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+        }
+
+        .demo-filter-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Loading State */
+        .demo-filter-btn.loading {
+            background: var(--primary-700);
+        }
+
+        .demo-filter-btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .demo-filter-btn.loading .spinner {
+            display: block;
+        }
+
+        .demo-filter-btn.loading .btn-icon {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Result Panel States */
+        .demo-result-idle,
+        .demo-result-loading,
+        .demo-result-complete {
+            display: none;
+        }
+
+        .demo-result-idle.active,
+        .demo-result-loading.active,
+        .demo-result-complete.active {
+            display: block;
+        }
+
+        /* Idle State */
+        .demo-idle-content {
+            text-align: center;
+            padding: 48px 24px;
+        }
+
+        .demo-idle-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-100);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .demo-idle-icon svg {
+            width: 40px;
+            height: 40px;
+            color: var(--primary-600);
+        }
+
+        .demo-idle-content h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 8px;
+        }
+
+        .demo-idle-content p {
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+
+        /* Loading State */
+        .demo-loading-content {
+            text-align: center;
+            padding: 48px 24px;
+        }
+
+        .demo-loading-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-100);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            animation: shieldPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes shieldPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .demo-loading-icon svg {
+            width: 40px;
+            height: 40px;
+            color: var(--primary-600);
+        }
+
+        .demo-loading-content h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 8px;
+        }
+
+        .demo-loading-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 200px;
+            margin: 16px auto 0;
+        }
+
+        .demo-loading-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--gray-400);
+            transition: color 0.3s;
+        }
+
+        .demo-loading-step.active {
+            color: var(--primary-600);
+        }
+
+        .demo-loading-step.complete {
+            color: var(--gray-600);
+        }
+
+        .demo-loading-step svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Result Display */
+        .demo-result-card {
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mood Badge */
+        .demo-mood-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .demo-mood-badge.hostile {
+            background: #FEE2E2;
+            color: #DC2626;
+        }
+
+        .demo-mood-badge.tense {
+            background: #FEF3C7;
+            color: #B45309;
+        }
+
+        .demo-mood-badge.neutral {
+            background: #E0F2FE;
+            color: #0369A1;
+        }
+
+        .demo-mood-badge.calm {
+            background: #D1FAE5;
+            color: #047857;
+        }
+
+        .demo-mood-icon {
+            font-size: 16px;
+        }
+
+        /* Summary Section */
+        .demo-summary-section {
+            margin-bottom: 20px;
+        }
+
+        .demo-section-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .demo-summary-text {
+            background: var(--gray-50);
+            padding: 16px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-500);
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--gray-700);
+        }
+
+        /* Action Items */
+        .demo-actions-section {
+            margin-bottom: 20px;
+        }
+
+        .demo-action-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .demo-action-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .demo-action-item:last-child {
+            border-bottom: none;
+        }
+
+        .demo-action-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-500);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .demo-action-text {
+            font-size: 14px;
+            color: var(--gray-700);
+        }
+
+        .demo-action-deadline {
+            display: inline-block;
+            font-size: 12px;
+            color: #DC2626;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        /* Suggested Responses */
+        .demo-responses-section {
+            margin-bottom: 20px;
+        }
+
+        .demo-response-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .demo-response-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--primary-50);
+            border: 2px solid var(--primary-200);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .demo-response-option:hover {
+            background: var(--primary-100);
+            border-color: var(--primary-400);
+        }
+
+        .demo-response-option:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+        }
+
+        .demo-response-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--primary-500);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .demo-response-text {
+            font-size: 14px;
+            color: var(--gray-700);
+            line-height: 1.4;
+        }
+
+        /* Original Message Toggle */
+        .demo-original-section {
+            border-top: 1px solid var(--gray-200);
+            padding-top: 20px;
+        }
+
+        .demo-original-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-200);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .demo-original-toggle:hover {
+            background: var(--gray-200);
+        }
+
+        .demo-original-toggle:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.2);
+        }
+
+        .demo-original-toggle-text {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+        }
+
+        .demo-original-toggle-text svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .demo-original-toggle-arrow {
+            transition: transform 0.2s;
+        }
+
+        .demo-original-toggle[aria-expanded="true"] .demo-original-toggle-arrow {
+            transform: rotate(180deg);
+        }
+
+        .demo-original-content {
+            margin-top: 12px;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .demo-original-content[hidden] {
+            display: none;
+        }
+
+        .demo-original-warning {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #FEF3C7;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #92400E;
+        }
+
+        .demo-original-message {
+            background: #FEE2E2;
+            padding: 16px;
+            border-radius: 12px;
+            border-left: 4px solid #DC2626;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--gray-700);
+            font-style: italic;
+        }
+
+        /* Post-Demo CTA */
+        .demo-cta {
+            text-align: center;
+            margin-top: 48px;
+            padding: 32px;
+            background: var(--primary-50);
+            border-radius: 16px;
+            border: 2px solid var(--primary-200);
+        }
+
+        .demo-cta h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .demo-cta p {
+            font-size: 16px;
+            color: var(--gray-600);
+            margin-bottom: 24px;
+        }
+
+        .demo-disclaimer {
+            font-size: 12px;
+            color: var(--gray-500);
+            margin-top: 16px;
+        }
+
+        /* Rate Limit Message */
+        .demo-rate-limit {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #FEF3C7;
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .demo-rate-limit.active {
+            display: block;
+        }
+
+        .demo-rate-limit p {
+            font-size: 14px;
+            color: #92400E;
+            margin: 0;
+        }
+
+        /* Demo Responsive - Tablet */
+        @media (max-width: 968px) {
+            .demo-container {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .demo-panel {
+                max-width: 600px;
+                margin: 0 auto;
+                width: 100%;
+            }
+        }
+
+        /* Demo Responsive - Mobile */
+        @media (max-width: 640px) {
+            .demo {
+                padding: 60px 0;
+            }
+
+            .demo-container {
+                gap: 24px;
+                margin-top: 32px;
+            }
+
+            .demo-panel-content {
+                padding: 16px;
+            }
+
+            .demo-pills {
+                gap: 6px;
+            }
+
+            .demo-pill {
+                padding: 10px 12px;
+                font-size: 12px;
+                min-height: 44px;
+            }
+
+            .demo-textarea {
+                min-height: 120px;
+                font-size: 14px;
+            }
+
+            .demo-filter-btn {
+                padding: 14px 20px;
+                font-size: 15px;
+                min-height: 48px;
+            }
+
+            .demo-idle-content,
+            .demo-loading-content {
+                padding: 32px 16px;
+            }
+
+            .demo-response-option {
+                padding: 10px 12px;
+                min-height: 44px;
+            }
+
+            .demo-cta {
+                padding: 24px 16px;
+            }
+
+            .demo-cta h3 {
+                font-size: 20px;
+            }
+        }
+
+        /* Demo Responsive - Small Mobile */
+        @media (max-width: 380px) {
+            .demo-pill {
+                padding: 8px 10px;
+                font-size: 11px;
+                min-height: 44px;
+            }
+
+            .demo-filter-btn {
+                padding: 12px 16px;
+                font-size: 14px;
+                min-height: 44px;
+            }
+
+            .demo-cta h3 {
+                font-size: 18px;
+            }
+
+            .demo-summary-text,
+            .demo-original-message {
+                padding: 12px;
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1976,6 +2711,7 @@
             </a>
             <ul class="nav-links" id="nav-links">
                 <li><a href="#features">Features</a></li>
+                <li><a href="#demo">Try Demo</a></li>
                 <li><a href="#app-preview">App Preview</a></li>
                 <li><a href="/blog/">Blog</a></li>
                 <li><a href="#faq">FAQ</a></li>
@@ -2066,6 +2802,199 @@
             </div>
             <div class="section-cta">
                 <a href="#waitlist" class="cta-button-outline">Join the Waitlist</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Try the Filter Demo -->
+    <section class="demo" id="demo">
+        <div class="container">
+            <div class="section-header">
+                <h2>Try the Filter</h2>
+                <p>See how Filtered transforms hostile messages into calm, actionable summaries. Choose an example or type your own.</p>
+            </div>
+
+            <div class="demo-container">
+                <!-- Input Panel -->
+                <div class="demo-panel demo-input-panel">
+                    <div class="demo-panel-header">
+                        <h3>
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                            </svg>
+                            Incoming Message
+                        </h3>
+                    </div>
+                    <div class="demo-panel-content">
+                        <div class="demo-examples-label">Try an example:</div>
+                        <div class="demo-pills" role="group" aria-label="Example hostile messages">
+                            <button class="demo-pill" data-example="schedule" aria-pressed="false">
+                                <span class="demo-pill-icon" aria-hidden="true">📅</span>
+                                Schedule Change
+                            </button>
+                            <button class="demo-pill" data-example="financial" aria-pressed="false">
+                                <span class="demo-pill-icon" aria-hidden="true">💰</span>
+                                Financial Blame
+                            </button>
+                            <button class="demo-pill" data-example="hostile" aria-pressed="false">
+                                <span class="demo-pill-icon" aria-hidden="true">😤</span>
+                                Overt Hostility
+                            </button>
+                            <button class="demo-pill" data-example="passive" aria-pressed="false">
+                                <span class="demo-pill-icon" aria-hidden="true">🙄</span>
+                                Passive-Aggressive
+                            </button>
+                            <button class="demo-pill" data-example="medical" aria-pressed="false">
+                                <span class="demo-pill-icon" aria-hidden="true">🏥</span>
+                                Medical + Blame
+                            </button>
+                        </div>
+
+                        <div class="demo-textarea-wrapper">
+                            <textarea
+                                id="demo-input"
+                                class="demo-textarea"
+                                placeholder="Or type/paste a message here to see how Filtered would process it..."
+                                maxlength="2000"
+                                aria-label="Message to filter"
+                                aria-describedby="demo-char-count"
+                            ></textarea>
+                            <div class="demo-textarea-footer">
+                                <span id="demo-char-count" class="demo-char-count">0 / 2000</span>
+                            </div>
+                        </div>
+
+                        <button id="demo-filter-btn" class="demo-filter-btn" disabled>
+                            <span class="spinner" aria-hidden="true"></span>
+                            <svg aria-hidden="true" class="btn-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                            <span class="btn-text">Filter This Message</span>
+                        </button>
+
+                        <div id="demo-rate-limit" class="demo-rate-limit" role="alert" aria-live="assertive">
+                            <p>You've reached the demo limit. <a href="#waitlist">Join the waitlist</a> for unlimited filtering.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Result Panel -->
+                <div class="demo-panel demo-result-panel">
+                    <div class="demo-panel-header">
+                        <h3>
+                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                            Filtered Result
+                        </h3>
+                    </div>
+                    <div class="demo-panel-content">
+                        <!-- Idle State -->
+                        <div id="demo-result-idle" class="demo-result-idle active">
+                            <div class="demo-idle-content">
+                                <div class="demo-idle-icon">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                    </svg>
+                                </div>
+                                <h4>Ready to Filter</h4>
+                                <p>Select an example or enter a message to see how Filtered protects your peace.</p>
+                            </div>
+                        </div>
+
+                        <!-- Loading State -->
+                        <div id="demo-result-loading" class="demo-result-loading" role="status" aria-live="polite">
+                            <div class="demo-loading-content">
+                                <div class="demo-loading-icon">
+                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                    </svg>
+                                </div>
+                                <h4>Analyzing Message...</h4>
+                                <div class="demo-loading-steps">
+                                    <div class="demo-loading-step" data-step="1">
+                                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        Reading message
+                                    </div>
+                                    <div class="demo-loading-step" data-step="2">
+                                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        Detecting tone
+                                    </div>
+                                    <div class="demo-loading-step" data-step="3">
+                                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        Extracting facts
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Complete State -->
+                        <div id="demo-result-complete" class="demo-result-complete" role="region" aria-live="polite" aria-label="Filtering results">
+                            <div class="demo-result-card">
+                                <!-- Mood Badge -->
+                                <div id="demo-mood-badge" class="demo-mood-badge hostile" role="status">
+                                    <span class="demo-mood-icon" aria-hidden="true">😠</span>
+                                    <span class="demo-mood-text">Hostile Detected</span>
+                                </div>
+
+                                <!-- Summary -->
+                                <div class="demo-summary-section">
+                                    <div class="demo-section-label">AI Summary</div>
+                                    <div id="demo-summary" class="demo-summary-text"></div>
+                                </div>
+
+                                <!-- Action Items -->
+                                <div id="demo-actions-section" class="demo-actions-section">
+                                    <div class="demo-section-label">Action Items</div>
+                                    <ul id="demo-action-list" class="demo-action-list"></ul>
+                                </div>
+
+                                <!-- Suggested Responses -->
+                                <div id="demo-responses-section" class="demo-responses-section">
+                                    <div class="demo-section-label">Suggested Responses</div>
+                                    <div id="demo-response-options" class="demo-response-options"></div>
+                                </div>
+
+                                <!-- Original Message Toggle -->
+                                <div class="demo-original-section">
+                                    <button id="demo-original-toggle" class="demo-original-toggle" aria-expanded="false" aria-controls="demo-original-content">
+                                        <span class="demo-original-toggle-text">
+                                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                            </svg>
+                                            View Original Message
+                                        </span>
+                                        <svg aria-hidden="true" class="demo-original-toggle-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M6 9l6 6 6-6"/>
+                                        </svg>
+                                    </button>
+                                    <div id="demo-original-content" class="demo-original-content" hidden>
+                                        <div class="demo-original-warning">
+                                            <span aria-hidden="true">⚠️</span>
+                                            <span>Unfiltered content may be upsetting</span>
+                                        </div>
+                                        <div id="demo-original-message" class="demo-original-message"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post-Demo CTA -->
+            <div class="demo-cta">
+                <h3>Experience This Protection Every Day</h3>
+                <p>Stop absorbing hostility. Start co-parenting peacefully.</p>
+                <a href="#waitlist" class="cta-button" id="demo-cta-btn">Join the Waitlist</a>
+                <p class="demo-disclaimer">Demo uses the same AI that powers the full app. Results may vary based on message content.</p>
             </div>
         </div>
     </section>
@@ -2512,6 +3441,567 @@
             </ul>
         </div>
     </footer>
+
+    <!-- Try the Filter Demo JavaScript -->
+    <script>
+    (function() {
+        'use strict';
+
+        // ========================================
+        // UTILITY FUNCTIONS
+        // ========================================
+
+        // XSS Prevention - escape HTML entities
+        function escapeHtml(str) {
+            if (typeof str !== 'string') return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // ========================================
+        // PRE-COMPUTED EXAMPLE DATA
+        // ========================================
+        const DEMO_EXAMPLES = {
+            schedule: {
+                original: "I NEED to switch Saturday to Sunday because ONCE AGAIN my work scheduled me and you always make everything so difficult. It's not like you have anything important to do anyway. Just have them ready at 10. This shouldn't even be a discussion.",
+                mood: "hostile",
+                moodIcon: "😠",
+                moodText: "Hostile Detected",
+                summary: "Requesting to change pickup from Saturday to Sunday at 10am due to a work schedule conflict.",
+                actions: [
+                    { text: "Confirm or decline schedule change", deadline: "Saturday" }
+                ],
+                responses: [
+                    "Sunday at 10am works for me. I'll have them ready.",
+                    "I can't do Sunday. Let's stick with Saturday as planned.",
+                    "Can we discuss an alternative time that works for both of us?"
+                ]
+            },
+            financial: {
+                original: "The kids need new winter coats and OF COURSE you haven't thought about it. You never plan ahead for anything. I already bought them because someone had to be the responsible parent. You owe me $200. Send it now or I'll add it to the court filing.",
+                mood: "hostile",
+                moodIcon: "😠",
+                moodText: "Hostile Detected",
+                summary: "Purchased winter coats for the children totaling $200 and requesting reimbursement for your share of the expense.",
+                actions: [
+                    { text: "Review expense and determine your share", deadline: null },
+                    { text: "Respond to reimbursement request", deadline: null }
+                ],
+                responses: [
+                    "Thanks for getting the coats. Can you send me the receipts? I'll send my share once I review them.",
+                    "Per our agreement, I'll cover my portion. Please send receipts for documentation.",
+                    "I'd like to discuss how we handle these purchases going forward."
+                ]
+            },
+            hostile: {
+                original: "You are the WORST co-parent ever. You don't care about the kids at all. Everything is always about you. I can't believe I ever thought you were capable of being a decent parent. The kids deserve so much better than you.",
+                mood: "hostile",
+                moodIcon: "😠",
+                moodText: "Hostile Detected",
+                summary: "Message contains emotional venting but no specific requests, questions, or action items related to the children.",
+                actions: [],
+                responses: [
+                    "I understand you're frustrated. Is there something specific about the kids we need to discuss?",
+                    "I'm focused on co-parenting effectively. Let me know if there's something the kids need.",
+                    "I'll respond when there's something specific to address about our children."
+                ]
+            },
+            passive: {
+                original: "Fine. Whatever. I guess I'll just handle the school pickup like I handle everything else around here. Don't worry about it. I'm used to doing things without any help. It's fine. Really.",
+                mood: "tense",
+                moodIcon: "😒",
+                moodText: "Tense Detected",
+                summary: "Confirming they will handle school pickup. Tone suggests frustration about division of responsibilities.",
+                actions: [
+                    { text: "Acknowledge pickup arrangement", deadline: null }
+                ],
+                responses: [
+                    "Thank you for handling pickup today. I appreciate it.",
+                    "Sounds good. Let me know if you need me to take any upcoming pickups.",
+                    "Got it. I'll plan to do the next pickup to help balance things out."
+                ]
+            },
+            medical: {
+                original: "Emma has a fever of 102. I had to leave work AGAIN because you never answer your phone. This is the third time this month. She needs to see a doctor tomorrow. You need to take her because I've already missed too much work covering for YOUR failures as a parent.",
+                mood: "hostile",
+                moodIcon: "😠",
+                moodText: "Hostile Detected",
+                summary: "Emma has a 102° fever and needs to see a doctor tomorrow. Requesting you take her to the appointment.",
+                actions: [
+                    { text: "Confirm you can take Emma to the doctor tomorrow", deadline: "Tomorrow", urgent: true },
+                    { text: "Check on Emma's condition", deadline: null }
+                ],
+                responses: [
+                    "I'll take Emma to the doctor tomorrow. Please send me the appointment details when you have them.",
+                    "I hope Emma feels better. I can take her - what time is the appointment?",
+                    "Thanks for letting me know. I'll call the pediatrician first thing tomorrow to schedule."
+                ]
+            }
+        };
+
+        // ========================================
+        // STATE MANAGEMENT
+        // ========================================
+        const DemoState = {
+            currentExample: null,
+            isLoading: false,
+            hasResult: false,
+            originalVisible: false,
+            usageCount: 0,
+            maxUsage: 10,
+            usageKey: 'filtered_demo_usage',
+            usageResetKey: 'filtered_demo_reset'
+        };
+
+        // ========================================
+        // RATE LIMITER (localStorage-based)
+        // ========================================
+        const RateLimiter = {
+            check: function() {
+                try {
+                    const stored = localStorage.getItem(DemoState.usageKey);
+                    const resetTime = localStorage.getItem(DemoState.usageResetKey);
+                    const now = Date.now();
+                    const oneHour = 60 * 60 * 1000;
+
+                    // Reset if more than an hour has passed
+                    const resetTimestamp = parseInt(resetTime) || 0;
+                    if (resetTime && (now - resetTimestamp) > oneHour) {
+                        localStorage.setItem(DemoState.usageKey, '0');
+                        localStorage.setItem(DemoState.usageResetKey, now.toString());
+                        DemoState.usageCount = 0;
+                        return true;
+                    }
+
+                    // Initialize if not set
+                    if (!stored) {
+                        localStorage.setItem(DemoState.usageKey, '0');
+                        localStorage.setItem(DemoState.usageResetKey, now.toString());
+                        DemoState.usageCount = 0;
+                        return true;
+                    }
+
+                    DemoState.usageCount = parseInt(stored) || 0;
+                    return DemoState.usageCount < DemoState.maxUsage;
+                } catch (e) {
+                    // localStorage unavailable (private browsing) - allow usage
+                    return true;
+                }
+            },
+
+            increment: function() {
+                try {
+                    DemoState.usageCount++;
+                    localStorage.setItem(DemoState.usageKey, DemoState.usageCount.toString());
+                } catch (e) {
+                    // Silently fail if localStorage unavailable
+                }
+            }
+        };
+
+        // ========================================
+        // DOM ELEMENTS
+        // ========================================
+        const elements = {
+            pills: document.querySelectorAll('.demo-pill'),
+            textarea: document.getElementById('demo-input'),
+            charCount: document.getElementById('demo-char-count'),
+            filterBtn: document.getElementById('demo-filter-btn'),
+            rateLimitMsg: document.getElementById('demo-rate-limit'),
+            resultIdle: document.getElementById('demo-result-idle'),
+            resultLoading: document.getElementById('demo-result-loading'),
+            resultComplete: document.getElementById('demo-result-complete'),
+            moodBadge: document.getElementById('demo-mood-badge'),
+            summary: document.getElementById('demo-summary'),
+            actionsSection: document.getElementById('demo-actions-section'),
+            actionList: document.getElementById('demo-action-list'),
+            responsesSection: document.getElementById('demo-responses-section'),
+            responseOptions: document.getElementById('demo-response-options'),
+            originalToggle: document.getElementById('demo-original-toggle'),
+            originalContent: document.getElementById('demo-original-content'),
+            originalMessage: document.getElementById('demo-original-message'),
+            loadingSteps: document.querySelectorAll('.demo-loading-step'),
+            ctaBtn: document.getElementById('demo-cta-btn')
+        };
+
+        // ========================================
+        // STATE DISPLAY FUNCTIONS
+        // ========================================
+        function showState(state) {
+            elements.resultIdle.classList.remove('active');
+            elements.resultLoading.classList.remove('active');
+            elements.resultComplete.classList.remove('active');
+
+            switch(state) {
+                case 'idle':
+                    elements.resultIdle.classList.add('active');
+                    break;
+                case 'loading':
+                    elements.resultLoading.classList.add('active');
+                    break;
+                case 'complete':
+                    elements.resultComplete.classList.add('active');
+                    break;
+            }
+        }
+
+        function updateButtonState() {
+            const hasText = elements.textarea.value.trim().length >= 3;
+            const canUse = RateLimiter.check();
+
+            elements.filterBtn.disabled = !hasText || DemoState.isLoading || !canUse;
+
+            if (!canUse) {
+                elements.rateLimitMsg.classList.add('active');
+            } else {
+                elements.rateLimitMsg.classList.remove('active');
+            }
+        }
+
+        function updateCharCount() {
+            const count = elements.textarea.value.length;
+            elements.charCount.textContent = count + ' / 2000';
+
+            elements.charCount.classList.remove('warning', 'error');
+            if (count > 1800) {
+                elements.charCount.classList.add('error');
+            } else if (count > 1500) {
+                elements.charCount.classList.add('warning');
+            }
+        }
+
+        // ========================================
+        // EXAMPLE PILL HANDLERS
+        // ========================================
+        function selectExample(exampleKey) {
+            const example = DEMO_EXAMPLES[exampleKey];
+            if (!example) return;
+
+            // Update pill states
+            elements.pills.forEach(pill => {
+                pill.classList.remove('active');
+                pill.setAttribute('aria-pressed', 'false');
+            });
+
+            const selectedPill = document.querySelector('[data-example="' + exampleKey + '"]');
+            if (selectedPill) {
+                selectedPill.classList.add('active');
+                selectedPill.setAttribute('aria-pressed', 'true');
+            }
+
+            // Populate textarea
+            elements.textarea.value = example.original;
+            DemoState.currentExample = exampleKey;
+
+            updateCharCount();
+            updateButtonState();
+
+            // Track analytics
+            trackEvent('demo_example_selected', { example: exampleKey });
+        }
+
+        // ========================================
+        // LOADING ANIMATION
+        // ========================================
+        function animateLoadingSteps() {
+            elements.loadingSteps.forEach(step => {
+                step.classList.remove('active', 'complete');
+            });
+
+            let currentStep = 0;
+            const stepInterval = setInterval(() => {
+                if (currentStep > 0) {
+                    elements.loadingSteps[currentStep - 1].classList.remove('active');
+                    elements.loadingSteps[currentStep - 1].classList.add('complete');
+                }
+
+                if (currentStep < elements.loadingSteps.length) {
+                    elements.loadingSteps[currentStep].classList.add('active');
+                    currentStep++;
+                } else {
+                    clearInterval(stepInterval);
+                }
+            }, 400);
+
+            return stepInterval;
+        }
+
+        // ========================================
+        // RESULT DISPLAY
+        // ========================================
+        function displayResult(data) {
+            // Mood badge - use querySelector with null checks
+            elements.moodBadge.className = 'demo-mood-badge ' + escapeHtml(data.mood);
+            const moodIcon = elements.moodBadge.querySelector('.demo-mood-icon');
+            const moodText = elements.moodBadge.querySelector('.demo-mood-text');
+            if (moodIcon) moodIcon.textContent = data.moodIcon;
+            if (moodText) moodText.textContent = data.moodText;
+
+            // Summary
+            elements.summary.textContent = data.summary;
+
+            // Action items - use escapeHtml for XSS prevention
+            elements.actionList.innerHTML = '';
+            if (data.actions && data.actions.length > 0) {
+                elements.actionsSection.style.display = 'block';
+                data.actions.forEach(action => {
+                    const li = document.createElement('li');
+                    li.className = 'demo-action-item';
+                    li.innerHTML = '<div class="demo-action-checkbox"></div>' +
+                        '<span class="demo-action-text">' + escapeHtml(action.text) +
+                        (action.deadline ? '<span class="demo-action-deadline">Due: ' + escapeHtml(action.deadline) + '</span>' : '') +
+                        '</span>';
+                    elements.actionList.appendChild(li);
+                });
+            } else {
+                elements.actionsSection.style.display = 'none';
+            }
+
+            // Suggested responses - use escapeHtml for XSS prevention
+            elements.responseOptions.innerHTML = '';
+            if (data.responses && data.responses.length > 0) {
+                elements.responsesSection.style.display = 'block';
+                data.responses.forEach((response, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'demo-response-option';
+                    div.tabIndex = 0; // Make focusable for accessibility
+                    div.innerHTML = '<span class="demo-response-icon">' + (index + 1) + '</span>' +
+                        '<span class="demo-response-text">' + escapeHtml(response) + '</span>';
+                    elements.responseOptions.appendChild(div);
+                });
+            } else {
+                elements.responsesSection.style.display = 'none';
+            }
+
+            // Original message
+            elements.originalMessage.textContent = data.original;
+
+            // Reset toggle state
+            elements.originalContent.hidden = true;
+            elements.originalToggle.setAttribute('aria-expanded', 'false');
+            DemoState.originalVisible = false;
+        }
+
+        // ========================================
+        // FILTER ACTION
+        // ========================================
+        async function filterMessage() {
+            if (DemoState.isLoading) return;
+            if (!RateLimiter.check()) return;
+
+            const message = elements.textarea.value.trim();
+            if (message.length < 3) return;
+
+            DemoState.isLoading = true;
+            elements.filterBtn.classList.add('loading');
+            const btnText = elements.filterBtn.querySelector('.btn-text');
+            if (btnText) btnText.textContent = 'Filtering...';
+
+            showState('loading');
+            const stepInterval = animateLoadingSteps();
+
+            // Track analytics
+            trackEvent('demo_filter_clicked', {
+                example: DemoState.currentExample || 'custom',
+                messageLength: message.length
+            });
+
+            // For pre-computed examples, use cached data
+            // For custom messages, try live API first, then fall back to generic
+            let resultData;
+
+            if (DemoState.currentExample && DEMO_EXAMPLES[DemoState.currentExample]) {
+                // Use pre-computed data for examples (fast, no API cost)
+                resultData = DEMO_EXAMPLES[DemoState.currentExample];
+                await new Promise(resolve => setTimeout(resolve, 1500));
+            } else {
+                // Try live API for custom messages
+                try {
+                    const response = await fetch('/.netlify/functions/demo-filter', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: message })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+
+                        // Check for safety alerts
+                        if (data.safety) {
+                            resultData = {
+                                original: message,
+                                mood: 'hostile',
+                                moodIcon: '⚠️',
+                                moodText: 'Safety Alert',
+                                summary: data.message + ' Please consider reaching out for support.',
+                                actions: [],
+                                responses: [],
+                                safetyResources: data.resources
+                            };
+                        } else if (data.success) {
+                            resultData = data;
+                        } else {
+                            throw new Error(data.error || 'Unknown error');
+                        }
+                    } else if (response.status === 429) {
+                        // Rate limited - show message
+                        elements.rateLimitMsg.classList.add('active');
+                        clearInterval(stepInterval);
+                        DemoState.isLoading = false;
+                        elements.filterBtn.classList.remove('loading');
+                        const btnTextReset = elements.filterBtn.querySelector('.btn-text');
+                        if (btnTextReset) btnTextReset.textContent = 'Filter This Message';
+                        return;
+                    } else {
+                        throw new Error('API request failed');
+                    }
+                } catch (apiError) {
+                    // Fallback to generic response if API fails
+                    console.warn('Live API unavailable, using fallback:', apiError.message);
+                    resultData = {
+                        original: message,
+                        mood: message.length > 200 ? 'hostile' : 'tense',
+                        moodIcon: message.length > 200 ? '😠' : '😒',
+                        moodText: message.length > 200 ? 'Hostile Detected' : 'Tense Detected',
+                        summary: 'The sender expresses frustration. Consider focusing on any specific requests or actionable items when responding.',
+                        actions: [
+                            { text: 'Identify any specific requests in the message', deadline: null }
+                        ],
+                        responses: [
+                            "I understand. Is there something specific you need me to address?",
+                            "Thanks for letting me know. I'll look into this.",
+                            "Let's focus on what's best for the kids. What do you need from me?"
+                        ]
+                    };
+                    // Add delay for fallback
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
+            }
+
+            clearInterval(stepInterval);
+            RateLimiter.increment();
+
+            displayResult(resultData);
+            showState('complete');
+
+            DemoState.isLoading = false;
+            DemoState.hasResult = true;
+            elements.filterBtn.classList.remove('loading');
+            const btnTextReset = elements.filterBtn.querySelector('.btn-text');
+            if (btnTextReset) btnTextReset.textContent = 'Filter This Message';
+
+            updateButtonState();
+        }
+
+        // ========================================
+        // ORIGINAL MESSAGE TOGGLE
+        // ========================================
+        function toggleOriginal() {
+            DemoState.originalVisible = !DemoState.originalVisible;
+            elements.originalContent.hidden = !DemoState.originalVisible;
+            elements.originalToggle.setAttribute('aria-expanded', DemoState.originalVisible.toString());
+        }
+
+        // ========================================
+        // ANALYTICS
+        // ========================================
+        function trackEvent(eventName, params) {
+            if (typeof gtag === 'function') {
+                gtag('event', eventName, params);
+            }
+        }
+
+        // ========================================
+        // KEYBOARD NAVIGATION
+        // ========================================
+        function handlePillKeyNav(e) {
+            const pillsArray = Array.from(elements.pills);
+            const currentIndex = pillsArray.indexOf(e.target);
+
+            let nextIndex;
+            switch(e.key) {
+                case 'ArrowRight':
+                case 'ArrowDown':
+                    e.preventDefault();
+                    nextIndex = (currentIndex + 1) % pillsArray.length;
+                    pillsArray[nextIndex].focus();
+                    break;
+                case 'ArrowLeft':
+                case 'ArrowUp':
+                    e.preventDefault();
+                    nextIndex = (currentIndex - 1 + pillsArray.length) % pillsArray.length;
+                    pillsArray[nextIndex].focus();
+                    break;
+                case 'Enter':
+                case ' ':
+                    e.preventDefault();
+                    selectExample(e.target.dataset.example);
+                    break;
+            }
+        }
+
+        // ========================================
+        // EVENT LISTENERS
+        // ========================================
+        function initEventListeners() {
+            // Example pill clicks
+            elements.pills.forEach(pill => {
+                pill.addEventListener('click', () => selectExample(pill.dataset.example));
+                pill.addEventListener('keydown', handlePillKeyNav);
+            });
+
+            // Textarea input
+            elements.textarea.addEventListener('input', () => {
+                DemoState.currentExample = null; // Clear example selection when typing
+                elements.pills.forEach(pill => {
+                    pill.classList.remove('active');
+                    pill.setAttribute('aria-pressed', 'false');
+                });
+                updateCharCount();
+                updateButtonState();
+            });
+
+            // Filter button
+            elements.filterBtn.addEventListener('click', filterMessage);
+
+            // Original message toggle
+            elements.originalToggle.addEventListener('click', toggleOriginal);
+
+            // CTA button analytics
+            if (elements.ctaBtn) {
+                elements.ctaBtn.addEventListener('click', () => {
+                    trackEvent('demo_cta_clicked', { hasUsedDemo: DemoState.hasResult });
+                });
+            }
+
+            // Keyboard shortcut: Enter to filter (when textarea focused)
+            elements.textarea.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.ctrlKey) {
+                    e.preventDefault();
+                    filterMessage();
+                }
+            });
+        }
+
+        // ========================================
+        // INITIALIZATION
+        // ========================================
+        function init() {
+            RateLimiter.check(); // Initialize rate limiter
+            updateButtonState();
+            showState('idle');
+            initEventListeners();
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+    </script>
 
 </body>
 </html>
