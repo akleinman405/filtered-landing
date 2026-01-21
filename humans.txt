@@ -1,0 +1,12 @@
+/* TEAM */
+
+Founder: Alec Kleinman
+Site: https://filteredmessaging.com
+Location: Provo, UT, USA
+
+/* SITE */
+
+Last update: 2026-01-20
+Language: English
+Standards: HTML5, CSS3, JavaScript
+Software: Netlify, Supabase, React Native, FastAPI

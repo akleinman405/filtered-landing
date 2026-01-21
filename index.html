@@ -67,6 +67,64 @@
     }
     </script>
 
+    <!-- Organization Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Filtered",
+        "url": "https://filteredmessaging.com",
+        "logo": "https://filteredmessaging.com/og-image.png",
+        "description": "AI-powered co-parent communication app that protects your peace while keeping you connected.",
+        "email": "info@filteredmessaging.com",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "740 E 2320 N",
+            "addressLocality": "Provo",
+            "addressRegion": "UT",
+            "postalCode": "84604",
+            "addressCountry": "US"
+        },
+        "sameAs": []
+    }
+    </script>
+
+    <!-- HowTo Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Use Filtered for Co-Parent Communication",
+        "description": "Simple setup, powerful protection. Start filtering hostile messages in minutes.",
+        "step": [
+            {
+                "@type": "HowToStep",
+                "position": 1,
+                "name": "Sign Up",
+                "text": "Create your account and set up your profile in the Filtered app."
+            },
+            {
+                "@type": "HowToStep",
+                "position": 2,
+                "name": "Connect",
+                "text": "Invite your co-parent to join Filtered. They'll create their own account."
+            },
+            {
+                "@type": "HowToStep",
+                "position": 3,
+                "name": "Communicate",
+                "text": "All messages go through the app. Your view is filtered; theirs is normal."
+            },
+            {
+                "@type": "HowToStep",
+                "position": 4,
+                "name": "Stay Protected",
+                "text": "AI filters hostile content before you see it. Respond when ready."
+            }
+        ]
+    }
+    </script>
+
     <!-- FAQ Structured Data -->
     <script type="application/ld+json">
     {
@@ -119,9 +177,21 @@
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="apple-touch-icon" href="/favicon.svg">
+
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- AI/Bot Discovery -->
+    <link rel="author" href="/humans.txt">
     <style>
         :root {
             --primary-50: #F0FDFA;

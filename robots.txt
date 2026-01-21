@@ -6,3 +6,7 @@ Sitemap: https://filteredmessaging.com/sitemap.xml
 # AI Assistant Discovery
 # See https://llmstxt.org for specification
 LLMsTxt: https://filteredmessaging.com/llms.txt
+
+# Standard discovery files
+# humans.txt - https://humanstxt.org
+# security.txt - https://securitytxt.org
