@@ -2062,6 +2062,15 @@
             }
         }
 
+        /* Subject Line - like the app header */
+        .demo-subject {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin: 0 0 12px 0;
+            line-height: 1.3;
+        }
+
         /* Badges Row - Category first, then mood */
         .demo-badges-row {
             display: flex;
@@ -2140,13 +2149,6 @@
             flex-shrink: 0;
         }
 
-        .demo-mood-badge.hostile .demo-mood-icon {
-            background-color: #EF4444;
-        }
-        .demo-mood-badge.hostile .demo-mood-text {
-            color: #EF4444;
-        }
-
         .demo-mood-badge.tense .demo-mood-icon,
         .demo-mood-badge.frustrated .demo-mood-icon {
             background-color: #F59E0B;
@@ -2157,21 +2159,30 @@
         }
 
         .demo-mood-badge.neutral .demo-mood-icon {
-            background-color: #10B981;
+            background-color: #0F766E;
         }
         .demo-mood-badge.neutral .demo-mood-text {
-            color: #059669;
+            color: #0F766E;
         }
 
-        .demo-mood-badge.calm .demo-mood-icon {
-            background-color: #10B981;
+        .demo-mood-badge.calm .demo-mood-icon,
+        .demo-mood-badge.friendly .demo-mood-icon {
+            background-color: #22C55E;
         }
-        .demo-mood-badge.calm .demo-mood-text {
-            color: #059669;
+        .demo-mood-badge.calm .demo-mood-text,
+        .demo-mood-badge.friendly .demo-mood-text {
+            color: #16A34A;
+        }
+
+        .demo-mood-badge.hostile .demo-mood-icon {
+            background-color: #F97316;
+        }
+        .demo-mood-badge.hostile .demo-mood-text {
+            color: #EA580C;
         }
 
         .demo-mood-badge.abusive .demo-mood-icon {
-            background-color: #DC2626;
+            background-color: #EF4444;
         }
         .demo-mood-badge.abusive .demo-mood-text {
             color: #DC2626;
@@ -2817,10 +2828,16 @@
                         <!-- Complete State -->
                         <div id="demo-result-complete" class="demo-result-complete" role="region" aria-live="polite" aria-label="Filtering results">
                             <div class="demo-result-card">
-                                <!-- Mood Badge -->
+                                <!-- Subject Line -->
+                                <h4 id="demo-subject" class="demo-subject">Message</h4>
+
+                                <!-- Category and Mood Badges -->
                                 <div class="demo-badges-row">
+                                    <div id="demo-category-badge" class="demo-category-badge request" role="status">
+                                        <span class="demo-category-text">Request</span>
+                                    </div>
                                     <div id="demo-mood-badge" class="demo-mood-badge hostile" role="status">
-                                        <span class="demo-mood-dot" aria-hidden="true"></span>
+                                        <span class="demo-mood-icon" aria-hidden="true"></span>
                                         <span class="demo-mood-label">Mood:</span>
                                         <span class="demo-mood-text">Hostile</span>
                                     </div>
@@ -2828,7 +2845,7 @@
 
                                 <!-- Summary -->
                                 <div class="demo-summary-section">
-                                    <div class="demo-section-label">AI Summary</div>
+                                    <div class="demo-section-label">Summary</div>
                                     <div id="demo-summary" class="demo-summary-text"></div>
                                     <ul id="demo-bullets" class="demo-bullets-list" style="display: none;"></ul>
                                 </div>
@@ -3217,6 +3234,8 @@
             resultIdle: document.getElementById('demo-result-idle'),
             resultLoading: document.getElementById('demo-result-loading'),
             resultComplete: document.getElementById('demo-result-complete'),
+            subject: document.getElementById('demo-subject'),
+            categoryBadge: document.getElementById('demo-category-badge'),
             moodBadge: document.getElementById('demo-mood-badge'),
             summary: document.getElementById('demo-summary'),
             bulletsList: document.getElementById('demo-bullets'),
@@ -3280,13 +3299,28 @@
         // RESULT DISPLAY
         // ========================================
         function displayResult(data) {
-            // Mood badge - use querySelector with null checks
-            // The colored dot is CSS-based (no emoji), so we only set the class and text
-            elements.moodBadge.className = 'demo-mood-badge ' + escapeHtml(data.mood);
-            const moodText = elements.moodBadge.querySelector('.demo-mood-text');
-            if (moodText) moodText.textContent = data.moodText;
+            // Subject line - like the app's message header
+            if (elements.subject) {
+                elements.subject.textContent = data.subject || 'Message';
+            }
 
-            // Category badge removed - simplified UI
+            // Category badge - Request/Question/Proposal/Statement/Personal
+            if (elements.categoryBadge) {
+                const category = (data.category || 'statement').toLowerCase();
+                elements.categoryBadge.className = 'demo-category-badge ' + escapeHtml(category);
+                const categoryText = elements.categoryBadge.querySelector('.demo-category-text');
+                if (categoryText) categoryText.textContent = data.category || 'Statement';
+            }
+
+            // Mood badge - use moodLabel (Friendly/Neutral/Frustrated/Hostile/Abusive)
+            // Map mood string to CSS class: calm->friendly, neutral, tense->frustrated, hostile, abusive
+            let moodClass = data.mood || 'neutral';
+            if (data.moodLabel) {
+                moodClass = data.moodLabel.toLowerCase();
+            }
+            elements.moodBadge.className = 'demo-mood-badge ' + escapeHtml(moodClass);
+            const moodText = elements.moodBadge.querySelector('.demo-mood-text');
+            if (moodText) moodText.textContent = data.moodLabel || data.moodText || 'Neutral';
 
             // Summary and Bullets
             if (data.bullets && data.bullets.length > 0 && elements.bulletsList) {
