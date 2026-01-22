@@ -1,0 +1,51 @@
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+      <linearGradient id="tealGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#0F766E"/>
+        <stop offset="100%" style="stop-color:#0D9488"/>
+      </linearGradient>
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1.5" fill="white" opacity="0.06"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1350" fill="url(#tealGradient)"/>
+  <rect width="1080" height="1350" fill="url(#dots)"/>
+  
+  <!-- Decorative -->
+  <circle cx="1020" cy="60" r="120" fill="white" opacity="0.03"/>
+  <circle cx="60" cy="1290" r="80" fill="white" opacity="0.03"/>
+
+  <!-- Content -->
+  <text x="540" y="456.6"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="56"
+        font-weight="600"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="middle">The 4-letter framework that</text>
+  <text x="540" y="529.4"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="56"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="middle">changes co-parenting:</text>
+  <text x="540" y="675"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="52"
+        font-weight="700"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="middle">BIFF</text>
+  <text x="540" y="820.6"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="32"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="0.7"
+        text-anchor="middle">↓ Swipe to learn it ↓</text>
+
+</svg>

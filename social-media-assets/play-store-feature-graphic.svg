@@ -1,0 +1,62 @@
+<svg width="1024" height="500" viewBox="0 0 1024 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0F766E"/>
+      <stop offset="100%" style="stop-color:#0D9488"/>
+    </linearGradient>
+    <pattern id="dots" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="15" cy="15" r="1" fill="white" opacity="0.08"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="500" fill="url(#bgGradient)"/>
+  <rect width="1024" height="500" fill="url(#dots)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="950" cy="50" r="120" fill="white" opacity="0.04"/>
+  <circle cx="50" cy="450" r="80" fill="white" opacity="0.04"/>
+
+  <!-- Funnel Icon (left side) -->
+  <g transform="translate(100, 150) scale(8)">
+    <path fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+  </g>
+
+  <!-- App Name -->
+  <text x="380" y="180"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="64"
+        font-weight="700"
+        fill="white">
+    Filtered
+  </text>
+
+  <!-- Tagline -->
+  <text x="380" y="260"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="28"
+        font-weight="400"
+        fill="white"
+        opacity="0.95">
+    Protect your peace. Stay connected.
+  </text>
+
+  <!-- Subtitle -->
+  <text x="380" y="320"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="20"
+        font-weight="500"
+        fill="white"
+        opacity="0.7">
+    AI-Powered Co-Parent Communication
+  </text>
+
+  <!-- Features -->
+  <g transform="translate(380, 370)" fill="white" opacity="0.85" font-family="Inter, -apple-system, sans-serif" font-size="14">
+    <text x="0" y="0">Filter hostility</text>
+    <text x="0" y="0" dx="130">|</text>
+    <text x="0" y="0" dx="150">AI summaries</text>
+    <text x="0" y="0" dx="280">|</text>
+    <text x="0" y="0" dx="300">Court-ready docs</text>
+  </g>
+</svg>

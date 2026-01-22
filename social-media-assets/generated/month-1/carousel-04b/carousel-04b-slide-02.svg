@@ -1,0 +1,65 @@
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+      <linearGradient id="tealGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#0F766E"/>
+        <stop offset="100%" style="stop-color:#0D9488"/>
+      </linearGradient>
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1.5" fill="white" opacity="0.06"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1350" fill="url(#tealGradient)"/>
+  <rect width="1080" height="1350" fill="url(#dots)"/>
+  
+  <!-- Decorative -->
+  <circle cx="1020" cy="60" r="120" fill="white" opacity="0.03"/>
+  <circle cx="60" cy="1290" r="80" fill="white" opacity="0.03"/>
+
+  <!-- Content -->
+  <text x="540" y="410.40000000000003"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="middle">This isn&apos;t about blame.</text>
+  <text x="540" y="528"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="middle">It&apos;s about self-awareness.</text>
+  <text x="540" y="645.6"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="middle">Even when we&apos;re dealing with</text>
+  <text x="540" y="704.4000000000001"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="middle">genuinely difficult communication...</text>
+  <text x="540" y="822"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="middle">Sometimes our patterns</text>
+  <text x="540" y="880.8"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="middle">aren&apos;t helping either.</text>
+
+</svg>

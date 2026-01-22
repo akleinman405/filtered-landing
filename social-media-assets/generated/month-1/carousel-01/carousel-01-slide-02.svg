@@ -1,0 +1,56 @@
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+    
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1350" fill="#FFFFFF"/>
+  
+  
+
+  <!-- Content -->
+  <text x="540" y="439.8"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">You know the feeling:</text>
+  <text x="540" y="557.4"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Their name appears on your phone.</text>
+  <text x="540" y="616.2"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Your stomach drops.</text>
+  <text x="540" y="675"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Your mind races.</text>
+  <text x="540" y="792.5999999999999"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Before you even read it,</text>
+  <text x="540" y="851.4"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">you&apos;re already bracing for impact.</text>
+
+</svg>

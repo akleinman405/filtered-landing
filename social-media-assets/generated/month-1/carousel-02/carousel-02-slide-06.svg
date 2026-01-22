@@ -1,0 +1,63 @@
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+    
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1350" fill="#FFFFFF"/>
+  
+  
+
+  <!-- Large Letter -->
+  <text x="540" y="449.20000000000005"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="140"
+        font-weight="900"
+        fill="#1F2937"
+        opacity="0.15"
+        text-anchor="middle">F</text>
+  <text x="540" y="489.20000000000005"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="36"
+        font-weight="700"
+        fill="#1F2937"
+        text-anchor="middle">F = Firm</text>
+  <!-- Content -->
+  <text x="540" y="529.2"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">End the conversation. Don&apos;t</text>
+  <text x="540" y="588"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">leave room for debate.</text>
+  <text x="540" y="705.6"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">No questions that invite argument.</text>
+  <text x="120" y="823.2"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="36"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="start">✗ &quot;Does that work for you?&quot;</text>
+  <text x="120" y="882"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="36"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="start">✓ &quot;See you Saturday at 5pm.&quot;</text>
+
+</svg>

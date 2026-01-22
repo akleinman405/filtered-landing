@@ -1,0 +1,63 @@
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+    
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1350" fill="#FFFFFF"/>
+  
+  
+
+  <!-- Content -->
+  <text x="540" y="381"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">The only exception:</text>
+  <text x="540" y="498.6"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Actual emergencies involving</text>
+  <text x="540" y="557.4"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">your children&apos;s safety.</text>
+  <text x="540" y="675"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="38"
+        font-weight="500"
+        fill="#1F2937"
+        opacity="0.95"
+        text-anchor="middle">&quot;I need to know which</text>
+  <text x="540" y="733.8"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">shoes to pack&quot; ≠ emergency</text>
+  <text x="540" y="851.4"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="38"
+        font-weight="500"
+        fill="#1F2937"
+        opacity="0.95"
+        text-anchor="middle">&quot;Child has a 104 fever and</text>
+  <text x="540" y="910.1999999999999"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">needs a medical decision&quot; = emergency</text>
+
+</svg>

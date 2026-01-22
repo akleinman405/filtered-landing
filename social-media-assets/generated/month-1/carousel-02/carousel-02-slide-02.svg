@@ -1,0 +1,63 @@
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+    
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1350" fill="#FFFFFF"/>
+  
+  
+
+  <!-- Content -->
+  <text x="540" y="410.40000000000003"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">BIFF stands for:</text>
+  <text x="540" y="528"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Brief</text>
+  <text x="540" y="586.8"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Informative</text>
+  <text x="540" y="645.6"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Friendly</text>
+  <text x="540" y="704.4000000000001"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Firm</text>
+  <text x="540" y="822"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Created by Bill Eddy at the</text>
+  <text x="540" y="880.8"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">High Conflict Institute.</text>
+
+</svg>

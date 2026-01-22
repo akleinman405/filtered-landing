@@ -1,0 +1,63 @@
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+    
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1350" fill="#FFFFFF"/>
+  
+  
+
+  <!-- Content -->
+  <text x="540" y="381"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">The message:</text>
+  <text x="540" y="498.6"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="38"
+        font-weight="500"
+        fill="#1F2937"
+        opacity="0.95"
+        text-anchor="middle">&quot;I need to know NOW.</text>
+  <text x="540" y="557.4"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">This can&apos;t wait.</text>
+  <text x="540" y="616.2"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Answer me.&quot;</text>
+  <text x="540" y="733.8"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Your heart rate spikes.</text>
+  <text x="540" y="792.5999999999999"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Your fingers start typing.</text>
+  <text x="540" y="910.1999999999999"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Wait.</text>
+
+</svg>

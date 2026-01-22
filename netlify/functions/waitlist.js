@@ -56,6 +56,9 @@ exports.handler = async (event, context) => {
     console.log('GOOGLE_SHEETS_CREDENTIALS exists:', !!GOOGLE_SHEETS_CREDENTIALS);
     console.log('GOOGLE_SHEETS_CREDENTIALS length:', GOOGLE_SHEETS_CREDENTIALS ? GOOGLE_SHEETS_CREDENTIALS.length : 0);
 
+    // Track sheet write status for notification email
+    let sheetWriteStatus = { success: false, error: null };
+
     if (GOOGLE_SHEETS_CREDENTIALS && GOOGLE_SHEET_ID) {
       try {
         console.log('Parsing credentials...');
@@ -78,12 +81,15 @@ exports.handler = async (event, context) => {
           }
         });
         console.log('Added to Google Sheet:', email, 'Result:', JSON.stringify(result.data));
+        sheetWriteStatus = { success: true, error: null };
       } catch (sheetError) {
         console.error('Google Sheets error:', sheetError.message);
         console.error('Full error:', JSON.stringify(sheetError, Object.getOwnPropertyNames(sheetError)));
+        sheetWriteStatus = { success: false, error: sheetError.message };
       }
     } else {
       console.log('Skipping Google Sheets - credentials or sheet ID missing');
+      sheetWriteStatus = { success: false, error: 'Missing credentials or sheet ID' };
     }
 
     // Send confirmation email via Resend if configured
@@ -118,6 +124,10 @@ exports.handler = async (event, context) => {
     // Notify you of new signups
     if (RESEND_API_KEY) {
       try {
+        const sheetStatusHtml = sheetWriteStatus.success
+          ? '<p style="color: green;">✅ <strong>Google Sheet:</strong> Successfully added</p>'
+          : `<p style="color: red;">❌ <strong>Google Sheet:</strong> FAILED - ${sheetWriteStatus.error || 'Unknown error'}</p>`;
+
         await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
@@ -127,8 +137,8 @@ exports.handler = async (event, context) => {
           body: JSON.stringify({
             from: 'Filtered Waitlist <hello@filteredmessaging.com>',
             to: ['alec.m.kleinman@gmail.com'],
-            subject: `New Waitlist Signup: ${email}`,
-            html: `<p>New signup at ${timestamp}</p><p><strong>Email:</strong> ${email}</p>`
+            subject: `${sheetWriteStatus.success ? '✅' : '❌'} New Waitlist Signup: ${email}`,
+            html: `<p>New signup at ${timestamp}</p><p><strong>Email:</strong> ${email}</p>${sheetStatusHtml}`
           })
         });
       } catch (e) {

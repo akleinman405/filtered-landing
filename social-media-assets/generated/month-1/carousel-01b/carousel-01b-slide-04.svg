@@ -1,0 +1,49 @@
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+    
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1350" fill="#FFFFFF"/>
+  
+  
+
+  <!-- Content -->
+  <text x="540" y="410.40000000000003"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="38"
+        font-weight="500"
+        fill="#1F2937"
+        opacity="0.95"
+        text-anchor="middle">&quot;Dads don&apos;t get anxious about texts.&quot;</text>
+  <text x="540" y="528"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Actually, they do.</text>
+  <text x="540" y="645.6"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="38"
+        font-weight="500"
+        fill="#1F2937"
+        opacity="0.95"
+        text-anchor="middle">&quot;Dads should just let it go.&quot;</text>
+  <text x="540" y="763.2"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Actually, they shouldn&apos;t have to.</text>
+  <text x="540" y="880.8"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Your feelings are valid.</text>
+
+</svg>

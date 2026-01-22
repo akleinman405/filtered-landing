@@ -1,0 +1,72 @@
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+      <linearGradient id="softTealGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#14B8A6"/>
+        <stop offset="100%" style="stop-color:#0D9488"/>
+      </linearGradient>
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="20" cy="20" r="1.5" fill="white" opacity="0.06"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1350" fill="url(#softTealGradient)"/>
+  <rect width="1080" height="1350" fill="url(#dots)"/>
+  
+  <!-- Decorative -->
+  <circle cx="1020" cy="60" r="120" fill="white" opacity="0.03"/>
+  <circle cx="60" cy="1290" r="80" fill="white" opacity="0.03"/>
+
+  <!-- Content -->
+  <text x="540" y="381"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="middle">More honest questions:</text>
+  <text x="120" y="498.6"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="36"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="start">• Do I rehearse arguments</text>
+  <text x="540" y="557.4"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="middle">  in my head between messages?</text>
+  <text x="120" y="675"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="36"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="start">• Do I sometimes want to</text>
+  <text x="540" y="733.8"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="middle">  &quot;win&quot; the exchange?</text>
+  <text x="120" y="851.4"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="36"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="start">• Have I made this harder</text>
+  <text x="540" y="910.1999999999999"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#FFFFFF"
+        opacity="1"
+        text-anchor="middle">  by not setting boundaries earlier?</text>
+
+</svg>

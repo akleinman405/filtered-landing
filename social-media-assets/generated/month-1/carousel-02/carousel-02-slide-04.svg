@@ -1,0 +1,63 @@
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+    
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1350" fill="#FFFFFF"/>
+  
+  
+
+  <!-- Large Letter -->
+  <text x="540" y="449.20000000000005"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="140"
+        font-weight="900"
+        fill="#1F2937"
+        opacity="0.15"
+        text-anchor="middle">I</text>
+  <text x="540" y="489.20000000000005"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="36"
+        font-weight="700"
+        fill="#1F2937"
+        text-anchor="middle">I = Informative</text>
+  <!-- Content -->
+  <text x="540" y="529.2"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Stick to facts. No opinions,</text>
+  <text x="540" y="588"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">no emotions, no defensiveness.</text>
+  <text x="540" y="705.6"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Just the relevant information.</text>
+  <text x="120" y="823.2"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="36"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="start">✗ &quot;You always do this, but fine...&quot;</text>
+  <text x="120" y="882"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="36"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="start">✓ &quot;I can adjust the pickup time.&quot;</text>
+
+</svg>

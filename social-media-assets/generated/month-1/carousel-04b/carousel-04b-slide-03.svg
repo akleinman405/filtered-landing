@@ -1,0 +1,63 @@
+<svg width="1080" height="1350" viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    
+    
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1350" fill="#FFFFFF"/>
+  
+  
+
+  <!-- Content -->
+  <text x="540" y="381"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">Honest check-in:</text>
+  <text x="120" y="498.6"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="36"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="start">• Do I sometimes over-explain</text>
+  <text x="540" y="557.4"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">  when one sentence would do?</text>
+  <text x="120" y="675"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="36"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="start">• Do I match their energy</text>
+  <text x="540" y="733.8"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">  instead of choosing my own?</text>
+  <text x="120" y="851.4"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="36"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="start">• Do I respond when silence</text>
+  <text x="540" y="910.1999999999999"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
+        font-size="42"
+        font-weight="400"
+        fill="#1F2937"
+        opacity="1"
+        text-anchor="middle">  would be more effective?</text>
+
+</svg>
