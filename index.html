@@ -2294,6 +2294,22 @@
             gap: 10px;
         }
 
+        /* Single Response Display */
+        .demo-response-single {
+            margin-top: 8px;
+        }
+
+        .demo-response-single-text {
+            font-size: 14px;
+            color: var(--gray-700);
+            line-height: 1.6;
+            padding: 14px 16px;
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            font-style: italic;
+        }
+
         .demo-response-option {
             display: flex;
             align-items: flex-start;
@@ -2718,7 +2734,7 @@
         <div class="container">
             <div class="section-header">
                 <h2>Try the Filter</h2>
-                <p>See how Filtered transforms hostile messages into calm, actionable summaries. Choose an example or type your own.</p>
+                <p>See how Filtered transforms hostile messages into calm, actionable summaries. Type or paste a message to see it in action.</p>
             </div>
 
             <div class="demo-container">
@@ -2733,39 +2749,11 @@
                         </h3>
                     </div>
                     <div class="demo-panel-content">
-                        <div class="demo-examples-label">Try an example:</div>
-                        <div class="demo-pills" role="group" aria-label="Example hostile messages">
-                            <button class="demo-pill" data-example="schedule" aria-pressed="false">
-                                <span class="demo-pill-icon" aria-hidden="true">📅</span>
-                                Schedule Change
-                            </button>
-                            <button class="demo-pill" data-example="financial" aria-pressed="false">
-                                <span class="demo-pill-icon" aria-hidden="true">💰</span>
-                                Financial Blame
-                            </button>
-                            <button class="demo-pill" data-example="hostile" aria-pressed="false">
-                                <span class="demo-pill-icon" aria-hidden="true">😤</span>
-                                Overt Hostility
-                            </button>
-                            <button class="demo-pill" data-example="passive" aria-pressed="false">
-                                <span class="demo-pill-icon" aria-hidden="true">🙄</span>
-                                Passive-Aggressive
-                            </button>
-                            <button class="demo-pill" data-example="medical" aria-pressed="false">
-                                <span class="demo-pill-icon" aria-hidden="true">🏥</span>
-                                Medical + Blame
-                            </button>
-                            <button class="demo-pill demo-pill-emergency" data-example="emergency" aria-pressed="false">
-                                <span class="demo-pill-icon" aria-hidden="true">🚨</span>
-                                Emergency Alert
-                            </button>
-                        </div>
-
                         <div class="demo-textarea-wrapper">
                             <textarea
                                 id="demo-input"
                                 class="demo-textarea"
-                                placeholder="Or type/paste a message here to see how Filtered would process it..."
+                                placeholder="Type or paste a hostile co-parent message here to see how Filtered protects you..."
                                 maxlength="2000"
                                 aria-label="Message to filter"
                                 aria-describedby="demo-char-count"
@@ -2810,52 +2798,32 @@
                                     </svg>
                                 </div>
                                 <h4>Ready to Filter</h4>
-                                <p>Select an example or enter a message to see how Filtered protects your peace.</p>
+                                <p>Enter a message to see how Filtered protects your peace.</p>
                             </div>
                         </div>
 
                         <!-- Loading State -->
                         <div id="demo-result-loading" class="demo-result-loading" role="status" aria-live="polite">
                             <div class="demo-loading-content">
-                                <div class="demo-loading-icon">
+                                <div class="demo-loading-icon demo-loading-pulse">
                                     <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                                     </svg>
                                 </div>
-                                <h4>Analyzing Message...</h4>
-                                <div class="demo-loading-steps">
-                                    <div class="demo-loading-step" data-step="1">
-                                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                        </svg>
-                                        Reading message
-                                    </div>
-                                    <div class="demo-loading-step" data-step="2">
-                                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                        </svg>
-                                        Detecting tone
-                                    </div>
-                                    <div class="demo-loading-step" data-step="3">
-                                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                        </svg>
-                                        Extracting facts
-                                    </div>
-                                </div>
+                                <h4>Filtering message...</h4>
                             </div>
                         </div>
 
                         <!-- Complete State -->
                         <div id="demo-result-complete" class="demo-result-complete" role="region" aria-live="polite" aria-label="Filtering results">
                             <div class="demo-result-card">
-                                <!-- Mood and Category Badges -->
+                                <!-- Mood Badge -->
                                 <div class="demo-badges-row">
                                     <div id="demo-mood-badge" class="demo-mood-badge hostile" role="status">
-                                        <span class="demo-mood-icon" aria-hidden="true"></span>
+                                        <span class="demo-mood-dot" aria-hidden="true"></span>
+                                        <span class="demo-mood-label">Mood:</span>
                                         <span class="demo-mood-text">Hostile</span>
                                     </div>
-                                    <span id="demo-category-badge" class="demo-category-badge request">REQUEST</span>
                                 </div>
 
                                 <!-- Summary -->
@@ -2871,10 +2839,15 @@
                                     <ul id="demo-action-list" class="demo-action-list"></ul>
                                 </div>
 
-                                <!-- Suggested Responses -->
+                                <!-- Suggested Response -->
                                 <div id="demo-responses-section" class="demo-responses-section">
-                                    <div class="demo-section-label">Suggested Responses</div>
-                                    <div id="demo-response-options" class="demo-response-options"></div>
+                                    <div class="demo-section-label">
+                                        <svg class="demo-ai-sparkle" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                        </svg>
+                                        AI Suggested Response
+                                    </div>
+                                    <div id="demo-response-options" class="demo-response-single"></div>
                                 </div>
 
                                 <!-- Original Message Toggle -->
@@ -3173,143 +3146,11 @@
             return div.innerHTML;
         }
 
-        // ========================================
-        // PRE-COMPUTED EXAMPLE DATA
-        // ========================================
-        const DEMO_EXAMPLES = {
-            schedule: {
-                original: "I NEED to switch Saturday to Sunday because ONCE AGAIN my work scheduled me and you always make everything so difficult. It's not like you have anything important to do anyway. Just have them ready at 10. This shouldn't even be a discussion.",
-                mood: "hostile",
-                moodText: "Hostile",
-                category: "request",
-                categoryText: "REQUEST",
-                summary: "Requesting to change pickup from Saturday to Sunday at 10am due to a work schedule conflict.",
-                bullets: [
-                    "Requesting schedule change: Saturday → Sunday",
-                    "New pickup time: 10am",
-                    "Reason: Work schedule conflict"
-                ],
-                actions: [
-                    { text: "Confirm or decline schedule change", deadline: "Saturday" }
-                ],
-                responses: [
-                    "Sunday at 10am works for me. I'll have them ready.",
-                    "I can't do Sunday. Let's stick with Saturday as planned.",
-                    "Can we discuss an alternative time that works for both of us?"
-                ]
-            },
-            financial: {
-                original: "The kids need new winter coats and OF COURSE you haven't thought about it. You never plan ahead for anything. I already bought them because someone had to be the responsible parent. You owe me $200. Send it now or I'll add it to the court filing.",
-                mood: "hostile",
-                moodText: "Hostile",
-                category: "request",
-                categoryText: "REQUEST",
-                summary: "Purchased winter coats for the children totaling $200 and requesting reimbursement for your share of the expense.",
-                bullets: [
-                    "Purchased winter coats for children",
-                    "Total cost: $200",
-                    "Requesting reimbursement for your share"
-                ],
-                actions: [
-                    { text: "Review expense and determine your share", deadline: null },
-                    { text: "Respond to reimbursement request", deadline: null }
-                ],
-                responses: [
-                    "Thanks for getting the coats. Can you send me the receipts? I'll send my share once I review them.",
-                    "Per our agreement, I'll cover my portion. Please send receipts for documentation.",
-                    "I'd like to discuss how we handle these purchases going forward."
-                ]
-            },
-            hostile: {
-                original: "You are the WORST co-parent ever. You don't care about the kids at all. Everything is always about you. I can't believe I ever thought you were capable of being a decent parent. The kids deserve so much better than you.",
-                mood: "hostile",
-                moodText: "Hostile",
-                category: "personal",
-                categoryText: "PERSONAL",
-                summary: "Message contains emotional venting but no specific requests, questions, or action items related to the children.",
-                bullets: [
-                    "Contains emotional venting",
-                    "No specific requests or questions",
-                    "No action items related to children"
-                ],
-                actions: [],
-                responses: [
-                    "I understand you're frustrated. Is there something specific about the kids we need to discuss?",
-                    "I'm focused on co-parenting effectively. Let me know if there's something the kids need.",
-                    "I'll respond when there's something specific to address about our children."
-                ]
-            },
-            passive: {
-                original: "Fine. Whatever. I guess I'll just handle the school pickup like I handle everything else around here. Don't worry about it. I'm used to doing things without any help. It's fine. Really.",
-                mood: "tense",
-                moodText: "Tense",
-                category: "statement",
-                categoryText: "STATEMENT",
-                summary: "Confirming they will handle school pickup. Tone suggests frustration about division of responsibilities.",
-                bullets: [
-                    "Confirming school pickup",
-                    "They will handle it today"
-                ],
-                actions: [
-                    { text: "Acknowledge pickup arrangement", deadline: null }
-                ],
-                responses: [
-                    "Thank you for handling pickup today. I appreciate it.",
-                    "Sounds good. Let me know if you need me to take any upcoming pickups.",
-                    "Got it. I'll plan to do the next pickup to help balance things out."
-                ]
-            },
-            medical: {
-                original: "Emma has a fever of 102. I had to leave work AGAIN because you never answer your phone. This is the third time this month. She needs to see a doctor tomorrow. You need to take her because I've already missed too much work covering for YOUR failures as a parent.",
-                mood: "hostile",
-                moodText: "Hostile",
-                category: "request",
-                categoryText: "REQUEST",
-                summary: "Emma has a 102° fever and needs to see a doctor tomorrow. Requesting you take her to the appointment.",
-                bullets: [
-                    "Emma has a 102° fever",
-                    "Needs doctor appointment tomorrow",
-                    "Request: You take her to the appointment"
-                ],
-                actions: [
-                    { text: "Confirm you can take Emma to the doctor tomorrow", deadline: "Tomorrow", urgent: true },
-                    { text: "Check on Emma's condition", deadline: null }
-                ],
-                responses: [
-                    "I'll take Emma to the doctor tomorrow. Please send me the appointment details when you have them.",
-                    "I hope Emma feels better. I can take her - what time is the appointment?",
-                    "Thanks for letting me know. I'll call the pediatrician first thing tomorrow to schedule."
-                ]
-            },
-            emergency: {
-                original: "URGENT: Tommy broke his arm at school. I'm at the ER at St. Mary's Hospital with him now. Of course this happens on YOUR weekend. You never watch him properly. Get here NOW.",
-                mood: "hostile",
-                moodText: "Hostile",
-                category: "emergency",
-                categoryText: "EMERGENCY",
-                isEmergency: true,
-                summary: "Tommy broke his arm at school. Currently at St. Mary's Hospital ER. Your immediate presence is requested.",
-                bullets: [
-                    "Tommy broke his arm at school",
-                    "Currently at St. Mary's Hospital ER",
-                    "Immediate action required"
-                ],
-                actions: [
-                    { text: "Go to St. Mary's Hospital ER immediately", deadline: "Now", urgent: true }
-                ],
-                responses: [
-                    "On my way to the ER now. I'll be there as soon as possible.",
-                    "I'm leaving now. Please keep me updated on his condition.",
-                    "Heading to St. Mary's now. Thank you for letting me know."
-                ]
-            }
-        };
 
         // ========================================
         // STATE MANAGEMENT
         // ========================================
         const DemoState = {
-            currentExample: null,
             isLoading: false,
             hasResult: false,
             originalVisible: false,
@@ -3369,7 +3210,6 @@
         // DOM ELEMENTS
         // ========================================
         const elements = {
-            pills: document.querySelectorAll('.demo-pill'),
             textarea: document.getElementById('demo-input'),
             charCount: document.getElementById('demo-char-count'),
             filterBtn: document.getElementById('demo-filter-btn'),
@@ -3378,7 +3218,6 @@
             resultLoading: document.getElementById('demo-result-loading'),
             resultComplete: document.getElementById('demo-result-complete'),
             moodBadge: document.getElementById('demo-mood-badge'),
-            categoryBadge: document.getElementById('demo-category-badge'),
             summary: document.getElementById('demo-summary'),
             bulletsList: document.getElementById('demo-bullets'),
             actionsSection: document.getElementById('demo-actions-section'),
@@ -3388,7 +3227,6 @@
             originalToggle: document.getElementById('demo-original-toggle'),
             originalContent: document.getElementById('demo-original-content'),
             originalMessage: document.getElementById('demo-original-message'),
-            loadingSteps: document.querySelectorAll('.demo-loading-step'),
             ctaBtn: document.getElementById('demo-cta-btn')
         };
 
@@ -3439,62 +3277,6 @@
         }
 
         // ========================================
-        // EXAMPLE PILL HANDLERS
-        // ========================================
-        function selectExample(exampleKey) {
-            const example = DEMO_EXAMPLES[exampleKey];
-            if (!example) return;
-
-            // Update pill states
-            elements.pills.forEach(pill => {
-                pill.classList.remove('active');
-                pill.setAttribute('aria-pressed', 'false');
-            });
-
-            const selectedPill = document.querySelector('[data-example="' + exampleKey + '"]');
-            if (selectedPill) {
-                selectedPill.classList.add('active');
-                selectedPill.setAttribute('aria-pressed', 'true');
-            }
-
-            // Populate textarea
-            elements.textarea.value = example.original;
-            DemoState.currentExample = exampleKey;
-
-            updateCharCount();
-            updateButtonState();
-
-            // Track analytics
-            trackEvent('demo_example_selected', { example: exampleKey });
-        }
-
-        // ========================================
-        // LOADING ANIMATION
-        // ========================================
-        function animateLoadingSteps() {
-            elements.loadingSteps.forEach(step => {
-                step.classList.remove('active', 'complete');
-            });
-
-            let currentStep = 0;
-            const stepInterval = setInterval(() => {
-                if (currentStep > 0) {
-                    elements.loadingSteps[currentStep - 1].classList.remove('active');
-                    elements.loadingSteps[currentStep - 1].classList.add('complete');
-                }
-
-                if (currentStep < elements.loadingSteps.length) {
-                    elements.loadingSteps[currentStep].classList.add('active');
-                    currentStep++;
-                } else {
-                    clearInterval(stepInterval);
-                }
-            }, 400);
-
-            return stepInterval;
-        }
-
-        // ========================================
         // RESULT DISPLAY
         // ========================================
         function displayResult(data) {
@@ -3504,14 +3286,7 @@
             const moodText = elements.moodBadge.querySelector('.demo-mood-text');
             if (moodText) moodText.textContent = data.moodText;
 
-            // Category badge
-            if (data.category && elements.categoryBadge) {
-                elements.categoryBadge.className = 'demo-category-badge ' + escapeHtml(data.category);
-                elements.categoryBadge.textContent = data.categoryText || data.category.toUpperCase();
-                elements.categoryBadge.style.display = 'inline-block';
-            } else if (elements.categoryBadge) {
-                elements.categoryBadge.style.display = 'none';
-            }
+            // Category badge removed - simplified UI
 
             // Summary and Bullets
             if (data.bullets && data.bullets.length > 0 && elements.bulletsList) {
@@ -3552,21 +3327,13 @@
                 elements.actionsSection.style.display = 'none';
             }
 
-            // Suggested responses - use escapeHtml for XSS prevention
+            // Suggested response - show only ONE response (simplified)
             elements.responseOptions.innerHTML = '';
             if (data.responses && data.responses.length > 0) {
                 elements.responsesSection.style.display = 'block';
-                data.responses.forEach((response, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'demo-response-option';
-                    div.tabIndex = 0; // Make focusable for accessibility
-                    div.innerHTML = '<span class="demo-ai-badge">' +
-                        '<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">' +
-                        '<path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/>' +
-                        '</svg>AI</span>' +
-                        '<span class="demo-response-text">"' + escapeHtml(response) + '"</span>';
-                    elements.responseOptions.appendChild(div);
-                });
+                // Only show the first (best) response
+                const response = data.responses[0];
+                elements.responseOptions.innerHTML = '<div class="demo-response-single-text">"' + escapeHtml(response) + '"</div>';
             } else {
                 elements.responsesSection.style.display = 'none';
             }
@@ -3596,89 +3363,71 @@
             if (btnText) btnText.textContent = 'Filtering...';
 
             showState('loading');
-            const stepInterval = animateLoadingSteps();
 
             // Track analytics
             trackEvent('demo_filter_clicked', {
-                example: DemoState.currentExample || 'custom',
                 messageLength: message.length
             });
 
-            // For pre-computed examples, use cached data
-            // For custom messages, try live API first, then fall back to generic
+            // Use live API for all messages
             let resultData;
 
-            if (DemoState.currentExample && DEMO_EXAMPLES[DemoState.currentExample]) {
-                // Use pre-computed data for examples (fast, no API cost)
-                resultData = DEMO_EXAMPLES[DemoState.currentExample];
-                await new Promise(resolve => setTimeout(resolve, 1500));
-            } else {
-                // Try live API for custom messages
-                try {
-                    const response = await fetch('/.netlify/functions/demo-filter', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ message: message })
-                    });
+            try {
+                const response = await fetch('/.netlify/functions/demo-filter', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
 
-                    if (response.ok) {
-                        const data = await response.json();
+                if (response.ok) {
+                    const data = await response.json();
 
-                        // Check for safety alerts
-                        if (data.safety) {
-                            resultData = {
-                                original: message,
-                                mood: 'hostile',
-                                moodText: 'Safety Alert',
-                                category: 'personal',
-                                categoryText: 'PERSONAL',
-                                summary: data.message + ' Please consider reaching out for support.',
-                                actions: [],
-                                responses: [],
-                                safetyResources: data.resources
-                            };
-                        } else if (data.success) {
-                            resultData = data;
-                        } else {
-                            throw new Error(data.error || 'Unknown error');
-                        }
-                    } else if (response.status === 429) {
-                        // Rate limited - show message
-                        elements.rateLimitMsg.classList.add('active');
-                        clearInterval(stepInterval);
-                        DemoState.isLoading = false;
-                        elements.filterBtn.classList.remove('loading');
-                        const btnTextReset = elements.filterBtn.querySelector('.btn-text');
-                        if (btnTextReset) btnTextReset.textContent = 'Filter This Message';
-                        return;
+                    // Check for safety alerts
+                    if (data.safety) {
+                        resultData = {
+                            original: message,
+                            mood: 'hostile',
+                            moodText: 'Safety Alert',
+                            summary: data.message + ' Please consider reaching out for support.',
+                            actions: [],
+                            responses: [],
+                            safetyResources: data.resources
+                        };
+                    } else if (data.success) {
+                        resultData = data;
                     } else {
-                        throw new Error('API request failed');
+                        throw new Error(data.error || 'Unknown error');
                     }
-                } catch (apiError) {
-                    // Fallback to generic response if API fails
-                    console.warn('Live API unavailable, using fallback:', apiError.message);
-                    resultData = {
-                        original: message,
-                        mood: message.length > 200 ? 'hostile' : 'tense',
-                        moodText: message.length > 200 ? 'Hostile' : 'Tense',
-                        category: 'statement',
-                        categoryText: 'STATEMENT',
-                        summary: 'The sender expresses frustration. Consider focusing on any specific requests or actionable items when responding.',
-                        actions: [
-                            { text: 'Identify any specific requests in the message', deadline: null }
-                        ],
-                        responses: [
-                            "I understand. Is there something specific you need me to address?",
-                            "Thanks for letting me know. I'll look into this.",
-                            "Let's focus on what's best for the kids. What do you need from me?"
-                        ]
-                    };
-                    // Add delay for fallback
-                    await new Promise(resolve => setTimeout(resolve, 1000));
+                } else if (response.status === 429) {
+                    // Rate limited - show message
+                    elements.rateLimitMsg.classList.add('active');
+                    DemoState.isLoading = false;
+                    elements.filterBtn.classList.remove('loading');
+                    const btnTextReset = elements.filterBtn.querySelector('.btn-text');
+                    if (btnTextReset) btnTextReset.textContent = 'Filter This Message';
+                    return;
+                } else {
+                    throw new Error('API request failed');
                 }
+            } catch (apiError) {
+                // Fallback to generic response if API fails
+                console.warn('Live API unavailable, using fallback:', apiError.message);
+                resultData = {
+                    original: message,
+                    mood: message.length > 200 ? 'hostile' : 'tense',
+                    moodText: message.length > 200 ? 'Hostile' : 'Tense',
+                    summary: 'The sender expresses frustration. Consider focusing on any specific requests or actionable items when responding.',
+                    actions: [
+                        { text: 'Identify any specific requests in the message', deadline: null }
+                    ],
+                    responses: [
+                        "I understand. Is there something specific you need me to address?"
+                    ]
+                };
+                // Add delay for fallback
+                await new Promise(resolve => setTimeout(resolve, 1000));
             }
 
-            clearInterval(stepInterval);
             RateLimiter.increment();
 
             displayResult(resultData);
@@ -3712,51 +3461,11 @@
         }
 
         // ========================================
-        // KEYBOARD NAVIGATION
-        // ========================================
-        function handlePillKeyNav(e) {
-            const pillsArray = Array.from(elements.pills);
-            const currentIndex = pillsArray.indexOf(e.target);
-
-            let nextIndex;
-            switch(e.key) {
-                case 'ArrowRight':
-                case 'ArrowDown':
-                    e.preventDefault();
-                    nextIndex = (currentIndex + 1) % pillsArray.length;
-                    pillsArray[nextIndex].focus();
-                    break;
-                case 'ArrowLeft':
-                case 'ArrowUp':
-                    e.preventDefault();
-                    nextIndex = (currentIndex - 1 + pillsArray.length) % pillsArray.length;
-                    pillsArray[nextIndex].focus();
-                    break;
-                case 'Enter':
-                case ' ':
-                    e.preventDefault();
-                    selectExample(e.target.dataset.example);
-                    break;
-            }
-        }
-
-        // ========================================
         // EVENT LISTENERS
         // ========================================
         function initEventListeners() {
-            // Example pill clicks
-            elements.pills.forEach(pill => {
-                pill.addEventListener('click', () => selectExample(pill.dataset.example));
-                pill.addEventListener('keydown', handlePillKeyNav);
-            });
-
             // Textarea input
             elements.textarea.addEventListener('input', () => {
-                DemoState.currentExample = null; // Clear example selection when typing
-                elements.pills.forEach(pill => {
-                    pill.classList.remove('active');
-                    pill.setAttribute('aria-pressed', 'false');
-                });
                 updateCharCount();
                 updateButtonState();
             });

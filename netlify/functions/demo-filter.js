@@ -199,15 +199,16 @@ Respond in JSON format:
   "moodScore": 1-10 (10 = very hostile),
   "summary": "Brief factual summary of any requests, information, or action items (1-2 sentences)",
   "actions": [{"text": "action item", "deadline": "deadline if mentioned or null"}],
-  "responses": ["suggested neutral response 1", "suggested neutral response 2", "suggested neutral response 3"]
+  "responses": ["one suggested neutral response"]
 }
 
 Rules:
 - Remove insults, blame, manipulation, and emotional attacks
 - Focus only on facts: dates, times, locations, requests, questions
 - If no actionable content, say so in the summary
-- Keep responses brief, neutral, and focused on the children
-- For actions, only include concrete to-dos`;
+- Keep the response brief, neutral, and focused on the children
+- For actions, only include concrete to-dos
+- Provide only ONE suggested response`;
 
 async function filterWithClaude(message) {
     const anthropic = new Anthropic({
@@ -246,7 +247,7 @@ async function filterWithClaude(message) {
         moodText: getMoodText(parsed.mood),
         summary: parsed.summary || 'No actionable content found.',
         actions: Array.isArray(parsed.actions) ? parsed.actions.slice(0, 3) : [],
-        responses: Array.isArray(parsed.responses) ? parsed.responses.slice(0, 3) : [],
+        responses: Array.isArray(parsed.responses) ? parsed.responses.slice(0, 1) : [],
         original: message,
     };
 }
