@@ -1,0 +1,6 @@
+<svg width="720" height="720" viewBox="0 0 720 720" xmlns="http://www.w3.org/2000/svg">
+  <!-- Logo 10: Stylized F that looks like a funnel -->
+  <rect width="720" height="720" fill="#0D9488"/>
+  <!-- F shaped like a funnel - top bar wide, middle bar, vertical stem tapers -->
+  <path d="M200 160 L520 160 L520 230 L300 230 L300 320 L450 320 L450 390 L300 390 L300 560 L230 560 L230 160 Z" fill="white"/>
+</svg>

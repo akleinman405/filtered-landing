@@ -1,0 +1,6 @@
+<svg width="720" height="720" viewBox="0 0 720 720" xmlns="http://www.w3.org/2000/svg">
+  <!-- Logo 9: Ultra minimalist - just the essential funnel shape -->
+  <rect width="720" height="720" fill="#0D9488"/>
+  <!-- Simplified funnel - triangle with stem -->
+  <path d="M180 200 L540 200 L400 420 L400 560 L320 560 L320 420 Z" fill="white"/>
+</svg>

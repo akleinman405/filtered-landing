@@ -20,19 +20,20 @@
   <circle cx="1100" cy="100" r="200" fill="white" opacity="0.05"/>
   <circle cx="100" cy="530" r="150" fill="white" opacity="0.05"/>
 
-  <!-- Shield Icon -->
-  <g transform="translate(480, 120)">
-    <path d="M120 0L240 45V135C240 225 120 270 120 270S0 225 0 135V45L120 0Z"
-          fill="white" opacity="0.95"/>
-    <path d="M120 20L220 58V135C220 210 120 248 120 248S20 210 20 135V58L120 20Z"
-          fill="#0D9488"/>
-    <!-- Checkmark inside shield -->
-    <path d="M85 135L110 160L160 100"
-          stroke="white" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Funnel Icon Container -->
+  <g transform="translate(480, 80)">
+    <!-- Outer rounded rectangle background -->
+    <rect x="0" y="0" width="240" height="240" rx="40" fill="white" opacity="0.95"/>
+    <!-- Inner teal background -->
+    <rect x="20" y="20" width="200" height="200" rx="30" fill="#0D9488"/>
+    <!-- Funnel icon - OUTLINE style to match app -->
+    <g transform="translate(50, 50) scale(6.7)">
+      <path fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+    </g>
   </g>
 
   <!-- App Name -->
-  <text x="600" y="440"
+  <text x="600" y="400"
         font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
         font-size="72"
         font-weight="700"
@@ -42,7 +43,7 @@
   </text>
 
   <!-- Tagline -->
-  <text x="600" y="500"
+  <text x="600" y="470"
         font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
         font-size="28"
         font-weight="400"
@@ -53,7 +54,7 @@
   </text>
 
   <!-- Subtitle -->
-  <text x="600" y="545"
+  <text x="600" y="520"
         font-family="Inter, -apple-system, BlinkMacSystemFont, sans-serif"
         font-size="20"
         font-weight="500"
