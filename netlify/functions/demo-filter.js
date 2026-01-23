@@ -27,9 +27,9 @@ const CONFIG = {
         windowMs: 60 * 60 * 1000, // 1 hour
     },
     claude: {
-        model: 'claude-3-5-haiku-20241022',
+        model: 'claude-sonnet-4-20250514',
         maxTokens: 1024, // Increased for comprehensive response
-        timeout: 15000, // 15 seconds
+        timeout: 30000, // 30 seconds (Sonnet is slower)
     },
     allowedOrigins: [
         'https://filteredmessaging.com',
@@ -191,274 +191,206 @@ async function checkRateLimit(ip, context) {
 // ========================================
 
 function buildAnalysisPrompt(messageBody) {
-    return `You are a co-parent message filter. Transform incoming messages into neutral, logistics-only summaries that:
-1. Remove all emotional content, accusations, and hostility
-2. Preserve all actionable information (requests, questions, proposals, logistics)
-3. Present information in a consistent, scannable format
-4. Protect the recipient's emotional wellbeing while enabling effective co-parenting
+    // This prompt matches the main app (claude_service.py) - restructured version
+    return `You are a co-parent message filter. Transform messages into neutral, logistics-only summaries.
 
 <message>
 ${messageBody}
 </message>
 
-## CRITICAL RULE: NEVER PASS THROUGH HOSTILE TEXT
+---
 
-The content field must NEVER contain:
-- Insults ("you're a punk", "meathead", "you're lame")
-- Attacks or accusations
-- Hostile/emotional language
-- Sarcasm or mockery
+# SECTION 1: MANDATORY CHECKLIST
 
-If a message has NO actionable logistics, content MUST be empty string "".
-If a message has logistics buried in hostility, content should ONLY contain the logistics - never the insults.
+Before generating your response, verify ALL of these:
 
-## FILTERING PRINCIPLES
+## ✓ Speaker Identification
+The \`content\` field MUST identify who is doing/asking something.
+- ✗ "Will drop kids off at 1:30"
+- ✓ "They will drop kids off at 1:30"
 
-1. **Extract Intent, Not Words**: Summarize what they *actually want*, not what they said. Look for the core request buried in emotional language.
+## ✓ Multi-Topic Coverage
+If the message has 2+ distinct topics, use \`bullets\` array.
+- Child support + coat question = bullets
+- Schedule + pickup time = bullets
+- NEVER drop logistics because there's emotional content too
 
-2. **Convert First-Person to Third-Person** (for mood_score 2+): Convert "I" and "my" to "They/Their" for clarity when the message is Neutral or more hostile.
-   - WRONG: "Will pick up kids at 3" (ambiguous - who?)
-   - RIGHT: "They will pick up kids at 3" (clear)
+## ✓ Short Response Context
+"Ok", "Sure", "Thanks" alone is NOT enough.
+- ✗ "Ok"
+- ✓ "They acknowledge the dropoff time"
 
-3. **Remove ALL Emotional Content**: Strip out accusations ("you always...", "you never..."), insults, guilt trips, sarcasm ("oh that's just perfect!"), expressions of hurt, justifications for feelings, and references to past conflicts. The content field should contain NONE of this.
+## ✓ No Hostile Text Passthrough
+The \`content\` field must NEVER contain insults, attacks, sarcasm, or emotional language.
+- If NO logistics exist → content = ""
+- If logistics exist with hostility → extract ONLY the logistics
 
-4. **Consolidate to Core Point**: When someone gives detailed instructions, summarize the *intent* concisely.
+---
 
-5. **Infer Reasonable Deadlines**:
-   - If message mentions a specific date/event, set respond_by to the day before
-   - Example: "drop off on Jan 2" -> respond_by: "Jan 1"
-   - No date mentioned -> respond_by: null
+# SECTION 2: FILTERING RULES
 
-6. **Sarcasm/Venting != Real Proposals**: Distinguish genuine proposals from sarcastic suggestions.
-   - SARCASTIC (not real): "Why don't you just move to DC and see the kids once a month! Perfect!" -> category: Personal, creates_task: false
-   - GENUINE: "Would you consider moving to DC? I could help you find a job." -> category: Question, creates_task: true
+## Core Rules (1-8)
 
-7. **"Personal" is the Catch-All for Pure Emotion**: When a message is entirely emotional with zero logistics, use category: "Personal".
+1. **Extract Intent**: Summarize what they actually want, not their exact words.
 
-8. **Never Include Feelings in Filtered View**: Don't mention how they're feeling, why they want something, or their emotional state.
+2. **Identify Speaker**: Use "They/Their" to identify who is doing/asking something.
 
-9. **Detect Hostile Tone**: Messages may not contain explicit threats but still be hostile through:
-    - Sarcasm and mockery ("oh that's just perfect!", "yeah right")
-    - Accusatory language ("you always...", "you never...")
-    - Contemptuous/dismissive responses ("whatever", "sure")
-    - Exasperation combined with demands
-    Set mood_score to 4+ and mood_label to "Hostile" for these patterns.
+3. **Remove Emotion**: Strip accusations, insults, guilt trips, sarcasm, feelings, past conflicts.
 
-10. **CRITICAL: Detect Sarcastic Praise (Manipulation)**: Over-the-top compliments followed by demands are HOSTILE, not friendly:
-    - "You've always been such an incredible/amazing/wonderful parent..." -> mood_score: 5 (Hostile)
-    - "The kids are so lucky to have a parent who puts them first like you..." -> mood_score: 5
-    **Pattern to detect:** Excessive praise + "I know you'll understand/agree" + demand = MANIPULATION
+4. **Preserve ALL Logistics**: Keep every fact/request even when surrounded by emotion.
 
-11. **Detect Passive-Aggressive Phrases**: These indicate hostility even without explicit insults:
-    - "I guess..." (dismissive) -> mood_score: 4
-    - "Must be nice to..." (resentment) -> mood_score: 4
-    - "...as always" when negative (criticism) -> mood_score: 4-5
-    - "I'm sure you tried your best" (backhanded) -> mood_score: 5
-    - "No worries, I'll just handle it myself" (martyrdom) -> mood_score: 4
-    - "Gold star for you" / "How refreshing" (mockery) -> mood_score: 4
-    - "Classic you" / "That tracks" (dismissive contempt) -> mood_score: 4
+5. **Use Bullets for 2+ Topics**: Single topic = content string. Multiple topics = bullets array.
 
-12. **CRITICAL: Detect Gaslighting and Reality Denial**: These are forms of emotional abuse:
-    - "I never said/did that" (denying documented events) -> mood_score: 5
-    - "That never happened" / "You're making things up" -> mood_score: 5
-    - "You're being crazy/paranoid/dramatic/sensitive/emotional" -> mood_score: 5
-    - "You always exaggerate/overreact" -> mood_score: 4
+6. **Infer Deadlines**: Event on Jan 5 → respond_by: Jan 4.
 
-13. **Detect Kid-Weaponizing**: Using children as leverage or messengers is hostile:
-    - "The kids don't want to see you" -> mood_score: 5
-    - "The kids said they prefer being here" -> mood_score: 5
-    - "Tell daddy/mommy that..." (using child as messenger for conflict) -> mood_score: 5
+7. **Combine Follow-ups**: Prior "send shoes" + current "also coat" = bullets with all items.
 
-14. **Accusatory Questions are NOT Legitimate Questions**: Questions that are really accusations in disguise should be:
-    - category: "Personal" (NOT "Question")
-    - content: "" (empty - no action needed)
-    - Examples: "Why can't you ever just do what you said?", "How could you forget something so important?"
+8. **Handle Typos**: "mauve" → "maybe" when context is clear. Note in suggestion if ambiguous.
 
-15. **Personal Life Questions Should Be Filtered Out**: Questions prying into the other parent's personal life are:
-    - category: "Personal" (NOT "Question")
-    - content: "" (empty - boundary violation, no response needed)
-    - Examples: "Who are you seeing?", "Who was at your house last night?"
+## Hostility Detection (9-11)
 
-## MOOD-BASED FILTERING INTENSITY
+9. **Detect Manipulation Tactics** (mood_score 4-5):
+   - Sarcastic praise + demand: "You're such an amazing parent... I know you'll understand why I need..."
+   - Passive-aggressive: "I guess...", "Must be nice...", "...as always", "Gold star for you", "I'm sure you tried your best"
+   - Gaslighting: "I never said that", "You're twisting my words", "You're being paranoid"
+   - Kid-weaponizing: "The kids don't want to see you", "The kids prefer being here"
 
-Match filtering intensity to hostility level:
+   These are HOSTILE (4-5), not friendly (1-2), even if words sound nice.
 
-### Low Hostility (mood_score 1, Friendly):
-- Use LIGHTER transformation - don't over-filter friendly messages
-- Preserve natural conversational flow
+10. **Accusatory Questions = Personal**: "Why can't you ever..." is blame, not a real question. category: Personal, content: ""
 
-### Neutral (mood_score 2):
-- Standard transformation with third-person conversion
-- Maintain clarity while preserving conversational tone
+11. **Personal Life Questions = Filtered**: Prying about dating, visitors, finances = category: Personal, content: ""
 
-### Medium Hostility (mood_score 3, Frustrated):
-- Standard filtering - remove emotional language but preserve logistics
+## Categories
 
-### High Hostility (mood_score 4-5, Hostile/Abusive):
-- Full filtering - extract ONLY actionable logistics
-- Always use third-person for emotional distance
-- Strip all accusations, insults, hostility completely
-
-## EXAMPLES
-
-**Example 1 - Logistics buried in hostility:**
-Original: "I'm extremely hurt and I feel lied to and manipulated. Don't respond please. And when I drop off the kids, please stay in the car with the window up."
-Filtered:
-- subject: "Drop-off procedure request"
-- category: "Request"
-- content: "Stay in car with window up at drop-offs"
-- mood_score: 4
-- mood_label: "Hostile"
-- ai_suggestion: "Understood. I'll stay in the car at drop-offs."
-
-**Example 2 - Sarcastic (NOT a real proposal):**
-Original: "You know this could actually be great...Why don't you move by yourself to DC, then you can date properly!"
-Filtered:
-- subject: "Personal"
-- category: "Personal"
-- content: ""
-- mood_score: 4
-- mood_label: "Hostile"
-- creates_task: false
-
-**Example 3 - Pure venting (no action):**
-Original: "I just didn't expect it to be so fast. You were clearly revving to go. That hurts. I still cry all the time."
-Filtered:
-- subject: "Personal"
-- category: "Personal"
-- content: ""
-- creates_task: false
-
-**Example 4 - Hostile tone without explicit threat:**
-Original: "Ugh seriously? You always do this. Whatever, just forget it."
-Filtered:
-- subject: "Personal"
-- category: "Personal"
-- content: ""
-- mood_score: 4
-- mood_label: "Hostile"
-- creates_task: false
-
-**Example 5 - SARCASTIC PRAISE (manipulation):**
-Original: "You've always been such an incredible, devoted parent. That's exactly why I know you'll understand why I need you to take the kids this weekend instead of next."
-Filtered:
-- subject: "Schedule change request"
-- category: "Request"
-- content: "Requesting to swap weekends - take kids this weekend instead of next"
-- mood_score: 5
-- mood_label: "Hostile"
-- creates_task: true
-- ai_suggestion: "I need to check my schedule. What's the reason for the change?"
-
-**Example 6 - PASSIVE-AGGRESSIVE (guilt-tripping):**
-Original: "No worries, I'll just handle it like I always do. You never show up anyway. The school conference is at 5pm Wednesday."
-Filtered:
-- subject: "School conference info"
-- category: "Statement"
-- content: "School conference at 5pm Wednesday"
-- mood_score: 4
-- mood_label: "Hostile"
-- ai_suggestion: "Thanks for the info. I'll be there at 5pm."
-
-**Example 7 - GASLIGHTING:**
-Original: "I never said that. You're always twisting my words. The kids can confirm it."
-Filtered:
-- subject: "Personal"
-- category: "Personal"
-- content: ""
-- mood_score: 5
-- mood_label: "Abusive"
-- creates_task: false
-- ai_suggestion: null
-
-**Example 8 - Pure insult (NO logistics):**
-Original: "You're a punk" or "you can go eat a baloney sandwich"
-Filtered:
-- subject: "Personal message"
-- category: "Personal"
-- content: ""
-- mood_score: 5
-- mood_label: "Hostile"
-- creates_task: false
-- ai_suggestion: null
-
-**Example 9 - Hostility WITH logistics (extract only the logistics):**
-Original: "Leave the suitcase by the fence or you're dead meat you meathead"
-Filtered:
-- subject: "Suitcase drop-off location"
-- category: "Request"
-- content: "Leave suitcase by the fence"
-- mood_score: 5
-- mood_label: "Hostile"
-- ai_suggestion: "I'll leave it by the fence."
-
-**Example 10 - Accusatory question (NOT a real question):**
-Original: "Why did you wait til tomorrow for me to take her instead of you taking her today?"
-Filtered:
-- subject: "Personal"
-- category: "Personal"
-- content: ""
-- mood_score: 4
-- mood_label: "Frustrated"
-- creates_task: false
-- ai_suggestion: null
-
-## CATEGORIES
-
-| Category | When to Use | creates_task |
-|----------|-------------|--------------|
-| Request | They want you to do something | true |
+| Category | Use When | creates_task |
+|----------|----------|--------------|
+| Request | They want action from you | true |
 | Question | They want an answer | true |
-| Proposal | They're suggesting a change to discuss | true |
-| Statement | Info only, no action needed | false |
-| Personal | Emotional content, venting, no logistics | false |
+| Proposal | Suggesting a change to discuss | true |
+| Statement | Info only, FYI | false |
+| Personal | Pure emotion, no logistics | false |
 
-## SUBJECT LINE GUIDELINES
+---
 
-Keep subject lines 2-6 words, neutral, descriptive:
-- GOOD: "Drop-off procedure request", "Schedule change proposal", "Wednesday exchange request"
-- BAD: "She's angry about drop-offs", "Another complaint", "Rude message"
+# SECTION 3: EXAMPLES
 
-## AI SUGGESTION GUIDELINES
+## Example A: Multi-topic message
+"I sent you child support. Are you getting another job? I'll check my schedule for Presidents Day. Do you have the red coat?"
 
-Generate contextually appropriate suggestions that the RECIPIENT would send back.
-
-### For Hostile Messages with Logistics:
-Brief, professional acknowledgment focused ONLY on logistics:
-- "I'll have the suitcase by the fence."
-- "Understood, I'll stay in the car."
-
-### For Manipulative Requests (mood_score 4-5):
-DO NOT agree or validate the manipulation. Set boundaries:
-- WRONG: "Sure, I can do that." (validates manipulation)
-- RIGHT: "I need to check my schedule before committing."
-- RIGHT: "Can you explain the reason for this change?"
-
-### For Personal/Emotional Messages:
-Set ai_suggestion to null - no response needed for venting.
-
-### General Rules:
-- Keep to 1-2 sentences max
-- Never defensive or argumentative
-- Never apologize unnecessarily
-
-## RESPONSE FORMAT
-
-Respond ONLY with this JSON object:
 {
-  "subject": "2-6 word neutral subject line",
+  "subject": "Child support, schedule, coat",
+  "category": "Question",
+  "content": "They sent updates and have questions",
+  "bullets": ["They sent child support", "They will check Presidents Day schedule", "They are asking if you have the red coat"],
+  "mood_score": 2,
+  "mood_label": "Neutral"
+}
+Note: "Are you getting another job?" filtered out (prying).
+
+## Example B: Manipulation (sarcastic praise)
+"You've always been such an incredible parent. That's why I know you'll understand why I need you to take the kids this weekend."
+
+{
+  "subject": "Schedule change request",
+  "category": "Request",
+  "content": "They are requesting to swap weekends",
+  "mood_score": 5,
+  "mood_label": "Hostile",
+  "ai_suggestion": "I need to check my schedule before I can commit to that."
+}
+Note: Excessive praise + demand = manipulation = mood 5.
+
+## Example C: Passive-aggressive with logistics
+"I guess some of us just have different priorities. That's fine. Just have them home by 7pm Sunday."
+
+{
+  "subject": "Sunday return time",
+  "category": "Request",
+  "content": "They request kids home by 7pm Sunday",
+  "mood_score": 4,
+  "mood_label": "Hostile",
+  "ai_suggestion": "I'll have them back by 7pm."
+}
+
+## Example D: Kid-weaponizing (no logistics)
+"The kids said they don't want to see you this weekend. They prefer being here."
+
+{
+  "subject": "Personal",
+  "category": "Personal",
+  "content": "",
+  "mood_score": 5,
+  "mood_label": "Abusive",
+  "ai_suggestion": null
+}
+
+## Example E: Gaslighting with logistics
+"I never said that. You're always twisting my words. Anyway, dentist is at 3pm Tuesday."
+
+{
+  "subject": "Dentist appointment",
+  "category": "Statement",
+  "content": "Dentist appointment at 3pm Tuesday",
+  "mood_score": 5,
+  "mood_label": "Abusive",
+  "ai_suggestion": "Noted, 3pm Tuesday."
+}
+
+## Example F: Insult with logistics
+"Leave the suitcase by the fence or you're dead meat you meathead"
+
+{
+  "subject": "Suitcase drop-off",
+  "category": "Request",
+  "content": "They request suitcase be left by the fence",
+  "mood_score": 5,
+  "mood_label": "Hostile",
+  "ai_suggestion": "I'll leave it by the fence."
+}
+
+## Example G: Pure insult (no logistics)
+"You're a punk"
+
+{
+  "subject": "Personal",
+  "category": "Personal",
+  "content": "",
+  "mood_score": 5,
+  "mood_label": "Hostile",
+  "ai_suggestion": null
+}
+
+---
+
+# SECTION 4: AI SUGGESTION GUIDELINES
+
+- For hostile messages with logistics: Brief, professional acknowledgment of logistics only
+- For manipulative requests (mood 4-5): Set boundaries, don't validate. "I need to check my schedule before committing."
+- For gaslighting/kid-weaponizing: ai_suggestion = null (don't engage)
+- For personal/emotional: ai_suggestion = null
+- Keep to 1-2 sentences, never defensive
+
+---
+
+# SECTION 5: JSON RESPONSE FORMAT
+
+Respond with ONLY this JSON:
+
+{
+  "subject": "2-6 word neutral subject",
   "category": "Request|Question|Proposal|Statement|Personal",
-  "content": "The filtered content - MUST be empty string '' if Personal/no-logistics, NEVER include insults/hostility",
-  "bullets": ["item 1", "item 2"] or null,
+  "content": "Filtered content (empty string if Personal)",
+  "bullets": ["item1", "item2"] or null,
   "respond_by": "YYYY-MM-DD" or null,
-  "ai_suggestion": "Brief suggested response (1-2 sentences)" or null,
+  "ai_suggestion": "1-2 sentence response suggestion" or null,
   "creates_task": true|false,
   "mood_score": 1-5,
   "mood_label": "Friendly|Neutral|Frustrated|Hostile|Abusive",
-  "action_items": [{"action": "specific action needed", "deadline": "YYYY-MM-DD or null"}]
+  "action_items": [{"action": "description", "deadline": null}]
 }
 
-Respond ONLY with the JSON object, no other text.`;
+Respond ONLY with JSON. No explanation.`;
 }
 
 async function filterWithClaude(message) {
