@@ -1,4 +1,4 @@
-# Filtered - AI-Powered Co-Parent Communication App
+# Filtered Messaging App - AI-Powered Co-Parent Communication
 
 > Filtered protects co-parents from hostile, manipulative, or emotionally draining messages while keeping them connected to important information about their children.
 
