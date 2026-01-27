@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8WVQ32HLGS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-8WVQ32HLGS');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You're Invited to Filtered</title>
+    <meta name="description" content="You've been invited to connect on Filtered - AI-powered co-parent communication.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-50: #F0FDFA;
+            --primary-100: #CCFBF1;
+            --primary-500: #14B8A6;
+            --primary-600: #0D9488;
+            --primary-700: #0F766E;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, var(--primary-50) 0%, white 50%, var(--gray-50) 100%);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            text-align: center;
+        }
+
+        .invite-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-50);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .invite-icon svg {
+            width: 40px;
+            height: 40px;
+            color: var(--primary-600);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+
+        .inviter-name {
+            color: var(--primary-600);
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: var(--gray-500);
+            margin-bottom: 1.5rem;
+        }
+
+        .invite-code-display {
+            background: var(--gray-50);
+            border: 2px dashed var(--gray-200);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .invite-code-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .invite-code {
+            font-family: monospace;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            letter-spacing: 0.05em;
+        }
+
+        .download-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .download-section h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--gray-800);
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(13, 148, 136, 0.4);
+            width: 100%;
+            margin-bottom: 0.75rem;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(13, 148, 136, 0.5);
+        }
+
+        .download-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .download-btn.secondary {
+            background: white;
+            color: var(--gray-800);
+            border: 1px solid var(--gray-200);
+            box-shadow: none;
+        }
+
+        .download-btn.secondary:hover {
+            background: var(--gray-50);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: var(--gray-400);
+            font-size: 0.875rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gray-200);
+        }
+
+        .divider::before {
+            margin-right: 1rem;
+        }
+
+        .divider::after {
+            margin-left: 1rem;
+        }
+
+        .open-app-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--primary-600);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .open-app-btn:hover {
+            background: var(--primary-50);
+        }
+
+        .open-app-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .features {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-100);
+            text-align: left;
+        }
+
+        .features h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--gray-700);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        .feature-list li svg {
+            width: 18px;
+            height: 18px;
+            color: var(--primary-500);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .loading {
+            color: var(--gray-500);
+            padding: 2rem;
+        }
+
+        .error {
+            background: #FEF2F2;
+            border: 1px solid #FCA5A5;
+            border-radius: 8px;
+            padding: 1rem;
+            color: #991B1B;
+            font-size: 0.9rem;
+        }
+
+        .error a {
+            color: #991B1B;
+            font-weight: 500;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="logo-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+            </div>
+            <span class="logo-text">Filtered</span>
+        </div>
+
+        <div class="card" id="content">
+            <div class="loading">Loading invitation...</div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://coparent-shield.fly.dev';
+
+        async function loadInvite() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const inviteCode = urlParams.get('code');
+            const contentEl = document.getElementById('content');
+
+            if (!inviteCode) {
+                contentEl.innerHTML = `
+                    <div class="error">
+                        <strong>Invalid Invite Link</strong>
+                        <p>This invite link appears to be incomplete. Please ask the person who invited you to send the link again.</p>
+                        <p style="margin-top: 1rem;"><a href="/">Visit Filtered homepage</a></p>
+                    </div>
+                `;
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/connections/invite/${inviteCode}/validate`);
+
+                if (!response.ok) {
+                    throw new Error('Invalid or expired invite');
+                }
+
+                const data = await response.json();
+                const inviterName = data.inviter_name || 'Someone';
+                const deepLink = `filtered://invite/${inviteCode}`;
+
+                contentEl.innerHTML = `
+                    <div class="invite-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+
+                    <h1>You're Invited!</h1>
+                    <p class="subtitle">
+                        <span class="inviter-name">${escapeHtml(inviterName)}</span> has invited you to connect on Filtered
+                    </p>
+
+                    <div class="invite-code-display">
+                        <div class="invite-code-label">Your Invite Code</div>
+                        <div class="invite-code">${escapeHtml(inviteCode.substring(0, 8))}...</div>
+                    </div>
+
+                    <div class="download-section">
+                        <h2>Step 1: Get the App</h2>
+                        <a href="/download" class="download-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.523 2H6.477C5.1 2 4 3.1 4 4.477v15.046C4 20.9 5.1 22 6.477 22h11.046C18.9 22 20 20.9 20 19.523V4.477C20 3.1 18.9 2 17.523 2zM12 19.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5zm4-4H8V5h8v10.5z"/>
+                            </svg>
+                            Download for Android
+                        </a>
+                        <p style="font-size: 0.8rem; color: var(--gray-500); margin-top: 0.5rem;">iOS coming soon</p>
+                    </div>
+
+                    <div class="divider">Already have the app?</div>
+
+                    <a href="${deepLink}" class="open-app-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        Open in Filtered App
+                    </a>
+
+                    <div class="features">
+                        <h3>What is Filtered?</h3>
+                        <ul class="feature-list">
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Secure messaging for co-parents</span>
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>AI helps reduce conflict and stress</span>
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Export conversations for legal records</span>
+                            </li>
+                        </ul>
+                    </div>
+                `;
+            } catch (error) {
+                contentEl.innerHTML = `
+                    <div class="error">
+                        <strong>Invite Not Found</strong>
+                        <p>This invite may have expired or already been used. Please ask the person who invited you to send a new invite.</p>
+                        <p style="margin-top: 1rem;"><a href="/">Visit Filtered homepage</a></p>
+                    </div>
+                `;
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        loadInvite();
+    </script>
+</body>
+</html>
