@@ -438,6 +438,11 @@
             border: 1px solid var(--green-100);
         }
 
+        .result-card.found {
+            background: var(--primary-50);
+            border: 1px solid var(--primary-100);
+        }
+
         .result-card.not-found {
             background: var(--red-50);
             border: 1px solid var(--red-100);
@@ -464,6 +469,11 @@
             color: var(--green-700);
         }
 
+        .result-badge.found {
+            background: var(--primary-100);
+            color: var(--primary-700);
+        }
+
         .result-badge.not-found {
             background: var(--red-100);
             color: var(--red-700);
@@ -486,6 +496,7 @@
         }
 
         .result-card.verified .result-heading { color: var(--green-700); }
+        .result-card.found .result-heading { color: var(--primary-700); }
         .result-card.not-found .result-heading { color: var(--red-700); }
         .result-card.expired .result-heading { color: var(--yellow-700); }
 
@@ -1070,7 +1081,74 @@
                             Verified
                         </div>
                         <h2 class="result-heading">Document Verified</h2>
-                        <p class="result-message">This is an authentic Filtered conversation export. The content has not been modified since it was created.</p>
+                        <p class="result-message">This document is cryptographically verified as authentic. The content is byte-for-byte identical to what Filtered generated.</p>
+                        <div class="result-details">
+                            ${data.verification_code ? `
+                            <div class="detail-row">
+                                <span class="detail-label">Verification Code</span>
+                                <span class="detail-value">${escapeHtml(data.verification_code)}</span>
+                            </div>
+                            ` : ''}
+                            ${data.export_details && data.export_details.message_count ? `
+                            <div class="detail-row">
+                                <span class="detail-label">Message Count</span>
+                                <span class="detail-value">${data.export_details.message_count}</span>
+                            </div>
+                            ` : ''}
+                            ${data.export_details && data.export_details.date_range_start ? `
+                            <div class="detail-row">
+                                <span class="detail-label">Date Range</span>
+                                <span class="detail-value">${formatDateRange(data.export_details.date_range_start, data.export_details.date_range_end)}</span>
+                            </div>
+                            ` : ''}
+                            ${data.created_at ? `
+                            <div class="detail-row">
+                                <span class="detail-label">Created</span>
+                                <span class="detail-value">${formatDate(data.created_at)}</span>
+                            </div>
+                            ` : ''}
+                            ${data.expires_at ? `
+                            <div class="detail-row">
+                                <span class="detail-label">Expires</span>
+                                <span class="detail-value">${formatDate(data.expires_at)}</span>
+                            </div>
+                            ` : ''}
+                            ${data.content_hash ? `
+                            <div class="detail-row">
+                                <span class="detail-label">Content Hash</span>
+                                <span class="detail-value">${data.content_hash.substring(0, 16)}...</span>
+                            </div>
+                            ` : ''}
+                            ${data.signature && data.signature.is_signed ? `
+                            <div class="detail-row">
+                                <span class="detail-label">Digital Signature</span>
+                                <span class="signature-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    Signed
+                                </span>
+                            </div>
+                            ` : ''}
+                        </div>
+                        <button class="reset-btn" onclick="resetForm()">Verify Another Document</button>
+                    </div>
+                `;
+            } else if (data.status === 'found') {
+                html = `
+                    <div class="result-card found">
+                        <div class="result-badge found">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"/>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                            </svg>
+                            Record Found
+                        </div>
+                        <h2 class="result-heading">Document Record Found</h2>
+                        <p class="result-message">We found a document with this verification code. Review the details below to manually confirm they match your document.</p>
+                        <p style="margin-top: 12px; margin-bottom: 20px; padding: 12px 16px; background: rgba(255,255,255,0.6); border-radius: 8px; font-size: 14px; color: var(--gray-600);">
+                            <strong>Tip:</strong> For full cryptographic verification that proves the document hasn't been modified, use the "Upload PDF" tab to verify the actual file.
+                        </p>
                         <div class="result-details">
                             ${data.verification_code ? `
                             <div class="detail-row">
