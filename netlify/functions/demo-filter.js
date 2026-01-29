@@ -191,8 +191,8 @@ async function checkRateLimit(ip, context) {
 // ========================================
 
 function buildAnalysisPrompt(messageBody) {
-    // This prompt matches the main app (claude_service.py) - restructured version
-    return `You are a co-parent message filter. Transform messages into neutral, logistics-only summaries.
+    // This prompt matches the main app (claude_service.py) EXACTLY
+    return `You are a message filter. Transform messages into neutral, logistics-only summaries.
 
 <message>
 ${messageBody}
@@ -247,6 +247,23 @@ The \`content\` field must NEVER contain insults, attacks, sarcasm, or emotional
 
 8. **Handle Typos**: "mauve" → "maybe" when context is clear. Note in suggestion if ambiguous.
 
+## Mood Scale (6-Point)
+
+| Score | Label | Description | Examples |
+|-------|-------|-------------|----------|
+| 1 | Friendly | Positive, cooperative | "Thanks!", "Sounds good", "Have a great day" |
+| 2 | Neutral | Businesslike, factual | "Pickup at 3pm", "Dentist Tuesday" |
+| 3 | Frustrated | Annoyed but not hostile | "This is frustrating", "How many times..." |
+| 4 | Hostile | Aggressive, rude, manipulative | Name-calling, passive-aggressive, sarcasm |
+| 5 | Abusive | EMOTIONAL abuse | Gaslighting, kid-weaponizing, degradation |
+| 6 | Dangerous | PHYSICAL threats | Death threats, weapon mentions, violence threats |
+
+**CRITICAL DISTINCTION - Abusive (5) vs Dangerous (6):**
+- **Abusive (5):** Emotional/psychological harm - gaslighting ("I never said that"), kid-weaponizing ("kids don't want to see you"), degradation ("terrible parent"), manipulation
+- **Dangerous (6):** Physical safety threats - death threats ("I'll kill you"), weapon mentions ("I have a gun"), violence ("you're dead"), stalking ("I'm coming for you")
+
+When in doubt: If the message threatens PHYSICAL harm or safety, it's Dangerous (6). If it's emotional manipulation/abuse, it's Abusive (5).
+
 ## Hostility Detection (9-11)
 
 9. **Detect Manipulation Tactics** (mood_score 4-5):
@@ -255,7 +272,7 @@ The \`content\` field must NEVER contain insults, attacks, sarcasm, or emotional
    - Gaslighting: "I never said that", "You're twisting my words", "You're being paranoid"
    - Kid-weaponizing: "The kids don't want to see you", "The kids prefer being here"
 
-   These are HOSTILE (4-5), not friendly (1-2), even if words sound nice.
+   These are ABUSIVE (5), not Hostile (4), as they constitute emotional abuse.
 
 10. **Accusatory Questions = Personal**: "Why can't you ever..." is blame, not a real question. category: Personal, content: ""
 
@@ -288,7 +305,19 @@ The \`content\` field must NEVER contain insults, attacks, sarcasm, or emotional
 }
 Note: "Are you getting another job?" filtered out (prying).
 
-## Example B: Manipulation (sarcastic praise)
+## Example B: Simple FYI
+"The carpet people are here right now FYI"
+
+{
+  "subject": "Home update",
+  "category": "Statement",
+  "content": "They report carpet installation happening now",
+  "bullets": null,
+  "mood_score": 1,
+  "mood_label": "Friendly"
+}
+
+## Example C: Manipulation (sarcastic praise)
 "You've always been such an incredible parent. That's why I know you'll understand why I need you to take the kids this weekend."
 
 {
@@ -296,12 +325,13 @@ Note: "Are you getting another job?" filtered out (prying).
   "category": "Request",
   "content": "They are requesting to swap weekends",
   "mood_score": 5,
-  "mood_label": "Hostile",
-  "ai_suggestion": "I need to check my schedule before I can commit to that."
+  "mood_label": "Abusive",
+  "ai_suggestion": "I need to check my schedule before I can commit to that.",
+  "communication_patterns": [{"pattern": "manipulation", "confidence": "high"}]
 }
 Note: Excessive praise + demand = manipulation = mood 5.
 
-## Example C: Passive-aggressive with logistics
+## Example D: Passive-aggressive with logistics
 "I guess some of us just have different priorities. That's fine. Just have them home by 7pm Sunday."
 
 {
@@ -310,10 +340,11 @@ Note: Excessive praise + demand = manipulation = mood 5.
   "content": "They request kids home by 7pm Sunday",
   "mood_score": 4,
   "mood_label": "Hostile",
-  "ai_suggestion": "I'll have them back by 7pm."
+  "ai_suggestion": "I'll have them back by 7pm.",
+  "communication_patterns": [{"pattern": "passive_aggressive", "confidence": "high"}]
 }
 
-## Example D: Kid-weaponizing (no logistics)
+## Example E: Kid-weaponizing (no logistics) - ABUSIVE (emotional manipulation)
 "The kids said they don't want to see you this weekend. They prefer being here."
 
 {
@@ -322,10 +353,12 @@ Note: Excessive praise + demand = manipulation = mood 5.
   "content": "",
   "mood_score": 5,
   "mood_label": "Abusive",
-  "ai_suggestion": null
+  "ai_suggestion": null,
+  "communication_patterns": [{"pattern": "manipulation", "confidence": "high"}]
 }
+Note: Kid-weaponizing is emotional abuse (Abusive = 5), not physical threat.
 
-## Example E: Gaslighting with logistics
+## Example F: Gaslighting with logistics - ABUSIVE (emotional manipulation)
 "I never said that. You're always twisting my words. Anyway, dentist is at 3pm Tuesday."
 
 {
@@ -334,31 +367,94 @@ Note: Excessive praise + demand = manipulation = mood 5.
   "content": "Dentist appointment at 3pm Tuesday",
   "mood_score": 5,
   "mood_label": "Abusive",
-  "ai_suggestion": "Noted, 3pm Tuesday."
+  "ai_suggestion": "Noted, 3pm Tuesday.",
+  "communication_patterns": [{"pattern": "gaslighting", "confidence": "high"}]
 }
+Note: Gaslighting is emotional abuse (Abusive = 5), not physical threat.
 
-## Example F: Insult with logistics
-"Leave the suitcase by the fence or you're dead meat you meathead"
+## Example G: Degradation with multiple logistics - ABUSIVE (emotional)
+"You're such a terrible parent. Also, can you pick up at 3pm? I hope you're miserable. By the way, dentist is Tuesday at 4pm."
+
+{
+  "subject": "Pickup and dentist",
+  "category": "Request",
+  "content": "They have logistics updates",
+  "bullets": ["They are asking about pickup at 3pm", "Dentist appointment Tuesday at 4pm"],
+  "mood_score": 5,
+  "mood_label": "Abusive",
+  "ai_suggestion": "I can do 3pm pickup. Noted on dentist.",
+  "communication_patterns": [{"pattern": "personal_attack", "confidence": "high"}]
+}
+Note: Degradation ("terrible parent", wishing misery) is emotional abuse (Abusive = 5).
+
+## Example H: Insult with logistics - HOSTILE (not physical threat)
+"Leave the suitcase by the fence you meathead"
 
 {
   "subject": "Suitcase drop-off",
   "category": "Request",
   "content": "They request suitcase be left by the fence",
-  "mood_score": 5,
+  "mood_score": 4,
   "mood_label": "Hostile",
-  "ai_suggestion": "I'll leave it by the fence."
+  "ai_suggestion": "I'll leave it by the fence.",
+  "communication_patterns": [{"pattern": "personal_attack", "confidence": "high"}]
 }
+Note: Name-calling without physical threat is Hostile (4), not Dangerous.
 
-## Example G: Pure insult (no logistics)
+## Example I: Pure insult (no logistics) - HOSTILE
 "You're a punk"
 
 {
   "subject": "Personal",
   "category": "Personal",
   "content": "",
-  "mood_score": 5,
+  "mood_score": 4,
   "mood_label": "Hostile",
-  "ai_suggestion": null
+  "ai_suggestion": null,
+  "communication_patterns": [{"pattern": "personal_attack", "confidence": "high"}]
+}
+
+## Example K: Physical threat - DANGEROUS
+"I'm going to kill you"
+
+{
+  "subject": "Personal",
+  "category": "Personal",
+  "content": "",
+  "mood_score": 6,
+  "mood_label": "Dangerous",
+  "ai_suggestion": null,
+  "is_emergency": false,
+  "communication_patterns": [{"pattern": "threats", "confidence": "high"}]
+}
+Note: Death threats are physical threats = Dangerous (6), highest severity.
+
+## Example L: Physical threat with logistics - DANGEROUS
+"Leave the suitcase by the fence or you're dead. I have a gun."
+
+{
+  "subject": "Suitcase drop-off",
+  "category": "Request",
+  "content": "They request suitcase be left by the fence",
+  "mood_score": 6,
+  "mood_label": "Dangerous",
+  "ai_suggestion": null,
+  "is_emergency": false,
+  "communication_patterns": [{"pattern": "threats", "confidence": "high"}]
+}
+Note: Weapon mention + violence threat = Dangerous (6). No suggestion for dangerous messages.
+
+## Example J: Friendly message
+"I can pick up the kids at 3 today"
+
+{
+  "subject": "Pickup confirmation",
+  "category": "Statement",
+  "content": "They will pick up kids at 3 today",
+  "mood_score": 1,
+  "mood_label": "Friendly",
+  "ai_suggestion": "Sounds good, I'll have them ready.",
+  "communication_patterns": [{"pattern": "cooperative", "confidence": "high"}]
 }
 
 ---
@@ -373,21 +469,114 @@ Note: Excessive praise + demand = manipulation = mood 5.
 
 ---
 
-# SECTION 5: JSON RESPONSE FORMAT
+# SECTION 5: EMERGENCY DETECTION
+
+Set "is_emergency": true ONLY when the message contains a genuine time-sensitive child emergency requiring immediate attention.
+
+**Medical Emergencies (is_emergency: true):**
+- Child at the ER, hospital, or urgent care
+- Injuries: "broke their arm", "fell and hit their head", "allergic reaction"
+- Acute illness: "high fever" (103°F+), "vomiting repeatedly", "can't breathe"
+- Accidents: car accident involving child, child injured
+
+**Urgent Pickup Due to External Event (is_emergency: true):**
+- School closed early due to emergency (gas leak, fire, weather)
+- Transportation emergency: "car broke down on the way", "can't pick up - accident"
+- Child safety concern at school/care
+
+**Safety Concerns (is_emergency: true):**
+- Child is lost or missing
+- Natural disaster, evacuation
+- Injury or medical emergency at school/activity
+
+**NOT Emergencies (is_emergency: false):**
+- Normal schedule changes, even with urgent language ("URGENT: can you do 2pm instead of 3pm?" → false)
+- Parent's personal emergencies ("My work meeting ran late" → false)
+- Mild symptoms ("runny nose", "slight fever" → false)
+- CAPS LOCK, exclamation marks, or "ASAP"/"urgent" language alone do NOT make something an emergency
+- Vague safety claims without specifics ("Something happened at school" → false, need details)
+
+**CRITICAL: Urgency Language ≠ Emergency**
+The words "urgent", "ASAP", "NOW", "immediately", CAPS, and exclamation marks are NOT sufficient to trigger is_emergency. There must be an actual medical, safety, or external event emergency described.
+
+**Examples:**
+- "Johnny fell and broke his arm. We're at St. Mary's ER." → is_emergency: true
+- "School just called - early dismissal due to gas leak. Pick up ASAP." → is_emergency: true
+- "Child is having an allergic reaction, on way to hospital" → is_emergency: true
+- "Car broke down. Need you to pick them up from school NOW." → is_emergency: true (transportation emergency)
+- "Can you pick up the kids at 4 instead of 5?" → is_emergency: false (schedule change)
+- "URGENT: Need you to take them this weekend instead!" → is_emergency: false (urgent language, but just scheduling)
+- "Dentist appointment moved to Tuesday" → is_emergency: false (routine scheduling)
+- "They have a runny nose and slight fever" → is_emergency: false (mild symptoms)
+
+**Key Distinction - Dangerous vs Emergency:**
+- **Dangerous (mood_score=6):** Physical THREATS to the recipient (death threats, violence, stalking)
+- **Emergency (is_emergency=true):** Urgent child SITUATIONS requiring immediate attention (medical, safety, external events)
+
+A message can be BOTH Dangerous AND an Emergency (rare), just an Emergency (child at ER), or just Dangerous (death threat with no child emergency).
+
+---
+
+# SECTION 6: COMMUNICATION PATTERN DETECTION
+
+Identify HOW the sender communicates (patterns), separate from WHAT they're saying (categories).
+Only tag patterns you're highly confident about. Multiple patterns are allowed.
+
+## Negative Patterns (tag when present)
+
+| Pattern | Definition | Example |
+|---------|------------|---------|
+| accusation | Blaming statements, "you always/never" | "You always forget the kids' things" |
+| personal_attack | Insults, name-calling, character attacks | "You're such a terrible parent" |
+| guilt_tripping | Leveraging guilt to manipulate | "After everything I've done for you..." |
+| gaslighting | Making someone doubt their reality/memory | "I never said that. You're imagining things." |
+| manipulation | Using flattery or emotional tactics for gain | "You're such a great parent, I know you'll understand why I need..." |
+| threats | Legal threats, custody threats, or intimidation | "Wait until the judge hears about this" |
+| passive_aggressive | Indirect hostility, sarcasm, backhanded comments | "That's fine, I guess... Must be nice to have free time" |
+| dismissive | Minimizing concerns, invalidating feelings | "You're overreacting. It's not a big deal." |
+
+## Positive Patterns (tag when present)
+
+| Pattern | Definition | Example |
+|---------|------------|---------|
+| cooperative | Working together, shared problem-solving | "Let's figure this out together" |
+| boundary_setting | Clear, respectful limits | "I'm not available for calls after 9pm" |
+| validation | Acknowledging the other's perspective | "I understand that's frustrating" |
+| solution_focused | Proposing concrete next steps | "Here's what I suggest we try next time" |
+
+## Detection Rules
+
+1. Only tag patterns with HIGH confidence - when you're certain the pattern is present
+2. A message can have MULTIPLE patterns (e.g., gaslighting + accusation)
+3. Neutral/friendly messages may have ZERO patterns - that's fine
+4. Positive patterns can appear even in messages with negative mood (e.g., boundary-setting may seem cold)
+5. Don't tag based on a single word - look for the overall communication style
+
+---
+
+# SECTION 7: JSON RESPONSE FORMAT
 
 Respond with ONLY this JSON:
 
 {
   "subject": "2-6 word neutral subject",
   "category": "Request|Question|Proposal|Statement|Personal",
+  "category_confidence": "high|medium|low",
   "content": "Filtered content (empty string if Personal)",
   "bullets": ["item1", "item2"] or null,
   "respond_by": "YYYY-MM-DD" or null,
+  "mood": "Positive|Neutral|Negative",
+  "mood_confidence": "high|medium|low",
   "ai_suggestion": "1-2 sentence response suggestion" or null,
+  "suggestion_confidence": "high|medium|low" or null,
   "creates_task": true|false,
-  "mood_score": 1-5,
-  "mood_label": "Friendly|Neutral|Frustrated|Hostile|Abusive",
-  "action_items": [{"action": "description", "deadline": null}]
+  "mood_score": 1-6,
+  "mood_label": "Friendly|Neutral|Frustrated|Hostile|Abusive|Dangerous",
+  "urgency": "low|medium|high|emergency",
+  "summary": "same as content",
+  "action_items": [{"action": "description", "deadline": null}],
+  "is_emergency": false,
+  "communication_patterns": [{"pattern": "gaslighting", "confidence": "high"}] or []
 }
 
 Respond ONLY with JSON. No explanation.`;
@@ -435,11 +624,11 @@ async function filterWithClaude(message) {
 }
 
 /**
- * Maps the app's response format to the legacy demo format
- * for backward compatibility with the landing page UI
+ * Maps the app's response format to the demo format
+ * Now includes all new features: urgency, emergency, communication patterns
  */
 function mapToLegacyFormat(parsed, originalMessage) {
-    // Map mood_score (1-5) to legacy mood string
+    // Map mood_score (1-6) to legacy mood string
     const moodScore = parsed.mood_score || 2;
     let mood;
     if (moodScore <= 1) {
@@ -448,8 +637,10 @@ function mapToLegacyFormat(parsed, originalMessage) {
         mood = 'neutral';
     } else if (moodScore === 3) {
         mood = 'tense';
-    } else {
+    } else if (moodScore <= 5) {
         mood = 'hostile';
+    } else {
+        mood = 'dangerous';
     }
 
     // Map action_items to legacy actions format
@@ -484,7 +675,7 @@ function mapToLegacyFormat(parsed, originalMessage) {
         mood,
         moodIcon: getMoodIcon(mood),
         moodText: getMoodText(mood),
-        moodScore: moodScore, // Include the actual 1-5 score
+        moodScore: moodScore, // Include the actual 1-6 score
         moodLabel: parsed.mood_label || getMoodLabel(moodScore),
         summary,
         subject: parsed.subject || 'Message',
@@ -494,6 +685,10 @@ function mapToLegacyFormat(parsed, originalMessage) {
         bullets: parsed.bullets || null,
         createsTask: parsed.creates_task || false,
         original: originalMessage,
+        // New fields for enhanced UI
+        urgency: parsed.urgency || 'medium',
+        isEmergency: parsed.is_emergency || false,
+        communicationPatterns: parsed.communication_patterns || [],
     };
 }
 
@@ -518,8 +713,8 @@ function getMoodText(mood) {
 }
 
 function getMoodLabel(moodScore) {
-    const labels = ['Friendly', 'Neutral', 'Frustrated', 'Hostile', 'Abusive'];
-    return labels[Math.min(Math.max(moodScore - 1, 0), 4)];
+    const labels = ['Friendly', 'Neutral', 'Frustrated', 'Hostile', 'Abusive', 'Dangerous'];
+    return labels[Math.min(Math.max(moodScore - 1, 0), 5)];
 }
 
 // ========================================

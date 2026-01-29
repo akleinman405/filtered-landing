@@ -2279,6 +2279,179 @@
             color: #DC2626;
         }
 
+        /* Dangerous mood - 6-level scale addition */
+        .demo-mood-badge.dangerous .demo-mood-icon {
+            background-color: #991B1B;
+        }
+        .demo-mood-badge.dangerous .demo-mood-text {
+            color: #7F1D1D;
+        }
+
+        /* Emergency Banner - matching mobile app */
+        .demo-emergency-banner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(90deg, #FEE2E2 0%, #FEF2F2 100%);
+            border: 1px solid #FECACA;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            animation: emergency-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes emergency-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.2); }
+            50% { box-shadow: 0 0 8px 2px rgba(220, 38, 38, 0.3); }
+        }
+
+        .demo-emergency-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .demo-emergency-text {
+            color: #991B1B;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Urgency Badge - matching mobile app */
+        .demo-urgency-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            background: white;
+            border: 1px solid var(--gray-200);
+        }
+
+        .demo-urgency-icon {
+            font-size: 12px;
+        }
+
+        .demo-urgency-badge.high {
+            background: #FFF7ED;
+            color: #EA580C;
+            border-color: #FED7AA;
+        }
+
+        .demo-urgency-badge.emergency {
+            background: #FEF2F2;
+            color: #DC2626;
+            border-color: #FECACA;
+            animation: urgency-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes urgency-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Communication Pattern Tags - matching PatternTagBadge.tsx */
+        .demo-patterns-section {
+            margin-bottom: 16px;
+        }
+
+        .demo-pattern-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .demo-pattern-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            border-width: 1px;
+            border-style: solid;
+        }
+
+        /* Danger patterns (red) - gaslighting, manipulation, threats, personal_attack, accusation */
+        .demo-pattern-tag.danger {
+            background-color: #FEF2F2;
+            color: #B91C1C;
+            border-color: #FECACA;
+        }
+
+        /* Warning patterns (amber) - guilt_tripping, passive_aggressive, dismissive */
+        .demo-pattern-tag.warning {
+            background-color: #FFFBEB;
+            color: #B45309;
+            border-color: #FDE68A;
+        }
+
+        /* Success patterns (green) - cooperative, boundary_setting, validation, solution_focused */
+        .demo-pattern-tag.success {
+            background-color: #F0FDF4;
+            color: #15803D;
+            border-color: #BBF7D0;
+        }
+
+        /* Feedback Section - matching mobile app */
+        .demo-feedback-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px;
+            margin-top: 16px;
+            background: #F9FAFB;
+            border-radius: 12px;
+            border: 1px solid #E5E7EB;
+        }
+
+        .demo-feedback-label {
+            font-size: 13px;
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        .demo-feedback-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .demo-feedback-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 16px;
+        }
+
+        .demo-feedback-btn:hover {
+            background: #F0FDFA;
+            border-color: var(--primary-400);
+            transform: scale(1.05);
+        }
+
+        .demo-feedback-btn:active {
+            transform: scale(0.95);
+        }
+
+        .demo-feedback-btn.selected {
+            background: var(--primary-100);
+            border-color: var(--primary-500);
+        }
+
+        .demo-feedback-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+        }
+
         /* Summary Section */
         .demo-summary-section {
             margin-bottom: 20px;
@@ -2930,10 +3103,16 @@
                         <!-- Complete State -->
                         <div id="demo-result-complete" class="demo-result-complete" role="region" aria-live="polite" aria-label="Filtering results">
                             <div class="demo-result-card">
+                                <!-- Emergency Banner (hidden by default) -->
+                                <div id="demo-emergency-banner" class="demo-emergency-banner" style="display: none;" role="alert">
+                                    <span class="demo-emergency-icon" aria-hidden="true">🚨</span>
+                                    <span class="demo-emergency-text">Emergency: Requires Immediate Attention</span>
+                                </div>
+
                                 <!-- Subject Line -->
                                 <h4 id="demo-subject" class="demo-subject">Message</h4>
 
-                                <!-- Category and Mood Badges -->
+                                <!-- Category, Mood, and Urgency Badges -->
                                 <div class="demo-badges-row">
                                     <div id="demo-category-badge" class="demo-category-badge request" role="status">
                                         <span class="demo-category-text">Request</span>
@@ -2943,6 +3122,15 @@
                                         <span class="demo-mood-label">Mood:</span>
                                         <span class="demo-mood-text">Hostile</span>
                                     </div>
+                                    <div id="demo-urgency-badge" class="demo-urgency-badge" style="display: none;" role="status">
+                                        <span class="demo-urgency-icon" aria-hidden="true">⏰</span>
+                                        <span class="demo-urgency-text">Medium</span>
+                                    </div>
+                                </div>
+
+                                <!-- Communication Pattern Tags -->
+                                <div id="demo-patterns-section" class="demo-patterns-section" style="display: none;">
+                                    <div id="demo-pattern-tags" class="demo-pattern-tags"></div>
                                 </div>
 
                                 <!-- Summary -->
@@ -2967,6 +3155,15 @@
                                         AI Suggested Response
                                     </div>
                                     <div id="demo-response-options" class="demo-response-single"></div>
+                                </div>
+
+                                <!-- Feedback Buttons -->
+                                <div id="demo-feedback-section" class="demo-feedback-section" style="display: none;">
+                                    <span class="demo-feedback-label">Was this filtering helpful?</span>
+                                    <div class="demo-feedback-buttons">
+                                        <button id="demo-feedback-up" class="demo-feedback-btn" aria-label="Helpful" title="Helpful">👍</button>
+                                        <button id="demo-feedback-down" class="demo-feedback-btn" aria-label="Not helpful" title="Not helpful">👎</button>
+                                    </div>
                                 </div>
 
                                 <!-- Original Message Toggle -->
@@ -3466,7 +3663,36 @@
             originalToggle: document.getElementById('demo-original-toggle'),
             originalContent: document.getElementById('demo-original-content'),
             originalMessage: document.getElementById('demo-original-message'),
-            ctaBtn: document.getElementById('demo-cta-btn')
+            ctaBtn: document.getElementById('demo-cta-btn'),
+            // New elements for enhanced features
+            emergencyBanner: document.getElementById('demo-emergency-banner'),
+            urgencyBadge: document.getElementById('demo-urgency-badge'),
+            patternsSection: document.getElementById('demo-patterns-section'),
+            patternTags: document.getElementById('demo-pattern-tags'),
+            feedbackSection: document.getElementById('demo-feedback-section'),
+            feedbackUp: document.getElementById('demo-feedback-up'),
+            feedbackDown: document.getElementById('demo-feedback-down')
+        };
+
+        // ========================================
+        // PATTERN CONFIGURATION (matching patternDefinitions.ts)
+        // ========================================
+        const PATTERN_CONFIG = {
+            // Danger (red) - emotional abuse patterns
+            gaslighting: { label: 'Gaslighting', variant: 'danger' },
+            manipulation: { label: 'Manipulation', variant: 'danger' },
+            threats: { label: 'Threats', variant: 'danger' },
+            personal_attack: { label: 'Personal Attack', variant: 'danger' },
+            accusation: { label: 'Accusation', variant: 'danger' },
+            // Warning (amber) - negative patterns
+            guilt_tripping: { label: 'Guilt-Tripping', variant: 'warning' },
+            passive_aggressive: { label: 'Passive-Aggressive', variant: 'warning' },
+            dismissive: { label: 'Dismissive', variant: 'warning' },
+            // Success (green) - positive patterns
+            cooperative: { label: 'Cooperative', variant: 'success' },
+            boundary_setting: { label: 'Boundary-Setting', variant: 'success' },
+            validation: { label: 'Validation', variant: 'success' },
+            solution_focused: { label: 'Solution-Focused', variant: 'success' }
         };
 
         // ========================================
@@ -3516,9 +3742,100 @@
         }
 
         // ========================================
+        // NEW FEATURE RENDERING
+        // ========================================
+
+        /**
+         * Render communication pattern tags
+         * @param {Array} patterns - Array of {pattern, confidence} objects
+         */
+        function renderPatternTags(patterns) {
+            if (!elements.patternsSection || !elements.patternTags) return;
+
+            if (!patterns || patterns.length === 0) {
+                elements.patternsSection.style.display = 'none';
+                return;
+            }
+
+            elements.patternsSection.style.display = 'block';
+            elements.patternTags.innerHTML = patterns
+                .map(function(p) {
+                    var config = PATTERN_CONFIG[p.pattern];
+                    if (!config) return '';
+                    return '<span class="demo-pattern-tag ' + escapeHtml(config.variant) + '">' +
+                           escapeHtml(config.label) + '</span>';
+                })
+                .filter(function(html) { return html !== ''; })
+                .join('');
+        }
+
+        /**
+         * Render urgency badge and emergency banner
+         * @param {string} urgency - 'low', 'medium', 'high', or 'emergency'
+         * @param {boolean} isEmergency - True if this is an emergency message
+         */
+        function renderUrgencyAndEmergency(urgency, isEmergency) {
+            // Handle emergency banner
+            if (elements.emergencyBanner) {
+                elements.emergencyBanner.style.display = isEmergency ? 'flex' : 'none';
+            }
+
+            // Handle urgency badge
+            if (elements.urgencyBadge) {
+                if (urgency === 'low' || urgency === 'medium' || !urgency) {
+                    elements.urgencyBadge.style.display = 'none';
+                } else {
+                    elements.urgencyBadge.style.display = 'inline-flex';
+                    elements.urgencyBadge.className = 'demo-urgency-badge ' + escapeHtml(urgency);
+                    var urgencyText = elements.urgencyBadge.querySelector('.demo-urgency-text');
+                    if (urgencyText) {
+                        urgencyText.textContent = urgency === 'emergency' ? 'Emergency' : 'High';
+                    }
+                    var urgencyIcon = elements.urgencyBadge.querySelector('.demo-urgency-icon');
+                    if (urgencyIcon) {
+                        urgencyIcon.textContent = urgency === 'emergency' ? '🚨' : '⏰';
+                    }
+                }
+            }
+        }
+
+        /**
+         * Render feedback section
+         */
+        function showFeedbackSection() {
+            if (elements.feedbackSection) {
+                elements.feedbackSection.style.display = 'flex';
+            }
+        }
+
+        /**
+         * Handle feedback button click
+         * @param {string} type - 'up' or 'down'
+         */
+        function handleFeedback(type) {
+            // Track analytics
+            trackEvent('demo_feedback', { type: type, helpful: type === 'up' });
+
+            // Visual feedback
+            if (type === 'up' && elements.feedbackUp) {
+                elements.feedbackUp.classList.add('selected');
+                if (elements.feedbackDown) elements.feedbackDown.classList.remove('selected');
+            } else if (type === 'down' && elements.feedbackDown) {
+                elements.feedbackDown.classList.add('selected');
+                if (elements.feedbackUp) elements.feedbackUp.classList.remove('selected');
+            }
+        }
+
+        // ========================================
         // RESULT DISPLAY
         // ========================================
         function displayResult(data) {
+            // Render emergency and urgency first
+            renderUrgencyAndEmergency(data.urgency, data.isEmergency);
+
+            // Render communication patterns
+            renderPatternTags(data.communicationPatterns);
+
             // Subject line - like the app's message header
             if (elements.subject) {
                 elements.subject.textContent = data.subject || 'Message';
@@ -3599,6 +3916,11 @@
             elements.originalContent.hidden = true;
             elements.originalToggle.setAttribute('aria-expanded', 'false');
             DemoState.originalVisible = false;
+
+            // Show feedback section and reset state
+            showFeedbackSection();
+            if (elements.feedbackUp) elements.feedbackUp.classList.remove('selected');
+            if (elements.feedbackDown) elements.feedbackDown.classList.remove('selected');
         }
 
         // ========================================
@@ -3735,6 +4057,14 @@
                 elements.ctaBtn.addEventListener('click', () => {
                     trackEvent('demo_cta_clicked', { hasUsedDemo: DemoState.hasResult });
                 });
+            }
+
+            // Feedback buttons
+            if (elements.feedbackUp) {
+                elements.feedbackUp.addEventListener('click', () => handleFeedback('up'));
+            }
+            if (elements.feedbackDown) {
+                elements.feedbackDown.addEventListener('click', () => handleFeedback('down'));
             }
 
             // Keyboard shortcut: Enter to filter (when textarea focused)
