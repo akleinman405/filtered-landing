@@ -87,7 +87,7 @@ Thanks for your interest! 💚 You can join our waitlist at filteredmessaging.co
 
 **Pricing Question:**
 ```
-Filtered will be $9.99/month or $79/year (2 months free). Includes your dedicated number, AI filtering, and response suggestions. Join the waitlist at filteredmessaging.com!
+Filtered is $14.99/month or $119.88/year (save 33%). Includes AI message filtering, mood indicators, pattern detection, and response suggestions. Join the waitlist at filteredmessaging.com!
 ```
 
 **Launch Date Question:**

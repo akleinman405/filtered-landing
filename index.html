@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Filtered Messaging App | AI-Filtered Messaging That Protects Your Peace</title>
-    <meta name="description" content="Filtered is the AI messaging app that filters hostile messages. Stay connected to what matters—without the drama. Free 7-day trial.">
+    <meta name="description" content="Filtered is the AI messaging app that filters hostile messages. Stay connected to what matters—without the drama. Free 14-day trial.">
 
     <!-- SEO Meta Tags -->
     <meta name="keywords" content="filtered messaging app, filtered app, filtered messaging, AI message filter, hostile message filter, difficult person communication, toxic relationship messaging, protect your peace app, co-parent communication app, coparenting app">
@@ -164,7 +164,15 @@
                 "name": "How much does Filtered cost?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Filtered offers a 7-day free trial. After the trial, it's $14.99/month or $119.99/year (save 33%). You can cancel anytime with no contracts or commitments."
+                    "text": "Filtered offers a 14-day free trial. After the trial, it's $14.99/month or $119.88/year (save 33%). You can cancel anytime with no contracts or commitments."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How does pricing work for both people?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "One person subscribes to Filtered Pro and gets full AI protection: filtered messages, mood analysis, pattern detection, and more. The other person is automatically added to the free tier. They can message you through the secure app and upgrade to Pro anytime for full filtering features."
                 }
             }
         ]
@@ -623,71 +631,116 @@
             font-size: 13px;
         }
 
+        .add-another-btn {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .add-another-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+        }
+
+        .add-another-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+            border-color: white;
+        }
+
         /* Pricing */
         .pricing {
             padding: 80px 0;
             background: white;
         }
 
-        .pricing-card {
-            max-width: 400px;
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1100px;
             margin: 0 auto;
+        }
+
+        .pricing-card {
             background: white;
-            border: 2px solid var(--primary-500);
+            border: 2px solid var(--gray-200);
             border-radius: 24px;
-            padding: 48px;
+            padding: 32px;
             text-align: center;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary-500);
             box-shadow: 0 10px 40px rgba(13, 148, 136, 0.15);
         }
 
+        .pricing-card.featured .best-value-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-600);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
         .pricing-card h3 {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: var(--gray-900);
             margin-bottom: 8px;
         }
 
         .pricing-card .price {
-            font-size: 56px;
+            font-size: 48px;
             font-weight: 700;
             color: var(--primary-600);
-            margin: 24px 0;
+            margin: 16px 0 8px;
         }
 
         .pricing-card .price span {
-            font-size: 20px;
+            font-size: 18px;
             color: var(--gray-500);
             font-weight: 500;
+        }
+
+        .pricing-card .price-subtitle {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 16px;
+            min-height: 20px;
         }
 
         .pricing-card .trial {
             background: var(--primary-100);
             color: var(--primary-700);
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             display: inline-block;
-            margin-bottom: 24px;
-        }
-
-        .annual-option {
-            margin-top: 16px;
-            padding: 16px;
-            background: var(--gray-50);
-            border-radius: 12px;
-            border: 1px solid var(--gray-200);
-        }
-
-        .annual-option-text {
-            font-size: 18px;
-            color: var(--gray-700);
-            font-weight: 500;
-        }
-
-        .annual-price {
-            font-weight: 600;
-            color: var(--primary-600);
+            margin-bottom: 16px;
         }
 
         .save-badge {
@@ -696,66 +749,84 @@
             color: white;
             padding: 4px 10px;
             border-radius: 12px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
-            margin-left: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .price-note {
-            font-size: 14px;
-            color: var(--gray-500);
-            margin-top: 8px;
-        }
-
-        .free-invitee-badge {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: var(--primary-50);
-            border: 1px dashed var(--primary-300);
-            border-radius: 12px;
-            padding: 12px 16px;
-            margin-top: 16px;
-        }
-
-        .free-invitee-badge svg {
-            width: 20px;
-            height: 20px;
-            color: var(--primary-600);
-            flex-shrink: 0;
-        }
-
-        .free-invitee-badge span {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--primary-700);
-        }
-
         .pricing-features {
             text-align: left;
-            margin: 32px 0;
+            margin: 24px 0;
+            list-style: none;
+            min-height: 280px;
         }
 
         .pricing-features li {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 0;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 8px 0;
             color: var(--gray-600);
+            font-size: 14px;
+            line-height: 1.4;
         }
 
         .pricing-features li svg {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             color: var(--primary-500);
             flex-shrink: 0;
+            margin-top: 2px;
         }
 
-        .pricing-features {
-            list-style: none;
+        .pricing-features li.feature-header {
+            font-weight: 600;
+            color: var(--gray-800);
+            padding-top: 12px;
+            border-top: 1px solid var(--gray-100);
+            margin-top: 4px;
+        }
+
+        .pricing-features li.feature-header:first-child {
+            border-top: none;
+            padding-top: 0;
+            margin-top: 0;
+        }
+
+        .pricing-card .cta-button {
+            width: 100%;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .pricing-card .cta-button.secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .pricing-card .cta-button.secondary:hover {
+            background: var(--gray-200);
+        }
+
+        .pricing-clarification {
+            max-width: 800px;
+            margin: 40px auto 0;
+            padding: 24px;
+            background: var(--primary-50);
+            border: 1px solid var(--primary-200);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .pricing-clarification p {
+            color: var(--gray-700);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .pricing-clarification strong {
+            color: var(--gray-900);
         }
 
         /* What They See - Comparison Section */
@@ -1354,6 +1425,24 @@
             }
         }
 
+        /* Responsive - Tablet (Pricing) */
+        @media (max-width: 968px) and (min-width: 641px) {
+            .pricing-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .pricing-card:first-child {
+                grid-column: 1 / -1;
+                max-width: 50%;
+                margin: 0 auto;
+            }
+
+            .pricing-card.featured {
+                order: -1;
+            }
+        }
+
         /* Responsive - Mobile */
         @media (max-width: 640px) {
             .container {
@@ -1492,9 +1581,18 @@
             }
 
             /* Pricing Mobile */
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
             .pricing-card {
-                padding: 32px 24px;
+                padding: 28px 24px;
                 border-radius: 20px;
+            }
+
+            .pricing-card.featured {
+                order: -1;
             }
 
             .pricing-card h3 {
@@ -1502,41 +1600,29 @@
             }
 
             .pricing-card .price {
-                font-size: 48px;
+                font-size: 42px;
             }
 
             .pricing-card .price span {
-                font-size: 18px;
-            }
-
-            .pricing-features li {
-                font-size: 15px;
-                padding: 10px 0;
-            }
-
-            .annual-option {
-                padding: 12px;
-            }
-
-            .annual-option-text {
                 font-size: 16px;
             }
 
-            .save-badge {
-                font-size: 11px;
-                padding: 3px 8px;
+            .pricing-features {
+                min-height: auto;
             }
 
-            .price-note {
-                font-size: 13px;
+            .pricing-features li {
+                font-size: 14px;
+                padding: 6px 0;
             }
 
-            .free-invitee-badge {
-                padding: 10px 12px;
+            .pricing-clarification {
+                padding: 20px;
+                margin-top: 32px;
             }
 
-            .free-invitee-badge span {
-                font-size: 13px;
+            .pricing-clarification p {
+                font-size: 14px;
             }
 
             /* SMS Terms Mobile */
@@ -2972,62 +3058,166 @@
         <div class="container">
             <div class="section-header">
                 <h2>Simple, Transparent Pricing</h2>
-                <p>One plan with everything you need. No hidden fees.</p>
+                <p>One person subscribes for protection. The other person uses the app free.</p>
             </div>
-            <div class="pricing-card">
-                <div class="trial">7-Day Free Trial</div>
-                <h3>Filtered Premium</h3>
-                <div class="price">$14.99<span>/month</span></div>
-                <div class="annual-option">
-                    <span class="annual-option-text">Or <span class="annual-price">$119.99/year</span></span>
-                    <span class="save-badge" aria-label="Save 33 percent annually">Save 33%</span>
-                    <div class="price-note">Just $10/month, billed annually</div>
+            <div class="pricing-grid">
+                <!-- Free Tier -->
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <div class="price">$0<span>/month</span></div>
+                    <div class="price-subtitle">Always free</div>
+                    <ul class="pricing-features">
+                        <li class="feature-header">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Unlimited secure messaging
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            End-to-end encrypted app
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Court-ready PDF exports
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            2-year message history
+                        </li>
+                    </ul>
+                    <a href="#waitlist" class="cta-button secondary">Get Early Access</a>
                 </div>
-                <ul class="pricing-features">
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Unlimited AI-filtered messages
-                    </li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        In-app secure messaging
-                    </li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Smart response suggestions
-                    </li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Emergency alerts
-                    </li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Message history & documentation
-                    </li>
-                    <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Cancel anytime
-                    </li>
-                </ul>
-                <div class="free-invitee-badge">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    <span>The other person joins FREE when you invite them</span>
+
+                <!-- Annual Tier (Featured) -->
+                <div class="pricing-card featured">
+                    <div class="best-value-badge">Best Value</div>
+                    <div class="trial">14-Day Free Trial</div>
+                    <h3>Pro Annual</h3>
+                    <div class="price">$9.99<span>/month</span></div>
+                    <div class="price-subtitle">Billed yearly ($119.88) <span class="save-badge">Save 33%</span></div>
+                    <ul class="pricing-features">
+                        <li class="feature-header">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Everything in Free, plus:
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            AI message filtering
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            6-level mood indicators
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Auto-detect tasks & deadlines
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Pattern detection (gaslighting, manipulation)
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Smart response suggestions
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Weekly mood insights
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Emergency detection
+                        </li>
+                    </ul>
+                    <a href="#waitlist" class="cta-button">Get Early Access</a>
                 </div>
-                <a href="#waitlist" class="cta-button" style="width: 100%; text-align: center; margin-top: 24px;">Get Early Access</a>
+
+                <!-- Monthly Tier -->
+                <div class="pricing-card">
+                    <div class="trial">14-Day Free Trial</div>
+                    <h3>Pro Monthly</h3>
+                    <div class="price">$14.99<span>/month</span></div>
+                    <div class="price-subtitle">Billed monthly</div>
+                    <ul class="pricing-features">
+                        <li class="feature-header">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Everything in Free, plus:
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            AI message filtering
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            6-level mood indicators
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Auto-detect tasks & deadlines
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Pattern detection (gaslighting, manipulation)
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Smart response suggestions
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Weekly mood insights
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            Emergency detection
+                        </li>
+                    </ul>
+                    <a href="#waitlist" class="cta-button">Get Early Access</a>
+                </div>
+            </div>
+
+            <!-- Clarification Box -->
+            <div class="pricing-clarification">
+                <p><strong>How it works:</strong> You subscribe and get AI protection. The person you communicate with is automatically added to the free tier. They can message you through the secure app and upgrade to Pro anytime for full filtering features.</p>
             </div>
         </div>
     </section>
@@ -3051,6 +3241,7 @@
                     <div style="font-size: 48px; margin-bottom: 16px;">&#10003;</div>
                     <h3 style="color: white; font-size: 24px; margin-bottom: 12px;">You're on the list!</h3>
                     <p style="color: rgba(255,255,255,0.9); font-size: 16px;">Check your email for confirmation. We'll notify you when Filtered launches.</p>
+                    <button type="button" id="add-another-btn" class="add-another-btn">+ Add another email</button>
                 </div>
                 <script>
                 document.getElementById('waitlist-form').addEventListener('submit', async function(e) {
@@ -3081,6 +3272,15 @@
                         btn.disabled = false;
                         alert(error.message || 'Something went wrong. Please try again.');
                     }
+                });
+
+                document.getElementById('add-another-btn').addEventListener('click', function() {
+                    document.getElementById('waitlist-form').style.display = 'block';
+                    document.getElementById('waitlist-success').style.display = 'none';
+                    document.getElementById('waitlist-email').value = '';
+                    document.getElementById('waitlist-btn').textContent = 'Get Early Access';
+                    document.getElementById('waitlist-btn').disabled = false;
+                    document.getElementById('waitlist-email').focus();
                 });
                 </script>
             </div>
@@ -3121,7 +3321,11 @@
                 </details>
                 <details class="faq-item">
                     <summary>What happens after the free trial?</summary>
-                    <p>After 7 days, your subscription continues at $14.99/month (or $119.99/year to save 33%). You can cancel anytime before the trial ends and won't be charged. No commitments, no contracts.</p>
+                    <p>After 14 days, your subscription continues at $14.99/month (or $119.88/year to save 33%). You can cancel anytime before the trial ends and won't be charged. No commitments, no contracts.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>How does pricing work for both people?</summary>
+                    <p>One person subscribes to Filtered Pro and gets full AI protection: filtered messages, mood analysis, pattern detection, and more. The other person is automatically added to the free tier. They can message you through the secure app and upgrade to Pro anytime for full filtering features.</p>
                 </details>
                 <details class="faq-item">
                     <summary>Is my data secure?</summary>
@@ -3143,7 +3347,7 @@
     <!-- Footer -->
     <footer>
         <div class="container footer-content">
-            <p>&copy; 2025 Filtered. All rights reserved. Filtered is a DBA of Alec Kleinman.</p>
+            <p>&copy; 2026 Filtered. All rights reserved. Filtered is a DBA of Alec Kleinman.</p>
             <ul class="footer-links">
                 <li><a href="/privacy.html">Privacy Policy</a></li>
                 <li><a href="/terms.html">Terms of Service</a></li>

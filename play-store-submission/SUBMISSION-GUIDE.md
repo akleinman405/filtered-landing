@@ -12,7 +12,7 @@
 
 Why? Your app requires:
 - User login (email/password via Supabase)
-- Subscription after 7-day trial
+- Subscription after 14-day trial
 
 **What to provide:**
 You need to give Google test credentials. See `TEST-CREDENTIALS.txt` in this folder.
@@ -136,9 +136,9 @@ PRIVACY & SECURITY
 
 PRICING
 ━━━━━━━
-• 7-day free trial
-• $14.99/month or $119.99/year (save 33%)
-• Your co-parent joins FREE when you invite them
+• 14-day free trial
+• $14.99/month or $119.88/year (save 33%)
+• The other person joins FREE when you invite them
 
 Stop absorbing hostility. Start co-parenting peacefully.
 
@@ -175,7 +175,7 @@ Features:
 • Task tracking for requests and deadlines
 • Court-ready message documentation
 
-Start your 7-day free trial today.
+Start your 14-day free trial today.
 
 Questions? info@filteredmessaging.com
 ```
