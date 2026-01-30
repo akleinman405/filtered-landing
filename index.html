@@ -2240,51 +2240,40 @@
             flex-shrink: 0;
         }
 
+        /* Mood text is always gray like in the app */
+        .demo-mood-text {
+            color: #6B7280;
+        }
+
+        /* Mood dot colors matching the production app */
         .demo-mood-badge.tense .demo-mood-icon,
         .demo-mood-badge.frustrated .demo-mood-icon {
-            background-color: #F59E0B;
-        }
-        .demo-mood-badge.tense .demo-mood-text,
-        .demo-mood-badge.frustrated .demo-mood-text {
-            color: #D97706;
+            background-color: #F59E0B; /* warning[500] */
         }
 
         .demo-mood-badge.neutral .demo-mood-icon {
-            background-color: #0F766E;
-        }
-        .demo-mood-badge.neutral .demo-mood-text {
-            color: #0F766E;
+            background-color: #6B7280; /* gray[500] - matches textTertiary */
         }
 
         .demo-mood-badge.calm .demo-mood-icon,
-        .demo-mood-badge.friendly .demo-mood-icon {
-            background-color: #22C55E;
-        }
-        .demo-mood-badge.calm .demo-mood-text,
-        .demo-mood-badge.friendly .demo-mood-text {
-            color: #16A34A;
+        .demo-mood-badge.friendly .demo-mood-icon,
+        .demo-mood-badge.positive .demo-mood-icon {
+            background-color: #22C55E; /* success[500] */
         }
 
-        .demo-mood-badge.hostile .demo-mood-icon {
-            background-color: #F97316;
-        }
-        .demo-mood-badge.hostile .demo-mood-text {
-            color: #EA580C;
+        .demo-mood-badge.hostile .demo-mood-icon,
+        .demo-mood-badge.negative .demo-mood-icon {
+            background-color: #EF4444; /* danger[500] */
         }
 
-        .demo-mood-badge.abusive .demo-mood-icon {
-            background-color: #EF4444;
-        }
-        .demo-mood-badge.abusive .demo-mood-text {
-            color: #DC2626;
+        .demo-mood-badge.abusive .demo-mood-icon,
+        .demo-mood-badge.severe .demo-mood-icon {
+            background-color: #B91C1C; /* danger[700] */
         }
 
-        /* Dangerous mood - 6-level scale addition */
+        /* Dangerous mood - most severe */
         .demo-mood-badge.dangerous .demo-mood-icon {
-            background-color: #991B1B;
-        }
-        .demo-mood-badge.dangerous .demo-mood-text {
-            color: #7F1D1D;
+            background-color: #991B1B; /* danger[800] */
         }
 
         /* Emergency Banner - matching mobile app */
@@ -2518,11 +2507,11 @@
 
         .demo-response-single-text {
             font-size: 14px;
-            color: var(--gray-700);
+            color: var(--primary-700);
             line-height: 1.6;
             padding: 14px 16px;
-            background: white;
-            border: 1px solid #E5E7EB;
+            background: var(--primary-100);
+            border: none;
             border-radius: 12px;
             font-style: italic;
         }
