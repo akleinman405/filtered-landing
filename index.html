@@ -2394,64 +2394,6 @@
             border-color: #BBF7D0;
         }
 
-        /* Feedback Section - matching mobile app */
-        .demo-feedback-section {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 16px;
-            margin-top: 16px;
-            background: #F9FAFB;
-            border-radius: 12px;
-            border: 1px solid #E5E7EB;
-        }
-
-        .demo-feedback-label {
-            font-size: 13px;
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-
-        .demo-feedback-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .demo-feedback-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            border: 1px solid #E5E7EB;
-            border-radius: 8px;
-            background: white;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 16px;
-        }
-
-        .demo-feedback-btn:hover {
-            background: #F0FDFA;
-            border-color: var(--primary-400);
-            transform: scale(1.05);
-        }
-
-        .demo-feedback-btn:active {
-            transform: scale(0.95);
-        }
-
-        .demo-feedback-btn.selected {
-            background: var(--primary-100);
-            border-color: var(--primary-500);
-        }
-
-        .demo-feedback-btn:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
-        }
-
         /* Summary Section */
         .demo-summary-section {
             margin-bottom: 20px;
@@ -3151,15 +3093,6 @@
                                     <div id="demo-response-options" class="demo-response-single"></div>
                                 </div>
 
-                                <!-- Feedback Buttons -->
-                                <div id="demo-feedback-section" class="demo-feedback-section" style="display: none;">
-                                    <span class="demo-feedback-label">Was this filtering helpful?</span>
-                                    <div class="demo-feedback-buttons">
-                                        <button id="demo-feedback-up" class="demo-feedback-btn" aria-label="Helpful" title="Helpful">👍</button>
-                                        <button id="demo-feedback-down" class="demo-feedback-btn" aria-label="Not helpful" title="Not helpful">👎</button>
-                                    </div>
-                                </div>
-
                                 <!-- Original Message Toggle -->
                                 <div class="demo-original-section">
                                     <button id="demo-original-toggle" class="demo-original-toggle" aria-expanded="false" aria-controls="demo-original-content">
@@ -3658,10 +3591,7 @@
             emergencyBanner: document.getElementById('demo-emergency-banner'),
             urgencyBadge: document.getElementById('demo-urgency-badge'),
             patternsSection: document.getElementById('demo-patterns-section'),
-            patternTags: document.getElementById('demo-pattern-tags'),
-            feedbackSection: document.getElementById('demo-feedback-section'),
-            feedbackUp: document.getElementById('demo-feedback-up'),
-            feedbackDown: document.getElementById('demo-feedback-down')
+            patternTags: document.getElementById('demo-pattern-tags')
         };
 
         // ========================================
@@ -3789,33 +3719,6 @@
             }
         }
 
-        /**
-         * Render feedback section
-         */
-        function showFeedbackSection() {
-            if (elements.feedbackSection) {
-                elements.feedbackSection.style.display = 'flex';
-            }
-        }
-
-        /**
-         * Handle feedback button click
-         * @param {string} type - 'up' or 'down'
-         */
-        function handleFeedback(type) {
-            // Track analytics
-            trackEvent('demo_feedback', { type: type, helpful: type === 'up' });
-
-            // Visual feedback
-            if (type === 'up' && elements.feedbackUp) {
-                elements.feedbackUp.classList.add('selected');
-                if (elements.feedbackDown) elements.feedbackDown.classList.remove('selected');
-            } else if (type === 'down' && elements.feedbackDown) {
-                elements.feedbackDown.classList.add('selected');
-                if (elements.feedbackUp) elements.feedbackUp.classList.remove('selected');
-            }
-        }
-
         // ========================================
         // RESULT DISPLAY
         // ========================================
@@ -3906,11 +3809,6 @@
             elements.originalContent.hidden = true;
             elements.originalToggle.setAttribute('aria-expanded', 'false');
             DemoState.originalVisible = false;
-
-            // Show feedback section and reset state
-            showFeedbackSection();
-            if (elements.feedbackUp) elements.feedbackUp.classList.remove('selected');
-            if (elements.feedbackDown) elements.feedbackDown.classList.remove('selected');
         }
 
         // ========================================
@@ -4047,14 +3945,6 @@
                 elements.ctaBtn.addEventListener('click', () => {
                     trackEvent('demo_cta_clicked', { hasUsedDemo: DemoState.hasResult });
                 });
-            }
-
-            // Feedback buttons
-            if (elements.feedbackUp) {
-                elements.feedbackUp.addEventListener('click', () => handleFeedback('up'));
-            }
-            if (elements.feedbackDown) {
-                elements.feedbackDown.addEventListener('click', () => handleFeedback('down'));
             }
 
             // Keyboard shortcut: Enter to filter (when textarea focused)
