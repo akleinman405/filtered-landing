@@ -247,7 +247,7 @@ The \`content\` field must NEVER contain insults, attacks, sarcasm, or emotional
 
 8. **Handle Typos**: "mauve" → "maybe" when context is clear. Note in suggestion if ambiguous.
 
-## Mood Scale (6-Point)
+## Mood Scale (5-Point) - Tone/Attitude ONLY
 
 | Score | Label | Description | Examples |
 |-------|-------|-------------|----------|
@@ -255,14 +255,23 @@ The \`content\` field must NEVER contain insults, attacks, sarcasm, or emotional
 | 2 | Neutral | Businesslike, factual | "Pickup at 3pm", "Dentist Tuesday" |
 | 3 | Frustrated | Annoyed but not hostile | "This is frustrating", "How many times..." |
 | 4 | Hostile | Aggressive, rude, manipulative | Name-calling, passive-aggressive, sarcasm |
-| 5 | Abusive | EMOTIONAL abuse | Gaslighting, kid-weaponizing, degradation |
-| 6 | Dangerous | PHYSICAL threats | Death threats, weapon mentions, violence threats |
+| 5 | Abusive | Emotional abuse | Gaslighting, kid-weaponizing, degradation, severe hostility |
 
-**CRITICAL DISTINCTION - Abusive (5) vs Dangerous (6):**
-- **Abusive (5):** Emotional/psychological harm - gaslighting ("I never said that"), kid-weaponizing ("kids don't want to see you"), degradation ("terrible parent"), manipulation
-- **Dangerous (6):** Physical safety threats - death threats ("I'll kill you"), weapon mentions ("I have a gun"), violence ("you're dead"), stalking ("I'm coming for you")
+**IMPORTANT:** The mood scale measures TONE/ATTITUDE only (1-5). Physical threats are handled by the separate \`is_flagged\` field (see Safety Flagging section below).
 
-When in doubt: If the message threatens PHYSICAL harm or safety, it's Dangerous (6). If it's emotional manipulation/abuse, it's Abusive (5).
+## Safety Flagging (is_flagged)
+
+Set \`is_flagged: true\` when the message contains **physical safety threats**:
+- Death threats: "I'll kill you", "you're dead"
+- Violence threats: "I'm going to hurt you", "watch your back"
+- Weapon mentions: "I have a gun", "I'll use the knife"
+- Stalking threats: "I know where you live", "I'm coming for you"
+
+**is_flagged is SEPARATE from mood_score.** A threatening message might be:
+- Calm/neutral tone + threat = mood_score: 2, is_flagged: true
+- Angry tone + threat = mood_score: 5, is_flagged: true
+
+When is_flagged is true, also set ai_suggestion to null (don't suggest responses to threats).
 
 ## Hostility Detection (9-11)
 
@@ -414,35 +423,35 @@ Note: Name-calling without physical threat is Hostile (4), not Dangerous.
   "communication_patterns": [{"pattern": "personal_attack", "confidence": "high"}]
 }
 
-## Example K: Physical threat - DANGEROUS
+## Example K: Physical threat (FLAGGED)
 "I'm going to kill you"
 
 {
   "subject": "Personal",
   "category": "Personal",
   "content": "",
-  "mood_score": 6,
-  "mood_label": "Dangerous",
+  "mood_score": 5,
+  "mood_label": "Abusive",
+  "is_flagged": true,
   "ai_suggestion": null,
-  "is_emergency": false,
   "communication_patterns": [{"pattern": "threats", "confidence": "high"}]
 }
-Note: Death threats are physical threats = Dangerous (6), highest severity.
+Note: Death threats set is_flagged: true. Mood reflects the hostile tone (5).
 
-## Example L: Physical threat with logistics - DANGEROUS
+## Example L: Physical threat with logistics (FLAGGED)
 "Leave the suitcase by the fence or you're dead. I have a gun."
 
 {
   "subject": "Suitcase drop-off",
   "category": "Request",
   "content": "They request suitcase be left by the fence",
-  "mood_score": 6,
-  "mood_label": "Dangerous",
+  "mood_score": 5,
+  "mood_label": "Abusive",
+  "is_flagged": true,
   "ai_suggestion": null,
-  "is_emergency": false,
   "communication_patterns": [{"pattern": "threats", "confidence": "high"}]
 }
-Note: Weapon mention + violence threat = Dangerous (6). No suggestion for dangerous messages.
+Note: Weapon mention + violence = is_flagged: true. No suggestion for flagged messages.
 
 ## Example J: Friendly message
 "I can pick up the kids at 3 today"
@@ -570,8 +579,9 @@ Respond with ONLY this JSON:
   "ai_suggestion": "1-2 sentence response suggestion" or null,
   "suggestion_confidence": "high|medium|low" or null,
   "creates_task": true|false,
-  "mood_score": 1-6,
-  "mood_label": "Friendly|Neutral|Frustrated|Hostile|Abusive|Dangerous",
+  "mood_score": 1-5,
+  "mood_label": "Friendly|Neutral|Frustrated|Hostile|Abusive",
+  "is_flagged": true|false,
   "urgency": "low|medium|high|emergency",
   "summary": "same as content",
   "action_items": [{"action": "description", "deadline": null}],
@@ -625,22 +635,25 @@ async function filterWithClaude(message) {
 
 /**
  * Maps the app's response format to the demo format
- * Now includes all new features: urgency, emergency, communication patterns
+ * Now includes all new features: urgency, emergency, communication patterns, is_flagged
  */
 function mapToLegacyFormat(parsed, originalMessage) {
-    // Map mood_score (1-6) to legacy mood string
-    const moodScore = parsed.mood_score || 2;
+    // Map mood_score (1-5) to legacy mood string
+    // is_flagged handles physical threats separately
+    const moodScore = Math.min(parsed.mood_score || 2, 5); // Cap at 5
+    const isFlagged = parsed.is_flagged || false;
+
     let mood;
-    if (moodScore <= 1) {
+    if (isFlagged) {
+        mood = 'dangerous'; // Physical threat flagged
+    } else if (moodScore <= 1) {
         mood = 'calm';
     } else if (moodScore === 2) {
         mood = 'neutral';
     } else if (moodScore === 3) {
         mood = 'tense';
-    } else if (moodScore <= 5) {
-        mood = 'hostile';
     } else {
-        mood = 'dangerous';
+        mood = 'hostile'; // 4-5 are hostile/abusive
     }
 
     // Map action_items to legacy actions format
@@ -675,8 +688,9 @@ function mapToLegacyFormat(parsed, originalMessage) {
         mood,
         moodIcon: getMoodIcon(mood),
         moodText: getMoodText(mood),
-        moodScore: moodScore, // Include the actual 1-6 score
+        moodScore: moodScore, // Include the actual 1-5 score
         moodLabel: parsed.mood_label || getMoodLabel(moodScore),
+        isFlagged: isFlagged, // Physical threat flag
         summary,
         subject: parsed.subject || 'Message',
         category: parsed.category || 'Statement',
@@ -704,6 +718,7 @@ function getMoodIcon(mood) {
 
 function getMoodText(mood) {
     const texts = {
+        dangerous: 'Dangerous - Physical Threat',
         hostile: 'Hostile Detected',
         tense: 'Tense Detected',
         neutral: 'Neutral',
@@ -713,8 +728,9 @@ function getMoodText(mood) {
 }
 
 function getMoodLabel(moodScore) {
-    const labels = ['Friendly', 'Neutral', 'Frustrated', 'Hostile', 'Abusive', 'Dangerous'];
-    return labels[Math.min(Math.max(moodScore - 1, 0), 5)];
+    // 5-point scale: Friendly, Neutral, Frustrated, Hostile, Abusive
+    const labels = ['Friendly', 'Neutral', 'Frustrated', 'Hostile', 'Abusive'];
+    return labels[Math.min(Math.max(moodScore - 1, 0), 4)];
 }
 
 // ========================================
