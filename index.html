@@ -2153,59 +2153,76 @@
             }
         }
 
-        /* Subject Line - like the app header */
+        /* Subject Line - matching app's subjectLine style */
         .demo-subject {
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 600;
             color: var(--gray-900);
-            margin: 0 0 12px 0;
+            margin: 0 0 6px 0;
             line-height: 1.3;
         }
 
-        /* Badges Row - Category first, then mood */
+        .demo-subject:empty,
+        .demo-subject[data-hidden="true"] {
+            display: none;
+        }
+
+        /* Badges Row - Category first, then mood (matching app's messageHeader) */
         .demo-badges-row {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 8px;
+            margin-bottom: 8px;
         }
 
-        /* Category Badge - Prominent like the app */
+        /* Category Badge - Matching app's getCategoryColor exactly */
         .demo-category-badge {
             display: inline-block;
             font-size: 11px;
-            font-weight: 700;
-            padding: 6px 12px;
+            font-weight: 600;
+            padding: 3px 8px;
             border-radius: 6px;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
             text-transform: uppercase;
-            order: -1; /* Category comes first */
+            border-width: 1px;
+            border-style: solid;
         }
 
+        /* Request: primary colors */
         .demo-category-badge.request {
-            background-color: #DBEAFE;
-            color: #1D4ED8;
+            background-color: #F0FDFA; /* primary[50] */
+            color: #0F766E; /* primary[700] */
+            border-color: #99F6E4; /* primary[200] */
         }
 
+        /* Question: secondary/blue colors */
         .demo-category-badge.question {
-            background-color: #F0FDFA;
-            color: #0F766E;
+            background-color: #EFF6FF; /* secondary[50] */
+            color: #1D4ED8; /* secondary[700] */
+            border-color: #DBEAFE; /* secondary[100] */
         }
 
+        /* Proposal: warning/amber colors */
         .demo-category-badge.proposal {
-            background-color: #FFFBEB;
-            color: #B45309;
+            background-color: #FFFBEB; /* warning[50] */
+            color: #B45309; /* warning[700] */
+            border-color: #FEF3C7; /* warning[100] */
         }
 
+        /* Statement: neutral gray */
         .demo-category-badge.statement {
-            background-color: #E5E7EB;
-            color: #374151;
+            background-color: #FFFFFF; /* white/backgroundSecondary */
+            color: #4B5563; /* gray[600]/textSecondary */
+            border-color: #E5E7EB; /* gray[200]/border */
         }
 
+        /* Personal: light gray (most subtle) */
         .demo-category-badge.personal {
-            background-color: #F3E8FF;
-            color: #7C3AED;
+            background-color: #F9FAFB; /* gray[50]/background */
+            color: #6B7280; /* gray[500]/textTertiary */
+            border-color: #E5E7EB; /* gray[200]/border */
         }
 
         .demo-category-badge.emergency {
@@ -3034,10 +3051,7 @@
                                     <span class="demo-emergency-text">Emergency: Requires Immediate Attention</span>
                                 </div>
 
-                                <!-- Subject Line -->
-                                <h4 id="demo-subject" class="demo-subject">Message</h4>
-
-                                <!-- Category, Mood, and Urgency Badges -->
+                                <!-- Category, Mood, and Urgency Badges (first, like app) -->
                                 <div class="demo-badges-row">
                                     <div id="demo-category-badge" class="demo-category-badge request" role="status">
                                         <span class="demo-category-text">Request</span>
@@ -3053,12 +3067,15 @@
                                     </div>
                                 </div>
 
-                                <!-- Communication Pattern Tags -->
+                                <!-- Communication Pattern Tags (second) -->
                                 <div id="demo-patterns-section" class="demo-patterns-section" style="display: none;">
                                     <div id="demo-pattern-tags" class="demo-pattern-tags"></div>
                                 </div>
 
-                                <!-- Summary -->
+                                <!-- Subject Line (third, after patterns) -->
+                                <h4 id="demo-subject" class="demo-subject">Message</h4>
+
+                                <!-- Summary/Content (fourth) -->
                                 <div class="demo-summary-section">
                                     <div class="demo-section-label">Summary</div>
                                     <div id="demo-summary" class="demo-summary-text"></div>
@@ -3719,8 +3736,16 @@
             renderPatternTags(data.communicationPatterns);
 
             // Subject line - like the app's message header
+            // In the app, subject is hidden when it equals 'Personal'
             if (elements.subject) {
-                elements.subject.textContent = data.subject || 'Message';
+                const subject = data.subject || '';
+                if (subject && subject !== 'Personal') {
+                    elements.subject.textContent = subject;
+                    elements.subject.style.display = 'block';
+                } else {
+                    elements.subject.textContent = '';
+                    elements.subject.style.display = 'none';
+                }
             }
 
             // Category badge - Request/Question/Proposal/Statement/Personal
