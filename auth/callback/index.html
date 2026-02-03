@@ -253,24 +253,14 @@
             const openAppBtn = document.getElementById('open-app-btn');
             openAppBtn.href = appUrl;
 
-            // Try multiple methods to open the app
-            let redirectAttempted = false;
+            // Try to open app immediately via location.href
+            window.location.href = appUrl;
 
-            // Redirect immediately - no delay
-            window.location.replace(appUrl);
-
-            // Also add click handler for manual button that tries window.open
-            openAppBtn.addEventListener('click', function(e) {
-                // First, try the href (will use the link's href)
-                // But also try window.open as backup
-                setTimeout(function() {
-                    try {
-                        window.open(appUrl, '_self');
-                    } catch (err) {
-                        // Ignore
-                    }
-                }, 100);
-            });
+            // Show manual button after 1 second if still on page
+            setTimeout(function() {
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('manual-state').classList.remove('hidden');
+            }, 1000);
         })();
     </script>
 </body>
