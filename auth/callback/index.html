@@ -206,11 +206,9 @@
             const errorDescription = hashParams.get('error_description') || queryParams.get('error_description');
 
             if (error || errorCode) {
-                // Show error state
                 document.getElementById('loading-state').classList.add('hidden');
                 document.getElementById('error-state').classList.remove('hidden');
 
-                // Customize error message based on error type
                 const errorDetail = document.getElementById('error-detail');
                 if (errorCode === 'otp_expired' || errorDescription?.includes('expired')) {
                     errorDetail.textContent = 'This link has expired. Please request a new one from the app.';
@@ -220,49 +218,68 @@
                 return;
             }
 
-            // Check for auth tokens
-            const accessToken = hashParams.get('access_token') || queryParams.get('access_token');
-            const refreshToken = hashParams.get('refresh_token') || queryParams.get('refresh_token');
-            const type = hashParams.get('type') || queryParams.get('type');
-
-            // Build the deep link URL
-            // Preserve the original hash/query params for the app to process
-            let appUrl = 'filtered://auth/callback';
-
             // Reconstruct the params for the deep link
             const params = [];
-
-            // Copy all params from hash
             for (const [key, value] of hashParams.entries()) {
                 params.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
             }
-
-            // Copy all params from query (if different)
             for (const [key, value] of queryParams.entries()) {
                 if (!hashParams.has(key)) {
                     params.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
                 }
             }
 
-            // Use hash fragment for tokens (standard OAuth2 implicit flow)
+            // Detect platform
+            const isAndroid = /android/i.test(navigator.userAgent);
+            const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+            // Build standard deep link URL (for iOS and desktop)
+            let standardUrl = 'filtered://auth/callback';
             if (params.length > 0) {
-                appUrl += '#' + params.join('&');
+                standardUrl += '#' + params.join('&');
             }
 
-            // Set up the manual button with the deep link URL
-            const openAppBtn = document.getElementById('open-app-btn');
-            openAppBtn.href = appUrl;
-
-            // On Android, show button immediately - user taps are more reliable than auto-redirect
-            const isAndroid = /android/i.test(navigator.userAgent);
-
+            // Build Android Intent URL
+            // Uses query params (?) instead of hash (#) to avoid parsing issues
+            let androidIntentUrl = null;
             if (isAndroid) {
-                // Show button immediately for Android
+                const queryString = params.length > 0 ? '?' + params.join('&') : '';
+                androidIntentUrl = 'intent://auth/callback' + queryString +
+                    '#Intent;' +
+                    'scheme=filtered;' +
+                    'package=com.filteredapp.app;' +
+                    'S.browser_fallback_url=' + encodeURIComponent('https://filteredmessaging.com/download.html') + ';' +
+                    'end';
+            }
+
+            // Set up button click handler
+            const openAppBtn = document.getElementById('open-app-btn');
+
+            openAppBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                if (isAndroid && androidIntentUrl) {
+                    // Android: Use Intent URL for reliable app opening
+                    window.location.href = androidIntentUrl;
+                } else {
+                    // iOS/Desktop: Use standard custom scheme URL
+                    window.location.href = standardUrl;
+                }
+            });
+
+            // Set href for iOS long-press "Open in App" option
+            if (!isAndroid) {
+                openAppBtn.href = standardUrl;
+            }
+
+            // Platform-specific display logic
+            if (isAndroid) {
+                // Android: Show button immediately - user tap required for reliable Intent URL
                 document.getElementById('loading-state').classList.add('hidden');
                 document.getElementById('manual-state').classList.remove('hidden');
             } else {
-                // iOS - try auto-redirect first
-                window.location.href = appUrl;
+                // iOS: Try auto-redirect first
+                window.location.href = standardUrl;
 
                 // Show button as fallback after 1.5 seconds
                 setTimeout(function() {
