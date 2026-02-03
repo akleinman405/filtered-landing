@@ -331,14 +331,14 @@
     <div class="container">
         <div class="logo">
             <div class="logo-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                 </svg>
             </div>
             <span class="logo-text">Filtered</span>
         </div>
 
-        <div class="card" id="content">
+        <div class="card" id="content" aria-live="polite">
             <div class="loading">Loading invitation...</div>
         </div>
     </div>
@@ -353,29 +353,42 @@
 
             if (!inviteCode) {
                 contentEl.innerHTML = `
-                    <div class="error">
+                    <div class="error" role="alert">
                         <strong>Invalid Invite Link</strong>
                         <p>This invite link appears to be incomplete. Please ask the person who invited you to send the link again.</p>
-                        <p style="margin-top: 1rem;"><a href="/">Visit Filtered homepage</a></p>
+                        <p style="margin-top: 1rem;"><a href="/" aria-label="Visit Filtered homepage">Visit Filtered homepage</a></p>
                     </div>
                 `;
                 return;
             }
 
             try {
-                const response = await fetch(`${API_BASE}/api/connections/invite/${inviteCode}/validate`);
+                // Add timeout for robustness
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+                const response = await fetch(`${API_BASE}/api/connections/invite/${inviteCode}/validate`, {
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
 
                 if (!response.ok) {
                     throw new Error('Invalid or expired invite');
                 }
 
-                const data = await response.json();
+                // Wrap JSON parsing for robustness
+                let data;
+                try {
+                    data = await response.json();
+                } catch (parseError) {
+                    throw new Error('Invalid response from server');
+                }
                 const inviterName = data.inviter_name || 'Someone';
                 const deepLink = `filtered://invite/${inviteCode}`;
 
                 contentEl.innerHTML = `
                     <div class="invite-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                     </div>
@@ -392,8 +405,8 @@
 
                     <div class="download-section">
                         <h2>Step 1: Get the App</h2>
-                        <a href="/download" class="download-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                        <a href="/download" class="download-btn" aria-label="Download Filtered app for Android">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M17.523 2H6.477C5.1 2 4 3.1 4 4.477v15.046C4 20.9 5.1 22 6.477 22h11.046C18.9 22 20 20.9 20 19.523V4.477C20 3.1 18.9 2 17.523 2zM12 19.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5zm4-4H8V5h8v10.5z"/>
                             </svg>
                             Download for Android
@@ -403,8 +416,8 @@
 
                     <div class="divider">Already have the app?</div>
 
-                    <a href="${deepLink}" class="open-app-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <a href="${deepLink}" class="open-app-btn" aria-label="Open invitation in Filtered app">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
                         Open in Filtered App
@@ -414,19 +427,19 @@
                         <h3>What is Filtered?</h3>
                         <ul class="feature-list">
                             <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
                                 <span>Secure messaging for difficult conversations</span>
                             </li>
                             <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
                                 <span>AI helps reduce conflict and stress</span>
                             </li>
                             <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
                                 <span>Export conversations for legal records</span>
@@ -435,11 +448,57 @@
                     </div>
                 `;
             } catch (error) {
+                // Even if validation fails, still offer the deep link - the mobile app
+                // can handle errors better (user might already be connected, etc.)
+                const deepLink = `filtered://invite/${inviteCode}`;
+                const isTimeout = error.name === 'AbortError';
+                const errorTitle = isTimeout ? 'Connection Timed Out' : 'Invite May Be Unavailable';
+                const errorMessage = isTimeout
+                    ? 'We couldn\'t reach the server. Please check your connection and try again, or open the app directly.'
+                    : 'This invite may have expired or already been used. If you already have an account, you might already be connected!';
+
                 contentEl.innerHTML = `
-                    <div class="error">
-                        <strong>Invite Not Found</strong>
-                        <p>This invite may have expired or already been used. Please ask the person who invited you to send a new invite.</p>
-                        <p style="margin-top: 1rem;"><a href="/">Visit Filtered homepage</a></p>
+                    <div role="alert">
+                        <div class="invite-icon" style="background: #FEF2F2;">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#991B1B" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                        </div>
+
+                        <h1>${errorTitle}</h1>
+                        <p class="subtitle">${errorMessage}</p>
+                    </div>
+
+                    <div class="invite-code-display">
+                        <div class="invite-code-label">Invite Code</div>
+                        <div class="invite-code">${escapeHtml(inviteCode.substring(0, 8))}...</div>
+                    </div>
+
+                    <div class="download-section">
+                        <h2>Already have the app?</h2>
+                        <a href="${deepLink}" class="download-btn" aria-label="Open invitation in Filtered app">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            Open in Filtered App
+                        </a>
+                        <p style="font-size: 0.8rem; color: var(--gray-500); margin-top: 0.5rem;">
+                            The app can check if you're already connected
+                        </p>
+                    </div>
+
+                    <div class="divider">Need the app?</div>
+
+                    <a href="/download" class="download-btn secondary" aria-label="Download Filtered app for Android">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M17.523 2H6.477C5.1 2 4 3.1 4 4.477v15.046C4 20.9 5.1 22 6.477 22h11.046C18.9 22 20 20.9 20 19.523V4.477C20 3.1 18.9 2 17.523 2zM12 19.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5zm4-4H8V5h8v10.5z"/>
+                        </svg>
+                        Download for Android
+                    </a>
+
+                    <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--gray-100); font-size: 0.85rem; color: var(--gray-500);">
+                        <p>If the invite has expired, ask the person who invited you to send a new one from the app.</p>
+                        <p style="margin-top: 0.75rem;"><a href="/" style="color: var(--primary-600);" aria-label="Visit Filtered homepage">Visit Filtered homepage</a></p>
                     </div>
                 `;
             }
