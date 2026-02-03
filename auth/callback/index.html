@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to Filtered...</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-500: #14B8A6;
+            --primary-600: #0D9488;
+            --primary-700: #0F766E;
+            --gray-100: #F3F4F6;
+            --gray-600: #4B5563;
+            --gray-800: #1F2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%);
+            color: white;
+            padding: 24px;
+        }
+
+        .container {
+            text-align: center;
+            padding: 32px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo svg {
+            width: 48px;
+            height: 48px;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 24px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .status {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            background: white;
+            color: var(--primary-600);
+            padding: 14px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .error-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .error-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .error-message {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .help-text {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-top: 24px;
+            line-height: 1.5;
+        }
+
+        .help-text a {
+            color: white;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Loading state (shown initially) -->
+        <div id="loading-state">
+            <div class="spinner"></div>
+            <h1>Opening Filtered...</h1>
+            <p class="status">Redirecting to the app...</p>
+        </div>
+
+        <!-- Manual open state (shown if auto-redirect fails) -->
+        <div id="manual-state" class="hidden">
+            <div class="logo">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 4a2 2 0 012-2h14a2 2 0 012 2v16a2 2 0 01-2 2H5a2 2 0 01-2-2V4z" stroke="white" stroke-width="2"/>
+                    <path d="M7 8h10M7 12h10M7 16h6" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h1>Almost there!</h1>
+            <p class="status">Tap the button below to open the Filtered app and complete your sign in.</p>
+            <a id="open-app-btn" class="btn" href="#">Open Filtered App</a>
+            <p class="help-text">
+                Don't have the app? <a href="https://filteredmessaging.com/download.html">Download it here</a>
+            </p>
+        </div>
+
+        <!-- Error state (shown if there's an auth error) -->
+        <div id="error-state" class="hidden">
+            <div class="logo">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
+                    <path d="M12 8v4M12 16h.01" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h1>Link Expired</h1>
+            <div class="error-container">
+                <p class="error-title">This link is no longer valid</p>
+                <p class="error-message" id="error-detail">Please request a new link from the app.</p>
+            </div>
+            <a class="btn" href="https://filteredmessaging.com/">Go to Website</a>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Parse URL parameters from both hash and query string
+            const hash = window.location.hash.substring(1);
+            const search = window.location.search.substring(1);
+            const hashParams = new URLSearchParams(hash);
+            const queryParams = new URLSearchParams(search);
+
+            // Check for errors first
+            const error = hashParams.get('error') || queryParams.get('error');
+            const errorCode = hashParams.get('error_code') || queryParams.get('error_code');
+            const errorDescription = hashParams.get('error_description') || queryParams.get('error_description');
+
+            if (error || errorCode) {
+                // Show error state
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('error-state').classList.remove('hidden');
+
+                // Customize error message based on error type
+                const errorDetail = document.getElementById('error-detail');
+                if (errorCode === 'otp_expired' || errorDescription?.includes('expired')) {
+                    errorDetail.textContent = 'This link has expired. Please request a new one from the app.';
+                } else if (errorDescription) {
+                    errorDetail.textContent = decodeURIComponent(errorDescription.replace(/\+/g, ' '));
+                }
+                return;
+            }
+
+            // Check for auth tokens
+            const accessToken = hashParams.get('access_token') || queryParams.get('access_token');
+            const refreshToken = hashParams.get('refresh_token') || queryParams.get('refresh_token');
+            const type = hashParams.get('type') || queryParams.get('type');
+
+            // Build the deep link URL
+            // Preserve the original hash/query params for the app to process
+            let appUrl = 'filtered://auth/callback';
+
+            // Reconstruct the params for the deep link
+            const params = [];
+
+            // Copy all params from hash
+            for (const [key, value] of hashParams.entries()) {
+                params.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+            }
+
+            // Copy all params from query (if different)
+            for (const [key, value] of queryParams.entries()) {
+                if (!hashParams.has(key)) {
+                    params.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+                }
+            }
+
+            // Use hash fragment for tokens (standard OAuth2 implicit flow)
+            if (params.length > 0) {
+                appUrl += '#' + params.join('&');
+            }
+
+            // Set up the manual button
+            const openAppBtn = document.getElementById('open-app-btn');
+            openAppBtn.href = appUrl;
+
+            // Try multiple methods to open the app
+            let redirectAttempted = false;
+
+            // Method 1: Hidden iframe (works on some Android browsers)
+            try {
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = appUrl;
+                document.body.appendChild(iframe);
+            } catch (e) {
+                // Ignore iframe errors
+            }
+
+            // Method 2: Direct location change after small delay
+            setTimeout(function() {
+                if (!redirectAttempted) {
+                    redirectAttempted = true;
+                    window.location.href = appUrl;
+                }
+            }, 100);
+
+            // Method 3: If still on page after 2.5 seconds, show manual button
+            setTimeout(function() {
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('manual-state').classList.remove('hidden');
+            }, 2500);
+
+            // Also add click handler for manual button that tries window.open
+            openAppBtn.addEventListener('click', function(e) {
+                // First, try the href (will use the link's href)
+                // But also try window.open as backup
+                setTimeout(function() {
+                    try {
+                        window.open(appUrl, '_self');
+                    } catch (err) {
+                        // Ignore
+                    }
+                }, 100);
+            });
+        })();
+    </script>
+</body>
+</html>
