@@ -256,29 +256,8 @@
             // Try multiple methods to open the app
             let redirectAttempted = false;
 
-            // Method 1: Hidden iframe (works on some Android browsers)
-            try {
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.src = appUrl;
-                document.body.appendChild(iframe);
-            } catch (e) {
-                // Ignore iframe errors
-            }
-
-            // Method 2: Direct location change after small delay
-            setTimeout(function() {
-                if (!redirectAttempted) {
-                    redirectAttempted = true;
-                    window.location.href = appUrl;
-                }
-            }, 100);
-
-            // Method 3: If still on page after 2.5 seconds, show manual button
-            setTimeout(function() {
-                document.getElementById('loading-state').classList.add('hidden');
-                document.getElementById('manual-state').classList.remove('hidden');
-            }, 2500);
+            // Redirect immediately - no delay
+            window.location.replace(appUrl);
 
             // Also add click handler for manual button that tries window.open
             openAppBtn.addEventListener('click', function(e) {
