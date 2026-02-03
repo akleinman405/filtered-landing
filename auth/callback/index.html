@@ -194,6 +194,10 @@
 
     <script>
         (function() {
+            // Pre-warm backend (Fly.io may be sleeping)
+            // Fire and forget - don't wait for response
+            fetch('https://coparent-shield.fly.dev/health').catch(() => {});
+
             // Parse URL parameters from both hash and query string
             const hash = window.location.hash.substring(1);
             const search = window.location.search.substring(1);
