@@ -253,14 +253,26 @@
             const openAppBtn = document.getElementById('open-app-btn');
             openAppBtn.href = appUrl;
 
-            // Try to open app immediately via location.href
-            window.location.href = appUrl;
+            // Detect Android for Intent URL (more reliable than custom scheme)
+            const isAndroid = /android/i.test(navigator.userAgent);
 
-            // Show manual button after 1 second if still on page
+            if (isAndroid) {
+                // Android Intent URL - more reliable way to open apps
+                // Format: intent://path#params#Intent;scheme=X;package=Y;end
+                const intentUrl = 'intent://auth/callback' +
+                    (params.length > 0 ? '#' + params.join('&') : '') +
+                    '#Intent;scheme=filtered;package=com.filteredapp.app;end';
+                window.location.href = intentUrl;
+            } else {
+                // iOS and others - use custom scheme directly
+                window.location.href = appUrl;
+            }
+
+            // Show manual button after 1.5 seconds if still on page
             setTimeout(function() {
                 document.getElementById('loading-state').classList.add('hidden');
                 document.getElementById('manual-state').classList.remove('hidden');
-            }, 1000);
+            }, 1500);
         })();
     </script>
 </body>
