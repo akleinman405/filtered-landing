@@ -257,10 +257,9 @@
             const isAndroid = /android/i.test(navigator.userAgent);
 
             if (isAndroid) {
-                // Android Intent URL - more reliable way to open apps
-                // Format: intent://path#params#Intent;scheme=X;package=Y;end
-                const intentUrl = 'intent://auth/callback' +
-                    (params.length > 0 ? '#' + params.join('&') : '') +
+                // Android Intent URL - use query params (?) not hash (#) to avoid double-hash issue
+                const queryString = params.length > 0 ? '?' + params.join('&') : '';
+                const intentUrl = 'intent://auth/callback' + queryString +
                     '#Intent;scheme=filtered;package=com.filteredapp.app;end';
                 window.location.href = intentUrl;
             } else {
