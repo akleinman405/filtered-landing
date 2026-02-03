@@ -249,29 +249,27 @@
                 appUrl += '#' + params.join('&');
             }
 
-            // Set up the manual button
+            // Set up the manual button with the deep link URL
             const openAppBtn = document.getElementById('open-app-btn');
             openAppBtn.href = appUrl;
 
-            // Detect Android for Intent URL (more reliable than custom scheme)
+            // On Android, show button immediately - user taps are more reliable than auto-redirect
             const isAndroid = /android/i.test(navigator.userAgent);
 
             if (isAndroid) {
-                // Android Intent URL - use query params (?) not hash (#) to avoid double-hash issue
-                const queryString = params.length > 0 ? '?' + params.join('&') : '';
-                const intentUrl = 'intent://auth/callback' + queryString +
-                    '#Intent;scheme=filtered;package=com.filteredapp.app;end';
-                window.location.href = intentUrl;
-            } else {
-                // iOS and others - use custom scheme directly
-                window.location.href = appUrl;
-            }
-
-            // Show manual button after 1.5 seconds if still on page
-            setTimeout(function() {
+                // Show button immediately for Android
                 document.getElementById('loading-state').classList.add('hidden');
                 document.getElementById('manual-state').classList.remove('hidden');
-            }, 1500);
+            } else {
+                // iOS - try auto-redirect first
+                window.location.href = appUrl;
+
+                // Show button as fallback after 1.5 seconds
+                setTimeout(function() {
+                    document.getElementById('loading-state').classList.add('hidden');
+                    document.getElementById('manual-state').classList.remove('hidden');
+                }, 1500);
+            }
         })();
     </script>
 </body>
