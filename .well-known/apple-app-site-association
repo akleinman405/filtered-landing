@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TEAM_ID.com.filteredapp.app",
+        "paths": ["/auth/*", "/billing/*", "/invite/*"]
+      }
+    ]
+  }
+}

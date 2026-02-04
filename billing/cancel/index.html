@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Cancelled - Filtered</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-500: #14B8A6;
+            --primary-600: #0D9488;
+            --primary-700: #0F766E;
+            --gray-100: #F3F4F6;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-800: #1F2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%);
+            color: white;
+            padding: 24px;
+        }
+
+        .container {
+            text-align: center;
+            padding: 32px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .icon svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .status {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .btn {
+            background: white;
+            color: var(--primary-600);
+            padding: 14px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-block;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .help-text {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-top: 24px;
+            line-height: 1.5;
+        }
+
+        .help-text a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 24px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Loading state (shown initially on iOS) -->
+        <div id="loading-state">
+            <div class="spinner"></div>
+            <h1>Opening Filtered...</h1>
+            <p class="status">Returning to the app...</p>
+        </div>
+
+        <!-- Cancel state (shown after redirect or on Android) -->
+        <div id="cancel-state" class="hidden">
+            <div class="icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </div>
+            <h1>Payment Cancelled</h1>
+            <p class="status">No worries! You can try again whenever you're ready.</p>
+            <a class="btn" id="open-app-btn" href="#">Return to Filtered App</a>
+            <p class="help-text">
+                Don't have the app? <a href="https://filteredmessaging.com/download.html">Download it here</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Pre-warm backend (Fly.io may be sleeping)
+            fetch('https://coparent-shield.fly.dev/health').catch(() => {});
+
+            // Parse query params
+            const params = window.location.search;
+
+            // Detect platform
+            const isAndroid = /android/i.test(navigator.userAgent);
+            const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+            // Build standard deep link URL
+            let standardUrl = 'filtered://billing/cancel' + params;
+
+            // Build Android Intent URL
+            let androidIntentUrl = null;
+            if (isAndroid) {
+                androidIntentUrl = 'intent://billing/cancel' + params +
+                    '#Intent;' +
+                    'scheme=filtered;' +
+                    'package=com.filteredapp.app;' +
+                    'S.browser_fallback_url=' + encodeURIComponent('https://filteredmessaging.com/download.html') + ';' +
+                    'end';
+            }
+
+            // Set up button click handler
+            const openAppBtn = document.getElementById('open-app-btn');
+
+            openAppBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                if (isAndroid && androidIntentUrl) {
+                    window.location.href = androidIntentUrl;
+                } else {
+                    window.location.href = standardUrl;
+                }
+            });
+
+            // Set href for iOS long-press
+            if (!isAndroid) {
+                openAppBtn.href = standardUrl;
+            }
+
+            // Platform-specific display logic
+            if (isAndroid) {
+                // Android: Show cancel state immediately - user tap required
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('cancel-state').classList.remove('hidden');
+            } else {
+                // iOS: Try auto-redirect first
+                window.location.href = standardUrl;
+
+                // Show cancel state as fallback after 1.5 seconds
+                setTimeout(function() {
+                    document.getElementById('loading-state').classList.add('hidden');
+                    document.getElementById('cancel-state').classList.remove('hidden');
+                }, 1500);
+            }
+        })();
+    </script>
+</body>
+</html>
