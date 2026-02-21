@@ -146,7 +146,11 @@ exports.handler = async (event) => {
         from: 'Filtered <hello@filteredmessaging.com>',
         to: [subscriberEmail],
         subject: "You're on the Filtered waitlist!",
-        html: emailHtml
+        html: emailHtml,
+        headers: {
+          'List-Unsubscribe': '<mailto:hello@filteredmessaging.com?subject=Unsubscribe>',
+          'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click'
+        }
       })
     });
 

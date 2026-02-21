@@ -46,7 +46,17 @@ exports.handler = async (event, context) => {
     }
 
     // Validate promo code format (DR + letters/numbers, 4-20 chars)
-    const promoValid = promoCode ? /^DR[A-Z0-9]{2,18}$/.test(promoCode) : false;
+    let promoValid = promoCode ? /^DR[A-Z0-9]{2,18}$/.test(promoCode) : false;
+
+    // Deadline enforcement: promo codes expire after Feb 28, 2026 EST
+    let promoExpired = false;
+    if (promoValid) {
+      const deadline = new Date('2026-03-01T04:59:59Z'); // Feb 28 23:59:59 EST
+      if (new Date() > deadline) {
+        promoValid = false;
+        promoExpired = true;
+      }
+    }
 
     const timestamp = new Date().toISOString();
     const submission = { email, timestamp, source: 'website', promo_code: promoCode || null };
@@ -107,7 +117,7 @@ exports.handler = async (event, context) => {
     if (RESEND_API_KEY) {
       try {
         const subject = promoValid
-          ? "You're on the list — your discount is locked in!"
+          ? "You're on the list — 6 months half off, locked in!"
           : "You're on the Filtered waitlist!";
         const emailHtml = promoValid
           ? getPromoEmailTemplate(promoCode)
@@ -123,7 +133,11 @@ exports.handler = async (event, context) => {
             from: 'Filtered <hello@filteredmessaging.com>',
             to: [email],
             subject,
-            html: emailHtml
+            html: emailHtml,
+            headers: {
+              'List-Unsubscribe': '<mailto:hello@filteredmessaging.com?subject=Unsubscribe>',
+              'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click'
+            }
           })
         });
 
@@ -158,7 +172,11 @@ exports.handler = async (event, context) => {
             from: 'Filtered Waitlist <hello@filteredmessaging.com>',
             to: ['alec.m.kleinman@gmail.com'],
             subject: `${sheetWriteStatus.success ? '✅' : '❌'} New Waitlist Signup: ${email}${promoCode ? ' [PROMO: ' + promoCode + ']' : ''}`,
-            html: `<p>New signup at ${timestamp}</p><p><strong>Email:</strong> ${email}</p>${promoHtml}${sheetStatusHtml}`
+            html: `<p>New signup at ${timestamp}</p><p><strong>Email:</strong> ${email}</p>${promoHtml}${sheetStatusHtml}`,
+            headers: {
+              'List-Unsubscribe': '<mailto:hello@filteredmessaging.com?subject=Unsubscribe>',
+              'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click'
+            }
           })
         });
       } catch (e) {
@@ -174,6 +192,7 @@ exports.handler = async (event, context) => {
         message: 'Thanks for joining the waitlist!',
         email,
         promo_valid: promoValid,
+        promo_expired: promoExpired,
         promo_code: promoCode || null
       })
     };
@@ -208,16 +227,16 @@ function getEmailTemplate() {
                     <tr>
                         <td style="padding: 40px;">
                             <p style="margin: 0 0 20px; color: #374151; font-size: 16px; line-height: 1.6;">
-                                Thanks for joining the Filtered waitlist. We're building something special for co-parents who deserve peaceful communication.
+                                Thanks for joining the Filtered waitlist. We're building something special for people who deserve peaceful communication.
                             </p>
                             <p style="margin: 0 0 24px; color: #374151; font-size: 16px; line-height: 1.6;">
                                 <strong>What is Filtered?</strong><br>
-                                An AI-powered app that filters hostile messages from your co-parent, so you only see the information that matters — without the emotional toll.
+                                An AI-powered app that strips hostility out of messages, so you only see the information that matters — without the emotional toll.
                             </p>
                             <table role="presentation" style="width: 100%; background-color: #F0FDFA; border-radius: 12px; margin-bottom: 24px;">
                                 <tr>
                                     <td style="padding: 24px;">
-                                        <p style="margin: 0 0 12px; color: #0F766E; font-size: 14px; font-weight: 600; text-transform: uppercase;">Coming Soon</p>
+                                        <p style="margin: 0 0 12px; color: #0F766E; font-size: 14px; font-weight: 600; text-transform: uppercase;">Launching March 1st</p>
                                         <ul style="margin: 0; padding: 0 0 0 20px; color: #374151; font-size: 15px; line-height: 1.8;">
                                             <li>AI-filtered messages that remove hostility</li>
                                             <li>Emergency alerts you'll never miss</li>
@@ -228,7 +247,7 @@ function getEmailTemplate() {
                                 </tr>
                             </table>
                             <p style="margin: 0; color: #6B7280; font-size: 14px;">
-                                We'll email you as soon as Filtered is ready. Take care of yourself!
+                                We'll email you on March 1st with download instructions. Take care of yourself!
                             </p>
                         </td>
                     </tr>
@@ -262,7 +281,7 @@ function getPromoEmailTemplate(promoCode) {
                     <tr>
                         <td style="background: linear-gradient(135deg, #0D9488 0%, #0F766E 100%); padding: 40px 40px 32px; text-align: center;">
                             <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">You're on the list!</h1>
-                            <p style="margin: 12px 0 0; color: rgba(255,255,255,0.9); font-size: 16px;">Your discount is locked in.</p>
+                            <p style="margin: 12px 0 0; color: rgba(255,255,255,0.9); font-size: 16px;">6 months half off — locked in.</p>
                         </td>
                     </tr>
                     <tr>
@@ -272,21 +291,22 @@ function getPromoEmailTemplate(promoCode) {
                                     <td style="padding: 20px; text-align: center;">
                                         <p style="margin: 0 0 4px; color: #065F46; font-size: 13px; font-weight: 600; text-transform: uppercase;">Your Promo Code</p>
                                         <p style="margin: 0; color: #065F46; font-size: 28px; font-weight: 700; letter-spacing: 2px;">${promoCode}</p>
-                                        <p style="margin: 8px 0 0; color: #047857; font-size: 14px;">1 month free when Filtered launches</p>
+                                        <p style="margin: 8px 0 0; color: #047857; font-size: 14px; font-weight: 600;">6 months half off — save $44.97</p>
+                                        <p style="margin: 4px 0 0; color: #6B7280; font-size: 12px;">Valid through March 1, 2026</p>
                                     </td>
                                 </tr>
                             </table>
                             <p style="margin: 0 0 20px; color: #374151; font-size: 16px; line-height: 1.6;">
-                                Thanks for joining the Filtered waitlist. Your promo code is saved to your account — no need to remember it. When we launch, your discount will be applied automatically.
+                                Thanks for joining the Filtered waitlist. Your promo code is saved to your account — no need to remember it. When we launch on <strong>March 1st</strong>, your discount will be applied automatically.
                             </p>
                             <p style="margin: 0 0 24px; color: #374151; font-size: 16px; line-height: 1.6;">
                                 <strong>What is Filtered?</strong><br>
-                                An AI-powered app that filters hostile messages from your co-parent, so you only see the information that matters — without the emotional toll.
+                                An AI-powered app that strips hostility out of messages, so you only see the information that matters — without the emotional toll.
                             </p>
                             <table role="presentation" style="width: 100%; background-color: #F0FDFA; border-radius: 12px; margin-bottom: 24px;">
                                 <tr>
                                     <td style="padding: 24px;">
-                                        <p style="margin: 0 0 12px; color: #0F766E; font-size: 14px; font-weight: 600; text-transform: uppercase;">Coming Soon</p>
+                                        <p style="margin: 0 0 12px; color: #0F766E; font-size: 14px; font-weight: 600; text-transform: uppercase;">Launching March 1st</p>
                                         <ul style="margin: 0; padding: 0 0 0 20px; color: #374151; font-size: 15px; line-height: 1.8;">
                                             <li>AI-filtered messages that remove hostility</li>
                                             <li>Emergency alerts you'll never miss</li>
@@ -297,7 +317,7 @@ function getPromoEmailTemplate(promoCode) {
                                 </tr>
                             </table>
                             <p style="margin: 0; color: #6B7280; font-size: 14px;">
-                                We'll email you as soon as Filtered is ready. Take care of yourself!
+                                We'll email you on March 1st with download instructions. Take care of yourself!
                             </p>
                         </td>
                     </tr>
