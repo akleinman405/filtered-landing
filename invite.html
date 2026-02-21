@@ -155,13 +155,7 @@
             margin-bottom: 0.5rem;
         }
 
-        .invite-code {
-            font-family: monospace;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--gray-800);
-            letter-spacing: 0.05em;
-        }
+        /* .invite-code styles are defined below with copy button styles */
 
         .download-section {
             margin-bottom: 1.5rem;
@@ -302,6 +296,69 @@
             padding: 2rem;
         }
 
+        .loading-spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--gray-200);
+            border-top-color: var(--primary-500);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 0.75rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-status {
+            font-size: 0.85rem;
+            color: var(--gray-400);
+            margin-top: 0.5rem;
+        }
+
+        .invite-code {
+            font-family: monospace;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            letter-spacing: 0.02em;
+            word-break: break-all;
+        }
+
+        .invite-code-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: var(--primary-50);
+            color: var(--primary-600);
+            border: 1px solid var(--primary-200, #99F6E4);
+            border-radius: 6px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-100);
+        }
+
+        .copy-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
         .error {
             background: #FEF2F2;
             border: 1px solid #FCA5A5;
@@ -339,12 +396,28 @@
         </div>
 
         <div class="card" id="content" aria-live="polite">
-            <div class="loading">Loading invitation...</div>
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <div id="loading-text">Loading invitation...</div>
+            </div>
         </div>
     </div>
 
     <script>
         const API_BASE = 'https://coparent-shield.fly.dev';
+
+        async function fetchWithTimeout(url, timeoutMs) {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+            try {
+                const response = await fetch(url, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                return response;
+            } catch (err) {
+                clearTimeout(timeoutId);
+                throw err;
+            }
+        }
 
         async function loadInvite() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -363,20 +436,39 @@
             }
 
             try {
-                // Add timeout for robustness
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 8000);
+                const validateUrl = `${API_BASE}/api/connections/invite/${inviteCode}/validate`;
+                let response;
+                let attempt = 0;
 
-                const response = await fetch(`${API_BASE}/api/connections/invite/${inviteCode}/validate`, {
-                    signal: controller.signal
-                });
-                clearTimeout(timeoutId);
+                // Retry logic: first attempt 12s (cold start), retry 8s
+                const timeouts = [12000, 8000];
 
-                if (!response.ok) {
+                while (attempt < timeouts.length) {
+                    try {
+                        if (attempt > 0) {
+                            // Show retry message
+                            const loadingText = document.getElementById('loading-text');
+                            if (loadingText) {
+                                loadingText.textContent = 'Waking up server... one moment';
+                            }
+                        }
+                        response = await fetchWithTimeout(validateUrl, timeouts[attempt]);
+                        if (response.ok) break;
+                        // Non-OK response (e.g. 404 expired invite) — don't retry
+                        throw new Error('Invalid or expired invite');
+                    } catch (err) {
+                        attempt++;
+                        if (err.name !== 'AbortError' || attempt >= timeouts.length) {
+                            throw err;
+                        }
+                        // AbortError = timeout, loop will retry
+                    }
+                }
+
+                if (!response || !response.ok) {
                     throw new Error('Invalid or expired invite');
                 }
 
-                // Wrap JSON parsing for robustness
                 let data;
                 try {
                     data = await response.json();
@@ -400,7 +492,13 @@
 
                     <div class="invite-code-display">
                         <div class="invite-code-label">Your Invite Code</div>
-                        <div class="invite-code">${escapeHtml(inviteCode.substring(0, 8))}...</div>
+                        <div class="invite-code-row">
+                            <span class="invite-code">${escapeHtml(inviteCode)}</span>
+                            <button class="copy-btn" data-code="${escapeHtml(inviteCode)}" onclick="copyInviteCode(this.dataset.code)" aria-label="Copy invite code">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                <span id="copy-label">Copy</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="download-section">
@@ -471,7 +569,13 @@
 
                     <div class="invite-code-display">
                         <div class="invite-code-label">Invite Code</div>
-                        <div class="invite-code">${escapeHtml(inviteCode.substring(0, 8))}...</div>
+                        <div class="invite-code-row">
+                            <span class="invite-code">${escapeHtml(inviteCode)}</span>
+                            <button class="copy-btn" data-code="${escapeHtml(inviteCode)}" onclick="copyInviteCode(this.dataset.code)" aria-label="Copy invite code">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                <span id="copy-label">Copy</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="download-section">
@@ -502,6 +606,34 @@
                     </div>
                 `;
             }
+        }
+
+        function copyInviteCode(code) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(code).then(function() {
+                    var label = document.getElementById('copy-label');
+                    if (label) { label.textContent = 'Copied!'; setTimeout(function() { label.textContent = 'Copy'; }, 2000); }
+                }).catch(function() {
+                    fallbackCopy(code);
+                });
+            } else {
+                fallbackCopy(code);
+            }
+        }
+
+        function fallbackCopy(code) {
+            var textarea = document.createElement('textarea');
+            textarea.value = code;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                var label = document.getElementById('copy-label');
+                if (label) { label.textContent = 'Copied!'; setTimeout(function() { label.textContent = 'Copy'; }, 2000); }
+            } catch (e) { /* ignore */ }
+            document.body.removeChild(textarea);
         }
 
         function escapeHtml(text) {
