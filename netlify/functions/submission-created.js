@@ -68,12 +68,12 @@ exports.handler = async (event) => {
                     <tr>
                         <td style="padding: 40px;">
                             <p style="margin: 0 0 20px; color: #374151; font-size: 16px; line-height: 1.6;">
-                                Thanks for joining the Filtered waitlist. We're building something special for co-parents who deserve peaceful communication.
+                                Thanks for joining the Filtered waitlist. We're building something special for people who deserve peaceful communication.
                             </p>
 
                             <p style="margin: 0 0 24px; color: #374151; font-size: 16px; line-height: 1.6;">
                                 <strong>What is Filtered?</strong><br>
-                                An AI-powered app that filters hostile messages from your co-parent, so you only see the information that matters — without the emotional toll.
+                                An AI-powered app that filters hostile messages before you see them, so you only get the information that matters — without the emotional toll.
                             </p>
 
                             <!-- Features Box -->
@@ -114,7 +114,7 @@ exports.handler = async (event) => {
                     <tr>
                         <td style="background-color: #F9FAFB; padding: 24px 40px; border-top: 1px solid #E5E7EB;">
                             <p style="margin: 0 0 8px; color: #6B7280; font-size: 13px; text-align: center;">
-                                <strong style="color: #374151;">Filtered</strong> — Peaceful co-parent communication
+                                <strong style="color: #374151;">Filtered</strong> — Peaceful communication, filtered
                             </p>
                             <p style="margin: 0; color: #9CA3AF; font-size: 12px; text-align: center;">
                                 You're receiving this because you signed up at filteredmessaging.com<br>

@@ -1,15 +1,15 @@
-# Filtered Messaging App - AI-Powered Co-Parent Communication
+# Filtered Messaging App - AI-Powered Hostile Message Filtering
 
-> Filtered protects co-parents from hostile, manipulative, or emotionally draining messages while keeping them connected to important information about their children.
+> Filtered protects people from hostile, manipulative, or emotionally draining messages while keeping them connected to important information.
 
 ## What is Filtered?
 
-Filtered is a mobile app designed for separated or divorced parents who need to communicate with a difficult co-parent. Instead of receiving raw, potentially hostile messages, users see AI-filtered summaries that extract only the actionable information (schedules, pickups, emergencies, requests) while shielding them from attacks, manipulation, guilt trips, and emotional abuse.
+Filtered is a mobile app designed for anyone who needs to communicate with a difficult or hostile person. Instead of receiving raw, potentially hostile messages, users see AI-filtered summaries that extract only the actionable information (schedules, requests, deadlines, emergencies) while shielding them from attacks, manipulation, guilt trips, and emotional abuse.
 
 ## How It Works
 
 1. **Sign Up** - Create an account and set up your profile
-2. **Connect** - Invite your co-parent to join Filtered (they create their own account)
+2. **Connect** - Invite the person you need to communicate with (they create their own account)
 3. **Communicate** - All messages go through the app. Your view is filtered; theirs is normal
 4. **Receive Filtered Messages** - AI analyzes messages and shows you:
    - A mood indicator (Friendly, Neutral, Tense, Hostile)
@@ -26,22 +26,24 @@ Filtered is a mobile app designed for separated or divorced parents who need to 
 - **Response Suggestions**: AI-generated neutral replies to avoid escalation
 - **Task Extraction**: Automatically extracts action items and deadlines from messages
 - **Message History**: Original messages stored for 2 years for legal documentation
-- **Court-Ready Exports**: Download message history for custody proceedings
-- **Pro Member vs Co-Parent Modes**: Pro members get filtering; co-parents see normal messages
+- **Court-Ready Exports**: Download message history as verified PDFs
+- **Pro vs Free Modes**: Pro members get filtering; connected contacts see normal messages
 
 ## Who Is This For?
 
-- Parents dealing with a high-conflict co-parent
-- Anyone experiencing emotional manipulation from an ex
-- Parents who need to stay informed about their children but struggle with hostile communication
+- Anyone dealing with a high-conflict ex or former partner
+- People experiencing emotional manipulation from a family member
+- Anyone managing hostile communication from a difficult colleague or associate
 - People going through divorce who need a communication buffer
 - Anyone ordered by court to maintain contact but struggling with the emotional toll
+- People who need to stay informed without absorbing hostility
 
 ## Pricing
 
 - **14-day free trial** (no credit card required to start)
-- **$9/month** after trial (for Pro members with filtering)
-- Co-parents can use basic features free
+- **$14.99/month** after trial (for Pro members with filtering)
+- **$119.88/year** ($9.99/month billed annually -- save 33%)
+- Connected contacts can use basic features free
 - Cancel anytime, no contracts
 
 ## Platforms
@@ -60,24 +62,24 @@ Filtered is a mobile app designed for separated or divorced parents who need to 
 
 ## Common Questions
 
-**Q: Will my co-parent know I'm using Filtered?**
-A: Both you and your co-parent use the Filtered app. They'll know messages go through Filtered, but filtering happens only on your side - they won't see which messages triggered filtering.
+**Q: Will the other person know I'm using Filtered?**
+A: Both you and the other person use the Filtered app. They'll know messages go through Filtered, but filtering happens only on your side - they won't see which messages triggered filtering.
 
 **Q: Can I use original messages in court?**
 A: Yes. All originals are stored and exportable for legal proceedings.
 
-**Q: What if there's an emergency about my child?**
+**Q: What if there's an emergency?**
 A: Emergency detection alerts you immediately, regardless of message tone.
 
 **Q: How is this different from blocking?**
 A: Blocking cuts off communication. Filtered keeps you informed without the emotional toll.
 
-**Q: What's the difference between Pro Member and Co-Parent accounts?**
-A: Pro Members ($9/month) get AI message filtering, mood indicators, and response suggestions. Co-Parents can communicate for free but see all messages unfiltered.
+**Q: What's the difference between Pro and Free accounts?**
+A: Pro members ($14.99/month or $9.99/month billed yearly) get AI message filtering, mood indicators, and response suggestions. Free users can communicate through the app but see all messages unfiltered.
 
 ## Coming Soon
 
-- SMS integration (communicate with co-parents who don't want to install the app)
+- SMS integration (communicate with contacts who don't want to install the app)
 - Shared calendar
 - Expense tracking
 
@@ -89,8 +91,8 @@ A: Pro Members ($9/month) get AI message filtering, mood indicators, and respons
 
 ## Company
 
-Filtered is built by parents, for parents. Founded to solve the real problem of needing to co-parent effectively while protecting mental health from toxic communication patterns.
+Filtered is built to solve the real problem of needing to communicate with someone difficult while protecting your mental health from toxic communication patterns. You need to communicate. You don't need to absorb their hostility.
 
 ---
 
-*Last updated: January 2026*
+*Last updated: February 2026*

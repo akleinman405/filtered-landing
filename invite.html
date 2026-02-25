@@ -546,29 +546,25 @@
                     </div>
                 `;
             } catch (error) {
-                // Even if validation fails, still offer the deep link - the mobile app
-                // can handle errors better (user might already be connected, etc.)
+                // Validation failed — could be timeout (backend cold start), network error,
+                // or actual expiry. Show a welcoming page regardless and let the app handle
+                // the real validation when the user opens it.
                 const deepLink = `filtered://invite/${inviteCode}`;
-                const isTimeout = error.name === 'AbortError';
-                const errorTitle = isTimeout ? 'Connection Timed Out' : 'Invite May Be Unavailable';
-                const errorMessage = isTimeout
-                    ? 'We couldn\'t reach the server. Please check your connection and try again, or open the app directly.'
-                    : 'This invite may have expired or already been used. If you already have an account, you might already be connected!';
 
                 contentEl.innerHTML = `
-                    <div role="alert">
-                        <div class="invite-icon" style="background: #FEF2F2;">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="#991B1B" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                            </svg>
-                        </div>
-
-                        <h1>${errorTitle}</h1>
-                        <p class="subtitle">${errorMessage}</p>
+                    <div class="invite-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
                     </div>
 
+                    <h1>You've Been Invited!</h1>
+                    <p class="subtitle">
+                        Someone has invited you to connect on Filtered
+                    </p>
+
                     <div class="invite-code-display">
-                        <div class="invite-code-label">Invite Code</div>
+                        <div class="invite-code-label">Your Invite Code</div>
                         <div class="invite-code-row">
                             <span class="invite-code">${escapeHtml(inviteCode)}</span>
                             <button class="copy-btn" data-code="${escapeHtml(inviteCode)}" onclick="copyInviteCode(this.dataset.code)" aria-label="Copy invite code">
@@ -587,7 +583,7 @@
                             Open in Filtered App
                         </a>
                         <p style="font-size: 0.8rem; color: var(--gray-500); margin-top: 0.5rem;">
-                            The app can check if you're already connected
+                            Open the app to accept this invite
                         </p>
                     </div>
 
@@ -599,10 +595,30 @@
                         </svg>
                         Download for Android
                     </a>
+                    <p style="font-size: 0.8rem; color: var(--gray-500); margin-top: 0.5rem;">iOS coming soon</p>
 
-                    <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--gray-100); font-size: 0.85rem; color: var(--gray-500);">
-                        <p>If the invite has expired, ask the person who invited you to send a new one from the app.</p>
-                        <p style="margin-top: 0.75rem;"><a href="/" style="color: var(--primary-600);" aria-label="Visit Filtered homepage">Visit Filtered homepage</a></p>
+                    <div class="features">
+                        <h3>What is Filtered?</h3>
+                        <ul class="feature-list">
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Secure messaging for difficult conversations</span>
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>AI helps reduce conflict and stress</span>
+                            </li>
+                            <li>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Export conversations for legal records</span>
+                            </li>
+                        </ul>
                     </div>
                 `;
             }

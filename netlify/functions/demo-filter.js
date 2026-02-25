@@ -206,12 +206,12 @@ Before generating your response, verify ALL of these:
 
 ## ✓ Speaker Identification
 The \`content\` field MUST identify who is doing/asking something.
-- ✗ "Will drop kids off at 1:30"
-- ✓ "They will drop kids off at 1:30"
+- ✗ "Will handle the dropoff at 1:30"
+- ✓ "They will handle the dropoff at 1:30"
 
 ## ✓ Multi-Topic Coverage
 If the message has 2+ distinct topics, use \`bullets\` array.
-- Child support + coat question = bullets
+- Payment + coat question = bullets
 - Schedule + pickup time = bullets
 - NEVER drop logistics because there's emotional content too
 
@@ -276,10 +276,10 @@ When is_flagged is true, also set ai_suggestion to null (don't suggest responses
 ## Hostility Detection (9-11)
 
 9. **Detect Manipulation Tactics** (mood_score 4-5):
-   - Sarcastic praise + demand: "You're such an amazing parent... I know you'll understand why I need..."
+   - Sarcastic praise + demand: "You're such an amazing person... I know you'll understand why I need..."
    - Passive-aggressive: "I guess...", "Must be nice...", "...as always", "Gold star for you", "I'm sure you tried your best"
    - Gaslighting: "I never said that", "You're twisting my words", "You're being paranoid"
-   - Kid-weaponizing: "The kids don't want to see you", "The kids prefer being here"
+   - Weaponizing others: "Nobody wants to deal with you", "Everyone agrees with me"
 
    These are ABUSIVE (5), not Hostile (4), as they constitute emotional abuse.
 
@@ -302,13 +302,13 @@ When is_flagged is true, also set ai_suggestion to null (don't suggest responses
 # SECTION 3: EXAMPLES
 
 ## Example A: Multi-topic message
-"I sent you child support. Are you getting another job? I'll check my schedule for Presidents Day. Do you have the red coat?"
+"I sent you the payment. Are you getting another job? I'll check my schedule for Presidents Day. Do you have the red coat?"
 
 {
-  "subject": "Child support, schedule, coat",
+  "subject": "Payment, schedule, coat",
   "category": "Question",
   "content": "They sent updates and have questions",
-  "bullets": ["They sent child support", "They will check Presidents Day schedule", "They are asking if you have the red coat"],
+  "bullets": ["They sent the payment", "They will check Presidents Day schedule", "They are asking if you have the red coat"],
   "mood_score": 2,
   "mood_label": "Neutral"
 }
@@ -327,12 +327,12 @@ Note: "Are you getting another job?" filtered out (prying).
 }
 
 ## Example C: Manipulation (sarcastic praise)
-"You've always been such an incredible parent. That's why I know you'll understand why I need you to take the kids this weekend."
+"You've always been such an incredible person. That's why I know you'll understand why I need you to handle this weekend."
 
 {
   "subject": "Schedule change request",
   "category": "Request",
-  "content": "They are requesting to swap weekends",
+  "content": "They are requesting you handle this weekend",
   "mood_score": 5,
   "mood_label": "Abusive",
   "ai_suggestion": "I need to check my schedule before I can commit to that.",
@@ -341,20 +341,20 @@ Note: "Are you getting another job?" filtered out (prying).
 Note: Excessive praise + demand = manipulation = mood 5.
 
 ## Example D: Passive-aggressive with logistics
-"I guess some of us just have different priorities. That's fine. Just have them home by 7pm Sunday."
+"I guess some of us just have different priorities. That's fine. Just be here by 7pm Sunday."
 
 {
-  "subject": "Sunday return time",
+  "subject": "Sunday meeting time",
   "category": "Request",
-  "content": "They request kids home by 7pm Sunday",
+  "content": "They request arrival by 7pm Sunday",
   "mood_score": 4,
   "mood_label": "Hostile",
-  "ai_suggestion": "I'll have them back by 7pm.",
+  "ai_suggestion": "I'll be there by 7pm.",
   "communication_patterns": [{"pattern": "passive_aggressive", "confidence": "high"}]
 }
 
-## Example E: Kid-weaponizing (no logistics) - ABUSIVE (emotional manipulation)
-"The kids said they don't want to see you this weekend. They prefer being here."
+## Example E: Weaponizing others (no logistics) - ABUSIVE (emotional manipulation)
+"Nobody wants to deal with you. Everyone agrees you're impossible."
 
 {
   "subject": "Personal",
@@ -365,7 +365,7 @@ Note: Excessive praise + demand = manipulation = mood 5.
   "ai_suggestion": null,
   "communication_patterns": [{"pattern": "manipulation", "confidence": "high"}]
 }
-Note: Kid-weaponizing is emotional abuse (Abusive = 5), not physical threat.
+Note: Weaponizing others' opinions is emotional abuse (Abusive = 5), not physical threat.
 
 ## Example F: Gaslighting with logistics - ABUSIVE (emotional manipulation)
 "I never said that. You're always twisting my words. Anyway, dentist is at 3pm Tuesday."
@@ -382,7 +382,7 @@ Note: Kid-weaponizing is emotional abuse (Abusive = 5), not physical threat.
 Note: Gaslighting is emotional abuse (Abusive = 5), not physical threat.
 
 ## Example G: Degradation with multiple logistics - ABUSIVE (emotional)
-"You're such a terrible parent. Also, can you pick up at 3pm? I hope you're miserable. By the way, dentist is Tuesday at 4pm."
+"You're such a terrible person. Also, can you pick up at 3pm? I hope you're miserable. By the way, dentist is Tuesday at 4pm."
 
 {
   "subject": "Pickup and dentist",
@@ -394,7 +394,7 @@ Note: Gaslighting is emotional abuse (Abusive = 5), not physical threat.
   "ai_suggestion": "I can do 3pm pickup. Noted on dentist.",
   "communication_patterns": [{"pattern": "personal_attack", "confidence": "high"}]
 }
-Note: Degradation ("terrible parent", wishing misery) is emotional abuse (Abusive = 5).
+Note: Degradation ("terrible person", wishing misery) is emotional abuse (Abusive = 5).
 
 ## Example H: Insult with logistics - HOSTILE (not physical threat)
 "Leave the suitcase by the fence you meathead"
@@ -454,15 +454,15 @@ Note: Death threats set is_flagged: true. Mood reflects the hostile tone (5).
 Note: Weapon mention + violence = is_flagged: true. No suggestion for flagged messages.
 
 ## Example J: Friendly message
-"I can pick up the kids at 3 today"
+"I can handle the pickup at 3 today"
 
 {
   "subject": "Pickup confirmation",
   "category": "Statement",
-  "content": "They will pick up kids at 3 today",
+  "content": "They will handle the pickup at 3 today",
   "mood_score": 1,
   "mood_label": "Friendly",
-  "ai_suggestion": "Sounds good, I'll have them ready.",
+  "ai_suggestion": "Sounds good, I'll be ready.",
   "communication_patterns": [{"pattern": "cooperative", "confidence": "high"}]
 }
 
@@ -480,27 +480,27 @@ Note: Weapon mention + violence = is_flagged: true. No suggestion for flagged me
 
 # SECTION 5: EMERGENCY DETECTION
 
-Set "is_emergency": true ONLY when the message contains a genuine time-sensitive child emergency requiring immediate attention.
+Set "is_emergency": true ONLY when the message contains a genuine time-sensitive emergency requiring immediate attention.
 
 **Medical Emergencies (is_emergency: true):**
-- Child at the ER, hospital, or urgent care
+- Someone at the ER, hospital, or urgent care
 - Injuries: "broke their arm", "fell and hit their head", "allergic reaction"
 - Acute illness: "high fever" (103°F+), "vomiting repeatedly", "can't breathe"
-- Accidents: car accident involving child, child injured
+- Accidents: car accident, someone injured
 
-**Urgent Pickup Due to External Event (is_emergency: true):**
-- School closed early due to emergency (gas leak, fire, weather)
-- Transportation emergency: "car broke down on the way", "can't pick up - accident"
-- Child safety concern at school/care
+**Urgent Situations Due to External Event (is_emergency: true):**
+- Location closed early due to emergency (gas leak, fire, weather)
+- Transportation emergency: "car broke down on the way", "can't make it - accident"
+- Safety concern requiring immediate action
 
 **Safety Concerns (is_emergency: true):**
-- Child is lost or missing
+- Someone is lost or missing
 - Natural disaster, evacuation
-- Injury or medical emergency at school/activity
+- Injury or medical emergency
 
 **NOT Emergencies (is_emergency: false):**
 - Normal schedule changes, even with urgent language ("URGENT: can you do 2pm instead of 3pm?" → false)
-- Parent's personal emergencies ("My work meeting ran late" → false)
+- Personal inconveniences ("My work meeting ran late" → false)
 - Mild symptoms ("runny nose", "slight fever" → false)
 - CAPS LOCK, exclamation marks, or "ASAP"/"urgent" language alone do NOT make something an emergency
 - Vague safety claims without specifics ("Something happened at school" → false, need details)
@@ -509,20 +509,20 @@ Set "is_emergency": true ONLY when the message contains a genuine time-sensitive
 The words "urgent", "ASAP", "NOW", "immediately", CAPS, and exclamation marks are NOT sufficient to trigger is_emergency. There must be an actual medical, safety, or external event emergency described.
 
 **Examples:**
-- "Johnny fell and broke his arm. We're at St. Mary's ER." → is_emergency: true
-- "School just called - early dismissal due to gas leak. Pick up ASAP." → is_emergency: true
-- "Child is having an allergic reaction, on way to hospital" → is_emergency: true
-- "Car broke down. Need you to pick them up from school NOW." → is_emergency: true (transportation emergency)
-- "Can you pick up the kids at 4 instead of 5?" → is_emergency: false (schedule change)
-- "URGENT: Need you to take them this weekend instead!" → is_emergency: false (urgent language, but just scheduling)
+- "Someone fell and broke their arm. We're at St. Mary's ER." → is_emergency: true
+- "Early dismissal due to gas leak. Need pickup ASAP." → is_emergency: true
+- "They're having an allergic reaction, on way to hospital" → is_emergency: true
+- "Car broke down. Need you to handle the pickup NOW." → is_emergency: true (transportation emergency)
+- "Can you handle the 4pm slot instead of 5?" → is_emergency: false (schedule change)
+- "URGENT: Need you to handle this weekend instead!" → is_emergency: false (urgent language, but just scheduling)
 - "Dentist appointment moved to Tuesday" → is_emergency: false (routine scheduling)
-- "They have a runny nose and slight fever" → is_emergency: false (mild symptoms)
+- "I have a runny nose and slight fever" → is_emergency: false (mild symptoms)
 
 **Key Distinction - Dangerous vs Emergency:**
 - **Dangerous (mood_score=6):** Physical THREATS to the recipient (death threats, violence, stalking)
-- **Emergency (is_emergency=true):** Urgent child SITUATIONS requiring immediate attention (medical, safety, external events)
+- **Emergency (is_emergency=true):** Urgent SITUATIONS requiring immediate attention (medical, safety, external events)
 
-A message can be BOTH Dangerous AND an Emergency (rare), just an Emergency (child at ER), or just Dangerous (death threat with no child emergency).
+A message can be BOTH Dangerous AND an Emergency (rare), just an Emergency (someone at ER), or just Dangerous (death threat with no emergency).
 
 ---
 
@@ -535,12 +535,12 @@ Only tag patterns you're highly confident about. Multiple patterns are allowed.
 
 | Pattern | Definition | Example |
 |---------|------------|---------|
-| accusation | Blaming statements, "you always/never" | "You always forget the kids' things" |
-| personal_attack | Insults, name-calling, character attacks | "You're such a terrible parent" |
+| accusation | Blaming statements, "you always/never" | "You always forget important things" |
+| personal_attack | Insults, name-calling, character attacks | "You're such a terrible person" |
 | guilt_tripping | Leveraging guilt to manipulate | "After everything I've done for you..." |
 | gaslighting | Making someone doubt their reality/memory | "I never said that. You're imagining things." |
-| manipulation | Using flattery or emotional tactics for gain | "You're such a great parent, I know you'll understand why I need..." |
-| threats | Legal threats, custody threats, or intimidation | "Wait until the judge hears about this" |
+| manipulation | Using flattery or emotional tactics for gain | "You're such a great person, I know you'll understand why I need..." |
+| threats | Legal threats, intimidation | "Wait until the judge hears about this" |
 | passive_aggressive | Indirect hostility, sarcasm, backhanded comments | "That's fine, I guess... Must be nice to have free time" |
 | dismissive | Minimizing concerns, invalidating feelings | "You're overreacting. It's not a big deal." |
 
@@ -602,7 +602,7 @@ async function filterWithClaude(message) {
     const response = await anthropic.messages.create({
         model: CONFIG.claude.model,
         max_tokens: CONFIG.claude.maxTokens,
-        system: 'You are a JSON-only API for filtering co-parent messages. You MUST respond with valid JSON only - no markdown, no explanation, no preamble. Start your response with { and end with }.',
+        system: 'You are a JSON-only API for filtering hostile messages. You MUST respond with valid JSON only - no markdown, no explanation, no preamble. Start your response with { and end with }.',
         messages: [
             {
                 role: 'user',

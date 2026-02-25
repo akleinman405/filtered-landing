@@ -155,8 +155,8 @@
         <!-- Loading state (shown initially) -->
         <div id="loading-state">
             <div class="spinner"></div>
-            <h1>Opening Filtered...</h1>
-            <p class="status">Redirecting to the app...</p>
+            <h1 id="loading-title">Opening Filtered...</h1>
+            <p class="status" id="loading-status">Redirecting to the app...</p>
         </div>
 
         <!-- Manual open state (shown if auto-redirect fails) -->
@@ -171,7 +171,7 @@
             <p class="status">Tap the button below to open the Filtered app and complete your sign in.</p>
             <a id="open-app-btn" class="btn" href="#">Open Filtered App</a>
             <p class="help-text">
-                Don't have the app? <a href="https://filteredmessaging.com/download.html">Download it here</a>
+                If the app doesn't open, please open the Filtered app manually.
             </p>
         </div>
 
@@ -192,29 +192,32 @@
         </div>
     </div>
 
+    <!-- Supabase JS for token verification (new flow) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
     <script>
         (function() {
             // Pre-warm backend (Fly.io may be sleeping)
             // Fire and forget - don't wait for response
-            fetch('https://coparent-shield.fly.dev/health').catch(() => {});
+            fetch('https://coparent-shield.fly.dev/health').catch(function() {});
 
             // Parse URL parameters from both hash and query string
-            const hash = window.location.hash.substring(1);
-            const search = window.location.search.substring(1);
-            const hashParams = new URLSearchParams(hash);
-            const queryParams = new URLSearchParams(search);
+            var hash = window.location.hash.substring(1);
+            var search = window.location.search.substring(1);
+            var hashParams = new URLSearchParams(hash);
+            var queryParams = new URLSearchParams(search);
 
             // Check for errors first
-            const error = hashParams.get('error') || queryParams.get('error');
-            const errorCode = hashParams.get('error_code') || queryParams.get('error_code');
-            const errorDescription = hashParams.get('error_description') || queryParams.get('error_description');
+            var error = hashParams.get('error') || queryParams.get('error');
+            var errorCode = hashParams.get('error_code') || queryParams.get('error_code');
+            var errorDescription = hashParams.get('error_description') || queryParams.get('error_description');
 
             if (error || errorCode) {
                 document.getElementById('loading-state').classList.add('hidden');
                 document.getElementById('error-state').classList.remove('hidden');
 
-                const errorDetail = document.getElementById('error-detail');
-                if (errorCode === 'otp_expired' || errorDescription?.includes('expired')) {
+                var errorDetail = document.getElementById('error-detail');
+                if (errorCode === 'otp_expired' || (errorDescription && errorDescription.indexOf('expired') !== -1)) {
                     errorDetail.textContent = 'This link has expired. Please request a new one from the app.';
                 } else if (errorDescription) {
                     errorDetail.textContent = decodeURIComponent(errorDescription.replace(/\+/g, ' '));
@@ -222,32 +225,123 @@
                 return;
             }
 
-            // Reconstruct the params for the deep link
-            const params = [];
-            for (const [key, value] of hashParams.entries()) {
-                params.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
-            }
-            for (const [key, value] of queryParams.entries()) {
-                if (!hashParams.has(key)) {
-                    params.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
-                }
+            // Check if this is the new flow: token_hash in query params (from custom email template)
+            var tokenHash = queryParams.get('token_hash');
+            var tokenType = queryParams.get('type') || 'signup';
+
+            if (tokenHash) {
+                handleTokenVerification(tokenHash, tokenType);
+                return;
             }
 
+            // Existing flow: access_token in hash (for password reset, OAuth, etc.)
+            handleExistingFlow(hashParams, queryParams);
+        })();
+
+        /**
+         * New flow: Verify email via token_hash using Supabase JS client.
+         * User clicked a link like: filteredmessaging.com/auth/callback?token_hash=xxx&type=signup
+         */
+        function handleTokenVerification(tokenHash, tokenType) {
+            // Show confirming state
+            document.getElementById('loading-title').textContent = 'Confirming your email...';
+            document.getElementById('loading-status').textContent = 'This will only take a moment.';
+
+            // Initialize Supabase client
+            var supabaseUrl = 'https://qisbqmwtfzeiffgtlzpk.supabase.co';
+            var supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFpc2JxbXd0ZnplaWZmZ3RsenBrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY3MTMzMTYsImV4cCI6MjA4MjI4OTMxNn0.jX4J13DNMFy1AXUtG0UBdCU4pnw3NBL1cwT-oCUlxOo';
+
+            var sb = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+            sb.auth.verifyOtp({
+                token_hash: tokenHash,
+                type: tokenType === 'signup' ? 'email' : tokenType,
+            }).then(function(result) {
+                if (result.error) {
+                    // Verification failed - show error
+                    document.getElementById('loading-state').classList.add('hidden');
+                    document.getElementById('error-state').classList.remove('hidden');
+
+                    var errorDetail = document.getElementById('error-detail');
+                    if (result.error.message && result.error.message.indexOf('expired') !== -1) {
+                        errorDetail.textContent = 'This link has expired. Please request a new one from the app.';
+                    } else {
+                        errorDetail.textContent = result.error.message || 'Verification failed. Please try again.';
+                    }
+                    return;
+                }
+
+                // Verification succeeded - we have session tokens
+                var session = result.data.session;
+                if (!session) {
+                    document.getElementById('loading-state').classList.add('hidden');
+                    document.getElementById('error-state').classList.remove('hidden');
+                    document.getElementById('error-detail').textContent = 'Email confirmed but no session returned. Please open the app and sign in.';
+                    return;
+                }
+
+                // Build deep link params with the session tokens
+                var params = [
+                    'access_token=' + encodeURIComponent(session.access_token),
+                    'refresh_token=' + encodeURIComponent(session.refresh_token),
+                    'type=signup'
+                ];
+
+                redirectToApp(params);
+
+            }).catch(function(err) {
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('error-state').classList.remove('hidden');
+                document.getElementById('error-detail').textContent = 'Something went wrong. Please open the app and try again.';
+            });
+        }
+
+        /**
+         * Existing flow: access_token already in hash fragment (password reset, OAuth, etc.)
+         */
+        function handleExistingFlow(hashParams, queryParams) {
+            // Reconstruct the params for the deep link
+            var params = [];
+            var entries;
+
+            entries = hashParams.entries();
+            var entry = entries.next();
+            while (!entry.done) {
+                params.push(encodeURIComponent(entry.value[0]) + '=' + encodeURIComponent(entry.value[1]));
+                entry = entries.next();
+            }
+
+            entries = queryParams.entries();
+            entry = entries.next();
+            while (!entry.done) {
+                if (!hashParams.has(entry.value[0])) {
+                    params.push(encodeURIComponent(entry.value[0]) + '=' + encodeURIComponent(entry.value[1]));
+                }
+                entry = entries.next();
+            }
+
+            redirectToApp(params);
+        }
+
+        /**
+         * Redirect to the Filtered app using Intent URL (Android) or custom scheme (iOS).
+         */
+        function redirectToApp(params) {
             // Detect platform
-            const isAndroid = /android/i.test(navigator.userAgent);
-            const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+            var isAndroid = /android/i.test(navigator.userAgent);
+            var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 
             // Build standard deep link URL (for iOS and desktop)
-            let standardUrl = 'filtered://auth/callback';
+            var standardUrl = 'filtered://auth/callback';
             if (params.length > 0) {
                 standardUrl += '#' + params.join('&');
             }
 
             // Build Android Intent URL
             // Uses query params (?) instead of hash (#) to avoid parsing issues
-            let androidIntentUrl = null;
+            var androidIntentUrl = null;
             if (isAndroid) {
-                const queryString = params.length > 0 ? '?' + params.join('&') : '';
+                var queryString = params.length > 0 ? '?' + params.join('&') : '';
                 androidIntentUrl = 'intent://auth/callback' + queryString +
                     '#Intent;' +
                     'scheme=filtered;' +
@@ -257,7 +351,7 @@
             }
 
             // Set up button click handler
-            const openAppBtn = document.getElementById('open-app-btn');
+            var openAppBtn = document.getElementById('open-app-btn');
 
             openAppBtn.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -276,13 +370,18 @@
                 openAppBtn.href = standardUrl;
             }
 
-            // Platform-specific display logic
-            if (isAndroid) {
-                // Android: Show button immediately - user tap required for reliable Intent URL
-                document.getElementById('loading-state').classList.add('hidden');
-                document.getElementById('manual-state').classList.remove('hidden');
+            // Try auto-redirect on all platforms (including Android)
+            if (isAndroid && androidIntentUrl) {
+                // Android: Try Intent URL auto-redirect
+                window.location.href = androidIntentUrl;
+
+                // Show button as fallback after 2 seconds
+                setTimeout(function() {
+                    document.getElementById('loading-state').classList.add('hidden');
+                    document.getElementById('manual-state').classList.remove('hidden');
+                }, 2000);
             } else {
-                // iOS: Try auto-redirect first
+                // iOS/Desktop: Try auto-redirect
                 window.location.href = standardUrl;
 
                 // Show button as fallback after 1.5 seconds
@@ -291,7 +390,7 @@
                     document.getElementById('manual-state').classList.remove('hidden');
                 }, 1500);
             }
-        })();
+        }
     </script>
 </body>
 </html>

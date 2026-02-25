@@ -254,7 +254,7 @@ function getEmailTemplate() {
                     <tr>
                         <td style="background-color: #F9FAFB; padding: 24px 40px; border-top: 1px solid #E5E7EB;">
                             <p style="margin: 0; color: #6B7280; font-size: 13px; text-align: center;">
-                                <strong style="color: #374151;">Filtered</strong> — Peaceful co-parent communication
+                                <strong style="color: #374151;">Filtered</strong> — Peaceful communication, filtered
                             </p>
                         </td>
                     </tr>
@@ -324,7 +324,7 @@ function getPromoEmailTemplate(promoCode) {
                     <tr>
                         <td style="background-color: #F9FAFB; padding: 24px 40px; border-top: 1px solid #E5E7EB;">
                             <p style="margin: 0; color: #6B7280; font-size: 13px; text-align: center;">
-                                <strong style="color: #374151;">Filtered</strong> — Peaceful co-parent communication
+                                <strong style="color: #374151;">Filtered</strong> — Peaceful communication, filtered
                             </p>
                         </td>
                     </tr>

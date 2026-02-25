@@ -1,6 +1,22 @@
 User-agent: *
 Allow: /
 
+# AI Crawlers - explicitly allowed for GEO visibility
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: https://filteredmessaging.com/sitemap.xml
 
 # AI Assistant Discovery

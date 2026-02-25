@@ -1,6 +1,7 @@
 # Filtered Social Media Strategy
 
 **Created:** 2026-01-20
+**Updated:** 2026-02-24
 **Status:** Active
 
 ---
@@ -15,10 +16,10 @@
 - **Gentle humor when appropriate** - Normalize the struggle
 
 ### Unique Positioning
-**"Filtered = Your co-parenting pause button"**
-- First co-parenting app with emotional wellness integration
+**"Filtered = Your communication pause button"**
+- First messaging app with emotional wellness integration
 - Focus on communication improvement, not just documentation
-- Target both parents equally (not mom-focused)
+- Target anyone dealing with hostile communication
 - Build community, not just a tool
 
 ---
@@ -37,16 +38,16 @@
 - Mental health check-ins
 - Self-compassion reminders
 
-### 3. Practical Co-Parenting Wins (20%)
+### 3. Practical Communication Wins (20%)
 - Scheduling tips
 - Documentation best practices
 - User success stories
 - Positive exchange celebrations
 
-### 4. Children-First Focus (10%)
-- Keeping kids out of the middle
-- Age-appropriate communication
-- Kids' perspective content
+### 4. Healthy Boundaries Focus (10%)
+- Setting and enforcing boundaries
+- Recognizing manipulation patterns
+- Self-care during difficult conversations
 
 ### 5. Product & Solution (10%)
 - How Filtered solves problems
@@ -100,8 +101,8 @@
 
 1. **"What to Say Instead"** - Reframe hostile messages
 2. **"3-Second Pause"** - Micro-reflection before responding
-3. **"From the Kids' View"** - Perspective-shifting content
-4. **"Co-Parenting Wins"** - Positive stories
+3. **"The Other Side"** - Perspective-shifting content
+4. **"Communication Wins"** - Positive stories
 5. **"Before You Send"** - Pause prompts
 
 ---
@@ -109,7 +110,7 @@
 ## CTAs by Stage
 
 ### Awareness (New followers)
-- "Follow for more co-parenting tips"
+- "Follow for more communication tips"
 - "Save this for later"
 - "Tag someone who needs this"
 
@@ -128,15 +129,15 @@
 ## Hashtag Strategy
 
 ### Primary (use on every post)
-#coparenting #coparentingtips #divorcerecovery
+#toxiccommunication #healthyboundaries #emotionalwellness
 
 ### Secondary (rotate)
-#parallelparenting #coparentingapp #divorcedparents
-#separatedparents #coparentlife #blendedlife
-#singleparent #custodybattle #coparentingwin
+#filteredmessaging #communicationtips #narcissistabuse
+#mentalhealth #boundarieswork #difficultpeople
+#manipulation #gaslighting #emotionalabuse
 
 ### Niche (use sparingly)
-#highconflictcoparenting #toxiccoparent #narcissistabuse
+#highconflictrelationship #toxicex #hostilecommunication
 
 ---
 
