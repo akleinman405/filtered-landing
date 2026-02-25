@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8WVQ32HLGS"></script>
+    <!-- Google Analytics (CCPA/CPRA consent-gated) -->
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-8WVQ32HLGS');
+        (function() {
+            var dominated = navigator.globalPrivacyControl;
+            var optedOut = document.cookie.split(";").some(function(c) {
+                return c.trim().indexOf("ccpa_opt_out=1") === 0;
+            });
+            if (dominated || optedOut) return;
+            var s = document.createElement("script");
+            s.async = true;
+            s.src = "https://www.googletagmanager.com/gtag/js?id=G-8WVQ32HLGS";
+            document.head.appendChild(s);
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            gtag("js", new Date());
+            gtag("config", "G-8WVQ32HLGS", { restricted_data_processing: true });
+        })();
     </script>
 
     <meta charset="UTF-8">
@@ -175,7 +186,7 @@
     <main class="container">
         <div class="content">
             <h1>Privacy Policy</h1>
-            <p class="last-updated">Last Updated: January 24, 2026</p>
+            <p class="last-updated">Last Updated: February 24, 2026</p>
 
             <p>Filtered ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you use our AI-powered communication filtering service.</p>
 
@@ -250,11 +261,12 @@
                 <li><strong>Right to Know:</strong> Request disclosure of personal information collected, sources, purposes, and third parties with whom we share it</li>
                 <li><strong>Right to Delete:</strong> Request deletion of your personal information (subject to exceptions)</li>
                 <li><strong>Right to Correct:</strong> Request correction of inaccurate personal information</li>
-                <li><strong>Right to Opt-Out of Sale/Sharing:</strong> We do not sell or share your personal information for cross-context behavioral advertising</li>
+                <li><strong>Right to Opt-Out of Sale/Sharing:</strong> Our website uses Google Analytics, which may constitute "sharing" under CPRA. You can opt out via our <a href="/do-not-sell.html">Do Not Sell or Share My Personal Information</a> page or by enabling Global Privacy Control (GPC) in your browser. We do not sell personal information for monetary consideration.</li>
                 <li><strong>Right to Non-Discrimination:</strong> We will not discriminate against you for exercising your CCPA rights</li>
             </ul>
             <p><strong>Categories of Personal Information Collected:</strong> Identifiers (name, email, phone), commercial information (subscription history), internet activity (app usage), and sensitive personal information (message content).</p>
             <p>To exercise your California privacy rights, contact us at <a href="mailto:privacy@filteredmessaging.com">privacy@filteredmessaging.com</a> or use the "Delete My Data" option in app Settings. We will respond within 45 days.</p>
+            <p><strong>Global Privacy Control (GPC):</strong> We honor the Global Privacy Control signal. When your browser sends a GPC signal, we will not load analytics tracking that could constitute sharing of your personal information under CPRA.</p>
 
             <h2>Additional State Privacy Rights</h2>
             <p>Residents of Virginia, Colorado, Connecticut, and other states with comprehensive privacy laws have similar rights to access, correct, delete, and port their data. Contact us at <a href="mailto:privacy@filteredmessaging.com">privacy@filteredmessaging.com</a> to exercise your rights.</p>
@@ -274,6 +286,7 @@
     </main>
 
     <footer>
+        <p><a href="/do-not-sell.html" style="color: var(--gray-500); text-decoration: none;">Do Not Sell My Info</a></p>
         <p>&copy; 2026 Filtered. All rights reserved. Filtered is a DBA of Alec Kleinman.</p>
     </footer>
 </body>

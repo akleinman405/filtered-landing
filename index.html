@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8WVQ32HLGS"></script>
+    <!-- Google Analytics (CCPA/CPRA consent-gated) -->
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-8WVQ32HLGS');
+        (function() {
+            var dominated = navigator.globalPrivacyControl;
+            var optedOut = document.cookie.split(";").some(function(c) {
+                return c.trim().indexOf("ccpa_opt_out=1") === 0;
+            });
+            if (dominated || optedOut) return;
+            var s = document.createElement("script");
+            s.async = true;
+            s.src = "https://www.googletagmanager.com/gtag/js?id=G-8WVQ32HLGS";
+            document.head.appendChild(s);
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            gtag("js", new Date());
+            gtag("config", "G-8WVQ32HLGS", { restricted_data_processing: true });
+        })();
     </script>
 
     <meta charset="UTF-8">
@@ -3422,6 +3433,7 @@
                     </div>
                     <p class="promo-applied" id="promo-applied"></p>
                     <p class="waitlist-note">No spam. Unsubscribe anytime.</p>
+                    <p class="waitlist-note" style="margin-top: 4px; font-size: 12px;">We collect your email to notify you when Filtered launches. <a href="/privacy.html" style="color: inherit; text-decoration: underline;">Privacy Policy</a>.</p>
                 </form>
                 <div class="waitlist-success" id="waitlist-success" style="display: none;">
                     <div style="font-size: 48px; margin-bottom: 16px;">&#10003;</div>
@@ -3574,6 +3586,7 @@
                 <li><a href="/terms.html">Terms of Service</a></li>
                 <li><a href="/faq.html">FAQ</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="/do-not-sell.html">Do Not Sell My Info</a></li>
             </ul>
         </div>
     </footer>

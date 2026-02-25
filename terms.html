@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8WVQ32HLGS"></script>
+    <!-- Google Analytics (CCPA/CPRA consent-gated) -->
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-8WVQ32HLGS');
+        (function() {
+            var dominated = navigator.globalPrivacyControl;
+            var optedOut = document.cookie.split(";").some(function(c) {
+                return c.trim().indexOf("ccpa_opt_out=1") === 0;
+            });
+            if (dominated || optedOut) return;
+            var s = document.createElement("script");
+            s.async = true;
+            s.src = "https://www.googletagmanager.com/gtag/js?id=G-8WVQ32HLGS";
+            document.head.appendChild(s);
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            gtag("js", new Date());
+            gtag("config", "G-8WVQ32HLGS", { restricted_data_processing: true });
+        })();
     </script>
 
     <meta charset="UTF-8">
@@ -318,6 +329,7 @@
     </main>
 
     <footer>
+        <p><a href="/do-not-sell.html" style="color: var(--gray-500); text-decoration: none;">Do Not Sell My Info</a></p>
         <p>&copy; 2026 Filtered. All rights reserved. Filtered is a DBA of Alec Kleinman.</p>
     </footer>
 </body>
