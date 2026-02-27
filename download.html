@@ -306,7 +306,7 @@
             <h1>Download for Android</h1>
             <p class="subtitle">Get the latest version of Filtered</p>
 
-            <a href="/filtered-v1.4.9.apk" class="download-btn" id="download-link">
+            <a href="/filtered-v1.4.11.apk" class="download-btn" id="download-link">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
@@ -315,19 +315,18 @@
 
             <div class="version-info">
                 <p>Current Version</p>
-                <span class="version-badge">v1.4.9</span>
-                <p style="margin-top: 0.5rem;">Released: February 26, 2026</p>
+                <span class="version-badge">v1.4.11</span>
+                <p style="margin-top: 0.5rem;">Released: February 27, 2026</p>
             </div>
 
             <div class="features">
-                <h2>What's New in v1.4.9</h2>
+                <h2>What's New in v1.4.11</h2>
                 <ul>
-                    <li><strong>Smoother Onboarding</strong> - Redesigned signup experience with animated progress and clearer steps</li>
-                    <li><strong>Offline Message Queue</strong> - Send messages without internet; they sync automatically when you reconnect</li>
-                    <li><strong>Better Error Handling</strong> - Clearer error messages throughout login, signup, and messaging</li>
-                    <li><strong>Crash Reporting</strong> - Sentry integration for faster bug detection and resolution</li>
-                    <li><strong>AI Filtering Improvements</strong> - Better temperature control and message truncation handling</li>
-                    <li><strong>Security Hardening</strong> - Per-account login lockout and session management improvements</li>
+                    <li><strong>Onboarding Reliability</strong> - Retry logic and escape hatch for failed onboarding steps so you never get stuck</li>
+                    <li><strong>Always-On Backend</strong> - Backend stays awake for faster first responses</li>
+                    <li><strong>Streamlined Pro Setup</strong> - Removed demo screen from Pro onboarding for a faster path to messaging</li>
+                    <li><strong>Daily Digest Fix</strong> - Daily digest now sends as push notification and respects your notification schedule</li>
+                    <li><strong>Crypto Compatibility</strong> - Added polyfill for broader device compatibility</li>
                 </ul>
                 <a href="/versions.html" class="version-link">View all versions &rarr;</a>
             </div>
