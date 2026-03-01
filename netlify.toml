@@ -25,3 +25,9 @@
     Content-Type = "application/vnd.android.package-archive"
     Content-Disposition = "attachment"
     X-Content-Type-Options = "nosniff"
+
+# Custom 404 page
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
