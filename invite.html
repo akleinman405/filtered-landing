@@ -168,15 +168,54 @@
 
         /* .invite-code styles are defined below with copy button styles */
 
-        .download-section {
+        .steps-section {
+            text-align: left;
             margin-bottom: 1.5rem;
         }
 
-        .download-section h2 {
+        .steps-section h2 {
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 1rem;
             color: var(--gray-800);
+            text-align: center;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+        }
+
+        .step-number {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .step-content {
+            flex: 1;
+            padding-top: 3px;
+        }
+
+        .step-content p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .step-content .download-btn {
+            margin-top: 0.5rem;
+            margin-bottom: 0;
         }
 
         .download-btn {
@@ -205,18 +244,6 @@
         .download-btn svg {
             width: 24px;
             height: 24px;
-        }
-
-        .download-btn.secondary {
-            background: white;
-            color: var(--gray-800);
-            border: 1px solid var(--gray-200);
-            box-shadow: none;
-        }
-
-        .download-btn.secondary:hover {
-            background: var(--gray-50);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .divider {
@@ -330,10 +357,10 @@
 
         .invite-code {
             font-family: monospace;
-            font-size: 0.95rem;
+            font-size: 1.5rem;
             font-weight: 600;
             color: var(--gray-800);
-            letter-spacing: 0.02em;
+            letter-spacing: 0.3em;
             word-break: break-all;
         }
 
@@ -393,10 +420,29 @@
                 padding: 1.5rem;
             }
         }
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            z-index: 9999;
+            padding: 8px 16px;
+            background: #0D9488;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 0 0 4px 0;
+        }
+        .skip-link:focus {
+            left: 0;
+            top: 0;
+            outline: 3px solid #111827;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <div id="main" class="container">
         <div class="logo">
             <div class="logo-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -512,15 +558,33 @@
                         </div>
                     </div>
 
-                    <div class="download-section">
-                        <h2>Step 1: Get the App</h2>
-                        <a href="/download" class="download-btn" aria-label="Download Filtered app for Android">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path d="M17.523 2H6.477C5.1 2 4 3.1 4 4.477v15.046C4 20.9 5.1 22 6.477 22h11.046C18.9 22 20 20.9 20 19.523V4.477C20 3.1 18.9 2 17.523 2zM12 19.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5zm4-4H8V5h8v10.5z"/>
-                            </svg>
-                            Download for Android
-                        </a>
-                        <p style="font-size: 0.8rem; color: var(--gray-500); margin-top: 0.5rem;">iOS coming soon</p>
+                    <div class="steps-section">
+                        <h2>How to Connect</h2>
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <p><strong>Copy your invite code</strong> above</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <p><strong>Download the app</strong></p>
+                                <a href="/download" class="download-btn" aria-label="Download Filtered app for Android">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path d="M17.523 2H6.477C5.1 2 4 3.1 4 4.477v15.046C4 20.9 5.1 22 6.477 22h11.046C18.9 22 20 20.9 20 19.523V4.477C20 3.1 18.9 2 17.523 2zM12 19.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5zm4-4H8V5h8v10.5z"/>
+                                    </svg>
+                                    Download for Android
+                                </a>
+                                <p style="font-size: 0.8rem; color: var(--gray-500); margin-top: 0.25rem;">iOS coming soon</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <p><strong>Open the app</strong>, tap "Have an invite code?", and paste your code</p>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="divider">Already have the app?</div>
@@ -585,28 +649,43 @@
                         </div>
                     </div>
 
-                    <div class="download-section">
-                        <h2>Already have the app?</h2>
-                        <a href="${deepLink}" class="download-btn" aria-label="Open invitation in Filtered app">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
-                            Open in Filtered App
-                        </a>
-                        <p style="font-size: 0.8rem; color: var(--gray-500); margin-top: 0.5rem;">
-                            Open the app to accept this invite
-                        </p>
+                    <div class="steps-section">
+                        <h2>How to Connect</h2>
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <p><strong>Copy your invite code</strong> above</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <p><strong>Download the app</strong></p>
+                                <a href="/download" class="download-btn" aria-label="Download Filtered app for Android">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path d="M17.523 2H6.477C5.1 2 4 3.1 4 4.477v15.046C4 20.9 5.1 22 6.477 22h11.046C18.9 22 20 20.9 20 19.523V4.477C20 3.1 18.9 2 17.523 2zM12 19.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5zm4-4H8V5h8v10.5z"/>
+                                    </svg>
+                                    Download for Android
+                                </a>
+                                <p style="font-size: 0.8rem; color: var(--gray-500); margin-top: 0.25rem;">iOS coming soon</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <p><strong>Open the app</strong>, tap "Have an invite code?", and paste your code</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="divider">Need the app?</div>
+                    <div class="divider">Already have the app?</div>
 
-                    <a href="/download" class="download-btn secondary" aria-label="Download Filtered app for Android">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path d="M17.523 2H6.477C5.1 2 4 3.1 4 4.477v15.046C4 20.9 5.1 22 6.477 22h11.046C18.9 22 20 20.9 20 19.523V4.477C20 3.1 18.9 2 17.523 2zM12 19.5c-.828 0-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5 1.5.672 1.5 1.5-.672 1.5-1.5 1.5zm4-4H8V5h8v10.5z"/>
+                    <a href="${deepLink}" class="open-app-btn" aria-label="Open invitation in Filtered app">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
-                        Download for Android
+                        Open in Filtered App
                     </a>
-                    <p style="font-size: 0.8rem; color: var(--gray-500); margin-top: 0.5rem;">iOS coming soon</p>
 
                     <div class="features">
                         <h3>What is Filtered?</h3>
