@@ -243,10 +243,29 @@
                 gap: 0.5rem;
             }
         }
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            z-index: 9999;
+            padding: 8px 16px;
+            background: #0D9488;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 0 0 4px 0;
+        }
+        .skip-link:focus {
+            left: 0;
+            top: 0;
+            outline: 3px solid #111827;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <div id="main" class="container">
         <a href="/download.html" class="back-link">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -261,8 +280,35 @@
         <div class="version-card current">
             <div class="version-header">
                 <div class="version-title">
-                    <span class="version-number">v1.4.11</span>
+                    <span class="version-number">v1.5.1</span>
                     <span class="current-badge">Current</span>
+                </div>
+                <div style="text-align: right;">
+                    <div class="version-date">March 1, 2026</div>
+                    <div class="version-build">Build 40</div>
+                </div>
+            </div>
+            <ul class="feature-list">
+                <li><strong>Simpler Invites</strong> - Share a 6-digit code to connect with your co-parent in seconds</li>
+                <li><strong>Mood Insights</strong> - Track message tone trends over time with the new Mood Ring</li>
+                <li><strong>Real-Time Delivery</strong> - Messages arrive instantly via WebSocket</li>
+                <li><strong>Offline Support</strong> - Messages queue and send automatically when you reconnect</li>
+                <li><strong>Accessibility</strong> - Screen reader support, reduced motion, and improved contrast</li>
+                <li><strong>Security & Performance</strong> - Invite code hardening, structured error codes, and worker monitoring</li>
+            </ul>
+            <a href="/filtered-v1.5.1.apk" class="download-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download this version
+            </a>
+        </div>
+
+        <!-- Previous Version v1.4.11 -->
+        <div class="version-card">
+            <div class="version-header">
+                <div class="version-title">
+                    <span class="version-number">v1.4.11</span>
                 </div>
                 <div style="text-align: right;">
                     <div class="version-date">February 27, 2026</div>
