@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>You're on the list! - Filtered</title>
+    <meta http-equiv="refresh" content="3;url=https://play.google.com/store/apps/details?id=com.filteredapp.app">
+    <title>Filtered is Live! - Filtered</title>
     <!-- Favicons -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -72,18 +73,37 @@
         .back-link:hover {
             background: #0F766E;
         }
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            z-index: 9999;
+            padding: 8px 16px;
+            background: #0D9488;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 0 0 4px 0;
+        }
+        .skip-link:focus {
+            left: 0;
+            top: 0;
+            outline: 3px solid #111827;
+        }
     </style>
 </head>
 <body>
-    <div class="success-box">
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <div id="main" class="success-box">
         <div class="check-icon">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
             </svg>
         </div>
-        <h1>You're on the list!</h1>
-        <p>Thanks for joining the Filtered waitlist. Check your email for confirmation. We'll notify you as soon as we launch.</p>
-        <a href="/" class="back-link">Back to Home</a>
+        <h1>Filtered is Live!</h1>
+        <p>Great news — Filtered is now available on Google Play. Redirecting you...</p>
+        <a href="https://play.google.com/store/apps/details?id=com.filteredapp.app" class="back-link">Get it on Google Play</a>
     </div>
 </body>
 </html>

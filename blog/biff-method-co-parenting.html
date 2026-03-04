@@ -446,9 +446,28 @@
                 text-align: center;
             }
         }
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            z-index: 9999;
+            padding: 8px 16px;
+            background: #0D9488;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 0 0 4px 0;
+        }
+        .skip-link:focus {
+            left: 0;
+            top: 0;
+            outline: 3px solid #111827;
+        }
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
@@ -467,7 +486,7 @@
                     <li><a href="/#faq">FAQ</a></li>
                     <li><a href="/#pricing">Pricing</a></li>
                 </ul>
-                <a href="/#waitlist" class="nav-cta">Join Waitlist</a>
+                <a href="https://play.google.com/store/apps/details?id=com.filteredapp.app" class="nav-cta" target="_blank" rel="noopener">Get the App</a>
             </div>
         </div>
     </nav>
@@ -486,7 +505,7 @@
     </header>
 
     <!-- Article Content -->
-    <main class="article-content">
+    <main id="main" class="article-content">
         <div class="container">
             <p>Communicating with a difficult person can feel like navigating a minefield. Every message feels loaded. Every response could trigger an explosion. You spend hours crafting the "perfect" reply, only to get pulled into another exhausting exchange.</p>
 
@@ -646,7 +665,7 @@
             <div class="cta-box">
                 <h3>Filtered Suggests BIFF Responses Automatically</h3>
                 <p>Our AI analyzes incoming messages and suggests calm, BIFF-style responses so you don't have to craft them when you're stressed.</p>
-                <a href="/#waitlist">Join the Waitlist</a>
+                <a href="https://play.google.com/store/apps/details?id=com.filteredapp.app" target="_blank" rel="noopener">Download Free</a>
             </div>
 
             <h2>Getting Started with BIFF</h2>

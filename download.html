@@ -23,8 +23,9 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Filtered App - Android APK</title>
-    <meta name="description" content="Download the Filtered app for Android. AI-powered communication filtering.">
+    <meta http-equiv="refresh" content="2;url=https://play.google.com/store/apps/details?id=com.filteredapp.app">
+    <title>Download Filtered App</title>
+    <meta name="description" content="Download the Filtered app for Android from Google Play.">
     <meta name="robots" content="noindex, nofollow">
 
     <!-- Favicons -->
@@ -127,7 +128,22 @@
             margin-bottom: 2rem;
         }
 
-        .download-btn {
+        .spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--gray-200, #E5E7EB);
+            border-top-color: var(--primary-500);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .play-store-btn {
             display: inline-flex;
             align-items: center;
             gap: 0.75rem;
@@ -142,127 +158,26 @@
             box-shadow: 0 4px 14px rgba(13, 148, 136, 0.4);
         }
 
-        .download-btn:hover {
+        .play-store-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(13, 148, 136, 0.5);
         }
 
-        .download-btn svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        .version-info {
+        .apk-fallback {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--gray-100);
         }
 
-        .version-info p {
-            font-size: 0.875rem;
+        .apk-fallback a {
             color: var(--gray-500);
-            margin-bottom: 0.5rem;
-        }
-
-        .version-badge {
-            display: inline-block;
-            background: var(--primary-50);
-            color: var(--primary-700);
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .instructions {
-            margin-top: 2rem;
-            text-align: left;
-        }
-
-        .instructions h2 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--gray-800);
-        }
-
-        .instructions ol {
-            padding-left: 1.25rem;
-        }
-
-        .instructions li {
-            margin-bottom: 0.75rem;
-            color: var(--gray-600);
-            font-size: 0.9rem;
-        }
-
-        .instructions code {
-            background: var(--gray-100);
-            padding: 0.125rem 0.375rem;
-            border-radius: 4px;
-            font-size: 0.85em;
-        }
-
-        .warning {
-            background: #FEF3C7;
-            border: 1px solid #F59E0B;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1.5rem;
-            font-size: 0.875rem;
-            color: #92400E;
-        }
-
-        .warning strong {
-            display: block;
-            margin-bottom: 0.25rem;
-        }
-
-        .features {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--gray-100);
-            text-align: left;
-        }
-
-        .features h2 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: var(--gray-800);
-        }
-
-        .features ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .features li {
-            padding: 0.5rem 0;
-            color: var(--gray-600);
-            font-size: 0.9rem;
-            border-bottom: 1px solid var(--gray-100);
-        }
-
-        .features li:last-child {
-            border-bottom: none;
-        }
-
-        .features li strong {
-            color: var(--primary-700);
-        }
-
-        .version-link {
-            display: inline-block;
-            margin-top: 1rem;
-            color: var(--primary-600);
             text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: 500;
+            font-size: 0.85rem;
         }
 
-        .version-link:hover {
+        .apk-fallback a:hover {
             text-decoration: underline;
+            color: var(--primary-600);
         }
 
         footer {
@@ -284,11 +199,12 @@
             .card {
                 padding: 1.5rem;
             }
-            .download-btn {
+            .play-store-btn {
                 width: 100%;
                 justify-content: center;
             }
         }
+
         .skip-link {
             position: absolute;
             left: -9999px;
@@ -322,53 +238,29 @@
         </div>
 
         <div class="card">
-            <h1>Download for Android</h1>
-            <p class="subtitle">Get the latest version of Filtered</p>
+            <div class="spinner"></div>
+            <h1>Taking you to Google Play...</h1>
+            <p class="subtitle">You'll be redirected automatically.</p>
 
-            <a href="/filtered-v1.5.1.apk" class="download-btn" id="download-link">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <a href="https://play.google.com/store/apps/details?id=com.filteredapp.app" class="play-store-btn" id="play-store-link">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
-                Download APK
+                Get it on Google Play
             </a>
 
-            <div class="version-info">
-                <p>Current Version</p>
-                <span class="version-badge">v1.5.1</span>
-                <p style="margin-top: 0.5rem;">Released: March 1, 2026</p>
-            </div>
-
-            <div class="features">
-                <h2>What's New in v1.5.1</h2>
-                <ul>
-                    <li><strong>Simpler Invites</strong> - Share a 6-digit code to connect with your co-parent in seconds</li>
-                    <li><strong>Mood Insights</strong> - Track message tone trends over time with the new Mood Ring</li>
-                    <li><strong>Real-Time Delivery</strong> - Messages arrive instantly via WebSocket</li>
-                    <li><strong>Offline Support</strong> - Messages queue and send automatically when you reconnect</li>
-                    <li><strong>Accessibility</strong> - Screen reader support, reduced motion, and improved contrast</li>
-                    <li><strong>Security & Performance</strong> - Invite code hardening, structured error codes, and worker monitoring</li>
-                </ul>
-                <a href="/versions.html" class="version-link">View all versions &rarr;</a>
-            </div>
-
-            <div class="instructions">
-                <h2>Installation Instructions</h2>
-                <ol>
-                    <li>Tap the <strong>Download APK</strong> button above</li>
-                    <li>When prompted, tap <strong>Download</strong> to save the file</li>
-                    <li>Open your <strong>Downloads</strong> folder or notification</li>
-                    <li>Tap the APK file to install</li>
-                    <li>If prompted about "unknown sources", tap <strong>Settings</strong> and enable <code>Allow from this source</code></li>
-                    <li>Tap <strong>Install</strong> to complete</li>
-                </ol>
-            </div>
-
-            <div class="warning">
-                <strong>Android Only</strong>
-                iOS version coming soon via TestFlight. Contact support for early access.
+            <div class="apk-fallback">
+                <a href="/filtered-v1.5.1.apk">Need the APK instead? Download v1.5.1</a>
             </div>
         </div>
     </div>
+
+    <script>
+        // JS redirect as backup for meta refresh
+        setTimeout(function() {
+            window.location.href = 'https://play.google.com/store/apps/details?id=com.filteredapp.app';
+        }, 2000);
+    </script>
 
     <footer>
         <a href="/">Back to Home</a> &bull;
