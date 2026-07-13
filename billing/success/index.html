@@ -135,10 +135,29 @@
         .hidden {
             display: none;
         }
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            z-index: 9999;
+            padding: 8px 16px;
+            background: #0D9488;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 0 0 4px 0;
+        }
+        .skip-link:focus {
+            left: 0;
+            top: 0;
+            outline: 3px solid #111827;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <div id="main" class="container">
         <!-- Loading state (shown initially on iOS) -->
         <div id="loading-state">
             <div class="spinner"></div>

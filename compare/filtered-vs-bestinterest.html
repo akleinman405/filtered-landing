@@ -306,9 +306,28 @@
             .comparison-table { font-size: 14px; }
             .comparison-table th, .comparison-table td { padding: 12px 8px; }
         }
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            z-index: 9999;
+            padding: 8px 16px;
+            background: #0D9488;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 0 0 4px 0;
+        }
+        .skip-link:focus {
+            left: 0;
+            top: 0;
+            outline: 3px solid #111827;
+        }
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
     <nav>
         <div class="nav-content">
             <a href="/" class="logo">
@@ -330,7 +349,7 @@
         </div>
     </header>
 
-    <main>
+    <main id="main">
         <div class="container">
             <div class="content-section">
                 <h2>Quick Comparison</h2>

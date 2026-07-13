@@ -271,7 +271,7 @@
         .code-input:focus {
             outline: none;
             border-color: var(--primary-500);
-            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
+            box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.5);
         }
 
         .code-input::placeholder {
@@ -732,9 +732,40 @@
             .tab-btn { padding: 10px 16px; font-size: 14px; }
             .detail-row { flex-direction: column; gap: 4px; }
         }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            z-index: 9999;
+            padding: 8px 16px;
+            background: #0D9488;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 0 0 4px 0;
+        }
+        .skip-link:focus {
+            left: 0;
+            top: 0;
+            outline: 3px solid #111827;
+        }
     </style>
 </head>
 <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
     <nav>
         <div class="nav-content">
             <a href="/" class="logo">
@@ -761,7 +792,7 @@
         </div>
     </header>
 
-    <main>
+    <main id="main">
         <div class="container">
             <div class="content-section">
                 <!-- Tab Switcher -->
@@ -776,6 +807,7 @@
                         <p><strong>Quick lookup:</strong> Confirms a document with this code exists in our system and shows its details (date range, message count, creation date).</p>
                     </div>
                     <div class="code-input-container">
+                        <label for="verification-code" class="sr-only">Verification code</label>
                         <input
                             type="text"
                             class="code-input"
@@ -811,6 +843,7 @@
                             Choose PDF File
                         </button>
                     </div>
+                    <label for="file-input" class="sr-only">Upload PDF document for verification</label>
                     <input type="file" class="file-input" id="file-input" accept=".pdf,application/pdf">
                     <div class="selected-file" id="selected-file" style="display: none;">
                         <svg class="file-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
