@@ -27,8 +27,13 @@ const CONFIG = {
         windowMs: 60 * 60 * 1000, // 1 hour
     },
     claude: {
-        model: 'claude-sonnet-4-20250514',
-        maxTokens: 1024, // Increased for comprehensive response
+        // Keep in sync with `self.model` in src/services/claude_service.py.
+        // claude-sonnet-4-20250514 was RETIRED 2026-06-15 (silently 404s) — see
+        // that file's comment for the incident and why the request shape below
+        // (no temperature, no assistant prefill, thinking disabled) matters for
+        // Sonnet 5 specifically.
+        model: 'claude-sonnet-5',
+        maxTokens: 2048,
         timeout: 30000, // 30 seconds (Sonnet is slower)
     },
     allowedOrigins: [
@@ -191,7 +196,10 @@ async function checkRateLimit(ip, context) {
 // ========================================
 
 function buildAnalysisPrompt(messageBody) {
-    // This prompt matches the main app (claude_service.py) EXACTLY
+    // Mirrors src/services/claude_service.py's `_build_analysis_prompt` in the
+    // no-context path (the demo never has a sender/recipient name to pass in).
+    // Keep this in sync whenever that prompt changes — see CLAUDE.md notes on
+    // the 2026-06-15 model retirement for why prompt/model drift here matters.
     return `You are a message filter. Transform messages into neutral, logistics-only summaries.
 
 <message>
@@ -205,25 +213,45 @@ ${messageBody}
 Before generating your response, verify ALL of these:
 
 ## ✓ Speaker Identification
-The \`content\` field MUST identify who is doing/asking something.
-- ✗ "Will handle the dropoff at 1:30"
-- ✓ "They will handle the dropoff at 1:30"
+The \`content\` field MUST include the sender's name, and must name the recipient instead of "you" when a Recipient is given in context.
+- ✗ "Will drop off the documents at 1:30"
+- ✓ "[Sender] will drop off the documents at 1:30"
+- ✗ "Asks if you can pick up the kids" (when Recipient is known)
+- ✓ "[Sender] asks if [Recipient] can pick up the kids"
 
 ## ✓ Multi-Topic Coverage
 If the message has 2+ distinct topics, use \`bullets\` array.
-- Payment + coat question = bullets
-- Schedule + pickup time = bullets
+- Payment sent + meeting question = bullets
+- Schedule + delivery time = bullets
 - NEVER drop logistics because there's emotional content too
 
 ## ✓ Short Response Context
 "Ok", "Sure", "Thanks" alone is NOT enough.
 - ✗ "Ok"
-- ✓ "They acknowledge the dropoff time"
+- ✓ "[Sender] acknowledges the meeting time"
 
 ## ✓ No Hostile Text Passthrough
 The \`content\` field must NEVER contain insults, attacks, sarcasm, or emotional language.
 - If NO logistics exist → content = ""
 - If logistics exist with hostility → extract ONLY the logistics
+
+## ✓ Entity Specificity (WHO/WHAT/WHEN)
+
+Every summary MUST preserve specific entities:
+
+**WHO** - Name people mentioned:
+- ✗ "Personal check-in"
+- ✓ "Asks about your mother's health"
+
+**WHAT** - Name specific items/actions:
+- ✗ "Logistics updates"
+- ✓ "Requests the signed agreement be sent"
+
+**WHEN** - Include times if mentioned:
+- ✗ "Schedule change"
+- ✓ "Requests moving the meeting to Thursday at 4pm"
+
+**Specificity Test:** If this summary could describe 10 different messages, it's too vague. Rewrite with specific entities.
 
 ---
 
@@ -233,7 +261,7 @@ The \`content\` field must NEVER contain insults, attacks, sarcasm, or emotional
 
 1. **Extract Intent**: Summarize what they actually want, not their exact words.
 
-2. **Identify Speaker**: Use "They/Their" to identify who is doing/asking something.
+2. **Identify Speaker**: Always use sender's name in filtered content.
 
 3. **Remove Emotion**: Strip accusations, insults, guilt trips, sarcasm, feelings, past conflicts.
 
@@ -243,19 +271,26 @@ The \`content\` field must NEVER contain insults, attacks, sarcasm, or emotional
 
 6. **Infer Deadlines**: Event on Jan 5 → respond_by: Jan 4.
 
-7. **Combine Follow-ups**: Prior "send shoes" + current "also coat" = bullets with all items.
+7. **Combine Follow-ups**: Prior "send the files" + current "also the invoice" = bullets with all items.
 
 8. **Handle Typos**: "mauve" → "maybe" when context is clear. Note in suggestion if ambiguous.
+
+8.5. **Reject Vague Summaries**: These patterns are FORBIDDEN:
+   - "Personal check-in" → "Asks about [person]'s [topic]"
+   - "Status inquiry" → "Asks for update on [specific situation]"
+   - "Logistics updates" → "[Sender] informs about [specific item]"
+   - "Schedule question" → "Asks to [specific change]"
+   If writing a vague summary, identify WHO + WHAT and rewrite.
 
 ## Mood Scale (5-Point) - Tone/Attitude ONLY
 
 | Score | Label | Description | Examples |
 |-------|-------|-------------|----------|
 | 1 | Friendly | Positive, cooperative | "Thanks!", "Sounds good", "Have a great day" |
-| 2 | Neutral | Businesslike, factual | "Pickup at 3pm", "Dentist Tuesday" |
+| 2 | Neutral | Businesslike, factual | "Meeting at 3pm", "Appointment Tuesday" |
 | 3 | Frustrated | Annoyed but not hostile | "This is frustrating", "How many times..." |
 | 4 | Hostile | Aggressive, rude, manipulative | Name-calling, passive-aggressive, sarcasm |
-| 5 | Abusive | Emotional abuse | Gaslighting, kid-weaponizing, degradation, severe hostility |
+| 5 | Abusive | Emotional abuse | Gaslighting, emotional manipulation, degradation, severe hostility |
 
 **IMPORTANT:** The mood scale measures TONE/ATTITUDE only (1-5). Physical threats are handled by the separate \`is_flagged\` field (see Safety Flagging section below).
 
@@ -276,10 +311,10 @@ When is_flagged is true, also set ai_suggestion to null (don't suggest responses
 ## Hostility Detection (9-11)
 
 9. **Detect Manipulation Tactics** (mood_score 4-5):
-   - Sarcastic praise + demand: "You're such an amazing person... I know you'll understand why I need..."
+   - Sarcastic praise + demand: "You've always been so helpful... I know you'll understand why I need..."
    - Passive-aggressive: "I guess...", "Must be nice...", "...as always", "Gold star for you", "I'm sure you tried your best"
    - Gaslighting: "I never said that", "You're twisting my words", "You're being paranoid"
-   - Weaponizing others: "Nobody wants to deal with you", "Everyone agrees with me"
+   - Emotional manipulation: "Nobody wants to deal with you", "Everyone agrees you're the problem"
 
    These are ABUSIVE (5), not Hostile (4), as they constitute emotional abuse.
 
@@ -289,72 +324,70 @@ When is_flagged is true, also set ai_suggestion to null (don't suggest responses
 
 ## Categories
 
-| Category | Use When | creates_task |
-|----------|----------|--------------|
-| Request | They want action from you | true |
-| Question | They want an answer | true |
-| Proposal | Suggesting a change to discuss | true |
-| Statement | Info only, FYI | false |
-| Personal | Pure emotion, no logistics | false |
+| Category | Use When |
+|----------|----------|
+| Request | They want action from you |
+| Question | They want an answer |
+| Proposal | Suggesting a change to discuss |
+| Statement | Info only, FYI |
+| Personal | Pure emotion, no logistics |
 
 ---
 
 # SECTION 3: EXAMPLES
 
 ## Example A: Multi-topic message
-"I sent you the payment. Are you getting another job? I'll check my schedule for Presidents Day. Do you have the red coat?"
+FROM Katrina: "I sent you the reimbursement. Are you even working? I'll check my schedule for the holiday. Do you have the red folder?"
 
 {
-  "subject": "Payment, schedule, coat",
+  "subject": "Reimbursement, schedule, folder",
   "category": "Question",
-  "content": "They sent updates and have questions",
-  "bullets": ["They sent the payment", "They will check Presidents Day schedule", "They are asking if you have the red coat"],
+  "content": "Katrina sent updates and has questions",
+  "bullets": ["Katrina sent the reimbursement", "Katrina will check the holiday schedule", "Katrina is asking if you have the red folder"],
   "mood_score": 2,
   "mood_label": "Neutral"
 }
-Note: "Are you getting another job?" filtered out (prying).
+Note: "Are you even working?" filtered out (prying).
 
 ## Example B: Simple FYI
-"The carpet people are here right now FYI"
+FROM Katrina: "The carpet people are here right now FYI"
 
 {
   "subject": "Home update",
   "category": "Statement",
-  "content": "They report carpet installation happening now",
+  "content": "Katrina reports carpet installation happening now",
   "bullets": null,
   "mood_score": 1,
   "mood_label": "Friendly"
 }
 
 ## Example C: Manipulation (sarcastic praise)
-"You've always been such an incredible person. That's why I know you'll understand why I need you to handle this weekend."
+FROM Katrina: "You've always been such an incredible help. That's why I know you'll understand why I need you to handle this for me this weekend."
 
 {
-  "subject": "Schedule change request",
+  "subject": "Weekend request",
   "category": "Request",
-  "content": "They are requesting you handle this weekend",
+  "content": "Katrina is requesting help this weekend",
   "mood_score": 5,
   "mood_label": "Abusive",
-  "ai_suggestion": "I need to check my schedule before I can commit to that.",
-  "communication_patterns": [{"pattern": "manipulation", "confidence": "high"}]
+  "ai_suggestion": "I need to check my schedule before I can commit to that."
 }
-Note: Excessive praise + demand = manipulation = mood 5.
+Note: Excessive praise + demand = manipulation = Abusive (5).
 
 ## Example D: Passive-aggressive with logistics
-"I guess some of us just have different priorities. That's fine. Just be here by 7pm Sunday."
+FROM Katrina: "I guess some of us just have different priorities. That's fine. Just have everything ready by 7pm Sunday."
 
 {
-  "subject": "Sunday meeting time",
+  "subject": "Sunday deadline",
   "category": "Request",
-  "content": "They request arrival by 7pm Sunday",
+  "content": "Katrina requests everything ready by 7pm Sunday",
   "mood_score": 4,
   "mood_label": "Hostile",
-  "ai_suggestion": "I'll be there by 7pm.",
-  "communication_patterns": [{"pattern": "passive_aggressive", "confidence": "high"}]
+  "ai_suggestion": "I'll have it ready by 7pm."
 }
 
-## Example E: Weaponizing others (no logistics) - ABUSIVE (emotional manipulation)
-"Nobody wants to deal with you. Everyone agrees you're impossible."
+## Example E: Emotional manipulation (no logistics) - ABUSIVE
+FROM Katrina: "Nobody wants to deal with you. Everyone prefers working with me."
 
 {
   "subject": "Personal",
@@ -362,56 +395,52 @@ Note: Excessive praise + demand = manipulation = mood 5.
   "content": "",
   "mood_score": 5,
   "mood_label": "Abusive",
-  "ai_suggestion": null,
-  "communication_patterns": [{"pattern": "manipulation", "confidence": "high"}]
+  "ai_suggestion": null
 }
-Note: Weaponizing others' opinions is emotional abuse (Abusive = 5), not physical threat.
+Note: Emotional manipulation (isolating, degrading) is emotional abuse (Abusive = 5), not physical threat.
 
 ## Example F: Gaslighting with logistics - ABUSIVE (emotional manipulation)
-"I never said that. You're always twisting my words. Anyway, dentist is at 3pm Tuesday."
+FROM Katrina: "I never said that. You're always twisting my words. Anyway, the appointment is at 3pm Tuesday."
 
 {
-  "subject": "Dentist appointment",
+  "subject": "Appointment Tuesday",
   "category": "Statement",
-  "content": "Dentist appointment at 3pm Tuesday",
+  "content": "Appointment at 3pm Tuesday",
   "mood_score": 5,
   "mood_label": "Abusive",
-  "ai_suggestion": "Noted, 3pm Tuesday.",
-  "communication_patterns": [{"pattern": "gaslighting", "confidence": "high"}]
+  "ai_suggestion": "Noted, 3pm Tuesday."
 }
 Note: Gaslighting is emotional abuse (Abusive = 5), not physical threat.
 
 ## Example G: Degradation with multiple logistics - ABUSIVE (emotional)
-"You're such a terrible person. Also, can you pick up at 3pm? I hope you're miserable. By the way, dentist is Tuesday at 4pm."
+FROM Alec: "You're such a terrible person. Also, can you meet me at 3pm? I hope you're miserable. By the way, the appointment is Tuesday at 4pm."
 
 {
-  "subject": "Pickup and dentist",
+  "subject": "Meeting and appointment",
   "category": "Request",
-  "content": "They have logistics updates",
-  "bullets": ["They are asking about pickup at 3pm", "Dentist appointment Tuesday at 4pm"],
+  "content": "Alec has logistics updates",
+  "bullets": ["Alec is asking to meet at 3pm", "Appointment Tuesday at 4pm"],
   "mood_score": 5,
   "mood_label": "Abusive",
-  "ai_suggestion": "I can do 3pm pickup. Noted on dentist.",
-  "communication_patterns": [{"pattern": "personal_attack", "confidence": "high"}]
+  "ai_suggestion": "I can do 3pm. Noted on the appointment."
 }
 Note: Degradation ("terrible person", wishing misery) is emotional abuse (Abusive = 5).
 
 ## Example H: Insult with logistics - HOSTILE (not physical threat)
-"Leave the suitcase by the fence you meathead"
+FROM Katrina: "Leave the suitcase by the fence you meathead"
 
 {
   "subject": "Suitcase drop-off",
   "category": "Request",
-  "content": "They request suitcase be left by the fence",
+  "content": "Katrina requests suitcase be left by the fence",
   "mood_score": 4,
   "mood_label": "Hostile",
-  "ai_suggestion": "I'll leave it by the fence.",
-  "communication_patterns": [{"pattern": "personal_attack", "confidence": "high"}]
+  "ai_suggestion": "I'll leave it by the fence."
 }
 Note: Name-calling without physical threat is Hostile (4), not Dangerous.
 
 ## Example I: Pure insult (no logistics) - HOSTILE
-"You're a punk"
+FROM Ronald: "You're a punk"
 
 {
   "subject": "Personal",
@@ -419,12 +448,11 @@ Note: Name-calling without physical threat is Hostile (4), not Dangerous.
   "content": "",
   "mood_score": 4,
   "mood_label": "Hostile",
-  "ai_suggestion": null,
-  "communication_patterns": [{"pattern": "personal_attack", "confidence": "high"}]
+  "ai_suggestion": null
 }
 
 ## Example K: Physical threat (FLAGGED)
-"I'm going to kill you"
+FROM Katrina: "I'm going to kill you"
 
 {
   "subject": "Personal",
@@ -433,37 +461,48 @@ Note: Name-calling without physical threat is Hostile (4), not Dangerous.
   "mood_score": 5,
   "mood_label": "Abusive",
   "is_flagged": true,
-  "ai_suggestion": null,
-  "communication_patterns": [{"pattern": "threats", "confidence": "high"}]
+  "ai_suggestion": null
 }
 Note: Death threats set is_flagged: true. Mood reflects the hostile tone (5).
 
 ## Example L: Physical threat with logistics (FLAGGED)
-"Leave the suitcase by the fence or you're dead. I have a gun."
+FROM Alec: "Leave the suitcase by the fence or you're dead. I have a gun."
 
 {
   "subject": "Suitcase drop-off",
   "category": "Request",
-  "content": "They request suitcase be left by the fence",
+  "content": "Alec requests suitcase be left by the fence",
   "mood_score": 5,
   "mood_label": "Abusive",
   "is_flagged": true,
-  "ai_suggestion": null,
-  "communication_patterns": [{"pattern": "threats", "confidence": "high"}]
+  "ai_suggestion": null
 }
 Note: Weapon mention + violence = is_flagged: true. No suggestion for flagged messages.
 
+## Example M: Stalking threat (FLAGGED)
+FROM Ronald: "I know where you live. I'm coming to get you."
+
+{
+  "subject": "Personal",
+  "category": "Personal",
+  "content": "",
+  "mood_score": 4,
+  "mood_label": "Hostile",
+  "is_flagged": true,
+  "ai_suggestion": null
+}
+Note: Stalking + "coming to get you" = is_flagged: true. Mood reflects menacing tone (4).
+
 ## Example J: Friendly message
-"I can handle the pickup at 3 today"
+FROM Ronald: "I can pick up the files at 3 today"
 
 {
   "subject": "Pickup confirmation",
   "category": "Statement",
-  "content": "They will handle the pickup at 3 today",
+  "content": "Ronald will pick up the files at 3 today",
   "mood_score": 1,
   "mood_label": "Friendly",
-  "ai_suggestion": "Sounds good, I'll be ready.",
-  "communication_patterns": [{"pattern": "cooperative", "confidence": "high"}]
+  "ai_suggestion": "Sounds good, I'll have them ready."
 }
 
 ---
@@ -472,7 +511,7 @@ Note: Weapon mention + violence = is_flagged: true. No suggestion for flagged me
 
 - For hostile messages with logistics: Brief, professional acknowledgment of logistics only
 - For manipulative requests (mood 4-5): Set boundaries, don't validate. "I need to check my schedule before committing."
-- For gaslighting/kid-weaponizing: ai_suggestion = null (don't engage)
+- For gaslighting/emotional manipulation: ai_suggestion = null (don't engage)
 - For personal/emotional: ai_suggestion = null
 - Keep to 1-2 sentences, never defensive
 
@@ -488,41 +527,41 @@ Set "is_emergency": true ONLY when the message contains a genuine time-sensitive
 - Acute illness: "high fever" (103°F+), "vomiting repeatedly", "can't breathe"
 - Accidents: car accident, someone injured
 
-**Urgent Situations Due to External Event (is_emergency: true):**
+**Urgent Situations Due to External Events (is_emergency: true):**
 - Location closed early due to emergency (gas leak, fire, weather)
 - Transportation emergency: "car broke down on the way", "can't make it - accident"
-- Safety concern requiring immediate action
+- Safety concern at a location
 
 **Safety Concerns (is_emergency: true):**
 - Someone is lost or missing
 - Natural disaster, evacuation
-- Injury or medical emergency
+- Injury or medical emergency at a location
 
 **NOT Emergencies (is_emergency: false):**
 - Normal schedule changes, even with urgent language ("URGENT: can you do 2pm instead of 3pm?" → false)
 - Personal inconveniences ("My work meeting ran late" → false)
 - Mild symptoms ("runny nose", "slight fever" → false)
 - CAPS LOCK, exclamation marks, or "ASAP"/"urgent" language alone do NOT make something an emergency
-- Vague safety claims without specifics ("Something happened at school" → false, need details)
+- Vague safety claims without specifics ("Something happened" → false, need details)
 
 **CRITICAL: Urgency Language ≠ Emergency**
 The words "urgent", "ASAP", "NOW", "immediately", CAPS, and exclamation marks are NOT sufficient to trigger is_emergency. There must be an actual medical, safety, or external event emergency described.
 
 **Examples:**
 - "Someone fell and broke their arm. We're at St. Mary's ER." → is_emergency: true
-- "Early dismissal due to gas leak. Need pickup ASAP." → is_emergency: true
-- "They're having an allergic reaction, on way to hospital" → is_emergency: true
-- "Car broke down. Need you to handle the pickup NOW." → is_emergency: true (transportation emergency)
-- "Can you handle the 4pm slot instead of 5?" → is_emergency: false (schedule change)
-- "URGENT: Need you to handle this weekend instead!" → is_emergency: false (urgent language, but just scheduling)
-- "Dentist appointment moved to Tuesday" → is_emergency: false (routine scheduling)
-- "I have a runny nose and slight fever" → is_emergency: false (mild symptoms)
+- "Building just announced early closure due to gas leak. Come now." → is_emergency: true
+- "Having an allergic reaction, on way to hospital" → is_emergency: true
+- "Car broke down. Need you to handle the delivery NOW." → is_emergency: true (transportation emergency)
+- "Can you meet at 4 instead of 5?" → is_emergency: false (schedule change)
+- "URGENT: Need you to handle this over the weekend instead!" → is_emergency: false (urgent language, but just scheduling)
+- "Appointment moved to Tuesday" → is_emergency: false (routine scheduling)
+- "Feeling under the weather with a slight fever" → is_emergency: false (mild symptoms)
 
-**Key Distinction - Dangerous vs Emergency:**
-- **Dangerous (mood_score=6):** Physical THREATS to the recipient (death threats, violence, stalking)
-- **Emergency (is_emergency=true):** Urgent SITUATIONS requiring immediate attention (medical, safety, external events)
+**Key Distinction - is_flagged vs is_emergency:**
+- **is_flagged=true:** Physical THREATS to the recipient (death threats, violence, stalking)
+- **is_emergency=true:** Urgent SITUATIONS requiring immediate attention (medical, safety, external events)
 
-A message can be BOTH Dangerous AND an Emergency (rare), just an Emergency (someone at ER), or just Dangerous (death threat with no emergency).
+A message can be BOTH flagged AND emergency (rare), just emergency (someone at ER), or just flagged (death threat with no emergency situation).
 
 ---
 
@@ -535,12 +574,12 @@ Only tag patterns you're highly confident about. Multiple patterns are allowed.
 
 | Pattern | Definition | Example |
 |---------|------------|---------|
-| accusation | Blaming statements, "you always/never" | "You always forget important things" |
+| accusation | Blaming statements, "you always/never" | "You always forget the important things" |
 | personal_attack | Insults, name-calling, character attacks | "You're such a terrible person" |
 | guilt_tripping | Leveraging guilt to manipulate | "After everything I've done for you..." |
 | gaslighting | Making someone doubt their reality/memory | "I never said that. You're imagining things." |
-| manipulation | Using flattery or emotional tactics for gain | "You're such a great person, I know you'll understand why I need..." |
-| threats | Legal threats, intimidation | "Wait until the judge hears about this" |
+| manipulation | Using flattery or emotional tactics for gain | "You're so great at this, I know you'll understand why I need..." |
+| threats | Legal threats or intimidation | "Wait until the judge hears about this" |
 | passive_aggressive | Indirect hostility, sarcasm, backhanded comments | "That's fine, I guess... Must be nice to have free time" |
 | dismissive | Minimizing concerns, invalidating feelings | "You're overreacting. It's not a big deal." |
 
@@ -571,21 +610,19 @@ Respond with ONLY this JSON:
   "subject": "2-6 word neutral subject",
   "category": "Request|Question|Proposal|Statement|Personal",
   "category_confidence": "high|medium|low",
-  "content": "Filtered content (empty string if Personal)",
+  "content": "Filtered content with speaker name (empty string if Personal)",
   "bullets": ["item1", "item2"] or null,
   "respond_by": "YYYY-MM-DD" or null,
   "mood": "Positive|Neutral|Negative",
   "mood_confidence": "high|medium|low",
   "ai_suggestion": "1-2 sentence response suggestion" or null,
   "suggestion_confidence": "high|medium|low" or null,
-  "creates_task": true|false,
   "mood_score": 1-5,
   "mood_label": "Friendly|Neutral|Frustrated|Hostile|Abusive",
-  "is_flagged": true|false,
   "urgency": "low|medium|high|emergency",
   "summary": "same as content",
-  "action_items": [{"action": "description", "deadline": null}],
   "is_emergency": false,
+  "is_flagged": false,
   "communication_patterns": [{"pattern": "gaslighting", "confidence": "high"}] or []
 }
 
@@ -599,25 +636,25 @@ async function filterWithClaude(message) {
 
     const prompt = buildAnalysisPrompt(message);
 
+    // Sonnet 5 request surface (matches claude_service.py's _call_api): no
+    // `temperature` override and no assistant-turn prefill — both 400 on
+    // Sonnet 5. JSON is enforced via the system prompt instead. Thinking is
+    // disabled so this stays a fast, cheap classifier call.
     const response = await anthropic.messages.create({
         model: CONFIG.claude.model,
         max_tokens: CONFIG.claude.maxTokens,
-        system: 'You are a JSON-only API for filtering hostile messages. You MUST respond with valid JSON only - no markdown, no explanation, no preamble. Start your response with { and end with }.',
+        thinking: { type: 'disabled' },
+        system: 'You are a JSON-only API for filtering difficult communication. Respond with exactly one valid JSON object and nothing else - no markdown, no explanation, no preamble, and no leading or trailing characters outside the object.',
         messages: [
             {
                 role: 'user',
                 content: prompt,
             },
-            {
-                role: 'assistant',
-                content: '{', // Prefill forces JSON start
-            },
         ],
     });
 
-    // Prepend the prefilled brace back since Claude continues from it
-    const content = '{' + (response.content[0]?.text || '');
-    if (!content || content === '{') {
+    const content = response.content[0]?.text || '';
+    if (!content) {
         throw new Error('Empty response from Claude');
     }
 
@@ -656,17 +693,6 @@ function mapToLegacyFormat(parsed, originalMessage) {
         mood = 'hostile'; // 4-5 are hostile/abusive
     }
 
-    // Map action_items to legacy actions format
-    const actions = [];
-    if (Array.isArray(parsed.action_items)) {
-        for (const item of parsed.action_items.slice(0, 3)) {
-            actions.push({
-                text: item.action || item.text || '',
-                deadline: item.deadline || null,
-            });
-        }
-    }
-
     // Build responses array from ai_suggestion
     const responses = [];
     if (parsed.ai_suggestion) {
@@ -694,10 +720,8 @@ function mapToLegacyFormat(parsed, originalMessage) {
         summary,
         subject: parsed.subject || 'Message',
         category: parsed.category || 'Statement',
-        actions,
         responses,
         bullets: parsed.bullets || null,
-        createsTask: parsed.creates_task || false,
         original: originalMessage,
         // New fields for enhanced UI
         urgency: parsed.urgency || 'medium',

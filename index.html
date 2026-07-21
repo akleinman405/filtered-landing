@@ -182,7 +182,7 @@
                 "name": "How does pricing work for both people?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "One person subscribes to Filtered Pro and gets full AI protection: filtered messages, mood analysis, pattern detection, and more. The other person is automatically added to the free tier. They can message through the app, and can pay to upgrade to Pro anytime for full filtering features."
+                    "text": "You subscribe to Filtered Pro and get full AI protection: filtered messages, mood analysis, pattern detection, and more. Your co-parent is automatically added on the free tier at no cost, with no separate signup required. They message securely through the app and can upgrade to Pro anytime for full filtering."
                 }
             }
         ]
@@ -871,6 +871,18 @@
             font-size: 14px;
             color: var(--gray-700);
             line-height: 1.5;
+        }
+
+        .message-status {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 6px;
+        }
+
+        .message-status-icon {
+            width: 15px;
+            height: 15px;
+            color: var(--gray-400);
         }
 
         .message-raw {
@@ -2384,54 +2396,6 @@
             flex-shrink: 0;
         }
 
-        /* Action Items */
-        .demo-actions-section {
-            margin-bottom: 20px;
-        }
-
-        .demo-action-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .demo-action-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--gray-100);
-        }
-
-        .demo-action-item:last-child {
-            border-bottom: none;
-        }
-
-        .demo-action-checkbox {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--primary-500);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .demo-action-text {
-            font-size: 14px;
-            color: var(--gray-700);
-        }
-
-        .demo-action-deadline {
-            display: inline-block;
-            font-size: 12px;
-            color: #DC2626;
-            font-weight: 500;
-            margin-left: 8px;
-        }
-
         /* Suggested Responses - App-like chips */
         .demo-responses-section {
             margin-bottom: 20px;
@@ -2516,83 +2480,46 @@
             flex: 1;
         }
 
-        /* Original Message Toggle - App-like styling */
-        .demo-original-section {
+        /* View Original — matches the app's pill button + confirm-before-reveal */
+        .demo-original-row {
             padding-top: 16px;
             margin-top: 16px;
             border-top: 1px solid #E5E7EB;
         }
 
         .demo-original-toggle {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 12px 16px;
-            background: white;
-            border: 1px solid #D1D5DB;
+            gap: 6px;
+            min-height: 36px;
+            padding: 8px 10px;
+            background: var(--gray-100);
+            border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 14px;
+            transition: background-color 0.15s, color 0.15s;
+            font-size: 13px;
             font-weight: 500;
             color: var(--gray-600);
         }
 
         .demo-original-toggle:hover {
-            background: #F9FAFB;
-            border-color: var(--gray-400);
+            background: var(--gray-200);
         }
 
-        .demo-original-toggle:focus {
+        .demo-original-toggle:focus-visible {
             outline: none;
-            border-color: var(--primary-500);
             box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.5);
         }
 
-        .demo-original-toggle-text {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .demo-original-toggle svg {
+            width: 16px;
+            height: 16px;
         }
 
-        .demo-original-toggle-text svg {
-            width: 18px;
-            height: 18px;
-            color: var(--gray-500);
-        }
-
-        .demo-original-toggle-arrow {
-            transition: transform 0.2s;
-            color: var(--gray-400);
-        }
-
-        .demo-original-toggle[aria-expanded="true"] .demo-original-toggle-arrow {
-            transform: rotate(180deg);
-        }
-
-        .demo-original-content {
-            margin-top: 12px;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-
-        .demo-original-content[hidden] {
-            display: none;
-        }
-
-        .demo-original-warning {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .demo-original-toggle.active {
             background: #FEF3C7;
-            padding: 12px 14px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            font-size: 13px;
-            color: #92400E;
-            font-weight: 500;
+            color: #B45309;
         }
 
         .demo-original-message {
@@ -2604,6 +2531,94 @@
             line-height: 1.6;
             color: var(--gray-700);
             font-style: italic;
+        }
+
+        /* View Original — confirmation modal */
+        .demo-confirm-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(17, 24, 39, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .demo-confirm-overlay[hidden] {
+            display: none;
+        }
+
+        .demo-confirm-modal {
+            background: white;
+            border-radius: 16px;
+            padding: 28px 24px;
+            max-width: 360px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+        }
+
+        .demo-confirm-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            background: #FEF3C7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .demo-confirm-modal h4 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+
+        .demo-confirm-modal p {
+            font-size: 14px;
+            color: var(--gray-600);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .demo-confirm-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .demo-confirm-cancel,
+        .demo-confirm-view {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .demo-confirm-cancel {
+            background: white;
+            border: 1px solid #D1D5DB;
+            color: var(--gray-700);
+        }
+
+        .demo-confirm-cancel:hover {
+            background: #F9FAFB;
+        }
+
+        .demo-confirm-view {
+            background: #D97706;
+            border: none;
+            color: white;
+        }
+
+        .demo-confirm-view:hover {
+            background: #B45309;
         }
 
         /* Post-Demo CTA */
@@ -2882,29 +2897,11 @@
                 <div class="feature-card">
                     <div class="feature-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                        </svg>
-                    </div>
-                    <h3>Check Before You Send</h3>
-                    <p>Before you hit send, Filtered checks your tone. If a message might escalate conflict, you'll get a chance to revise.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                        </svg>
-                    </div>
-                    <h3>Never Miss What Matters</h3>
-                    <p>Safety concerns and emergencies notify immediately and show unfiltered. For all other messages, you decide when to be notified.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                         </svg>
                     </div>
                     <h3>Know the Patterns</h3>
-                    <p>AI identifies deflection, blame-shifting, and guilt-tripping. View mood insights anytime to track communication trends.</p>
+                    <p>AI identifies mood and tone of each message. View mood insights over time to learn about communication patterns.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
@@ -3042,12 +3039,7 @@
                                     <div class="demo-section-label">Summary</div>
                                     <div id="demo-summary" class="demo-summary-text"></div>
                                     <ul id="demo-bullets" class="demo-bullets-list" style="display: none;"></ul>
-                                </div>
-
-                                <!-- Action Items -->
-                                <div id="demo-actions-section" class="demo-actions-section">
-                                    <div class="demo-section-label">Action Items</div>
-                                    <ul id="demo-action-list" class="demo-action-list"></ul>
+                                    <div id="demo-original-message" class="demo-original-message" style="display: none;"></div>
                                 </div>
 
                                 <!-- Suggested Response -->
@@ -3061,27 +3053,31 @@
                                     <div id="demo-response-options" class="demo-response-single"></div>
                                 </div>
 
-                                <!-- Original Message Toggle -->
-                                <div class="demo-original-section">
-                                    <button id="demo-original-toggle" class="demo-original-toggle" aria-expanded="false" aria-controls="demo-original-content">
-                                        <span class="demo-original-toggle-text">
-                                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                            View Original Message
-                                        </span>
-                                        <svg aria-hidden="true" class="demo-original-toggle-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M6 9l6 6 6-6"/>
+                                <!-- View Original — pill button matching the app; opens a confirm dialog before revealing -->
+                                <div class="demo-original-row">
+                                    <button id="demo-original-toggle" type="button" class="demo-original-toggle" aria-pressed="false">
+                                        <svg id="demo-original-icon-eye" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                         </svg>
+                                        <svg id="demo-original-icon-eyeoff" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display: none;">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                                        </svg>
+                                        <span id="demo-original-toggle-text">View Original</span>
                                     </button>
-                                    <div id="demo-original-content" class="demo-original-content" hidden>
-                                        <div class="demo-original-warning">
-                                            <span aria-hidden="true">⚠️</span>
-                                            <span>Unfiltered content may be upsetting</span>
-                                        </div>
-                                        <div id="demo-original-message" class="demo-original-message"></div>
-                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- View Original confirmation -->
+                        <div id="demo-original-confirm-overlay" class="demo-confirm-overlay" hidden>
+                            <div class="demo-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="demo-confirm-title">
+                                <div class="demo-confirm-icon" aria-hidden="true">⚠️</div>
+                                <h4 id="demo-confirm-title">View Original Message?</h4>
+                                <p>The original message may contain hostile or upsetting content.</p>
+                                <div class="demo-confirm-actions">
+                                    <button id="demo-confirm-cancel" type="button" class="demo-confirm-cancel">Cancel</button>
+                                    <button id="demo-confirm-view" type="button" class="demo-confirm-view">View Original</button>
                                 </div>
                             </div>
                         </div>
@@ -3115,9 +3111,12 @@
                         </div>
                         <div class="phone-message phone-message-original">
                             <p class="message-raw">"I can't believe you forgot the documents AGAIN. You're so irresponsible. The meeting is tomorrow and now I have to drive all the way back to get them. Thanks for nothing."</p>
-                        </div>
-                        <div class="phone-message" style="background: var(--gray-100); border-left-color: var(--primary-400);">
-                            <p class="message-raw" style="color: var(--gray-500);">Delivered</p>
+                            <div class="message-status">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="message-status-icon" aria-label="Delivered">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2 12l4.5 4.5L15 8" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l4.5 4.5L22 8" />
+                                </svg>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3143,7 +3142,7 @@
                                 <span class="mood-dot"></span>
                                 <span class="mood-text">Frustrated</span>
                             </div>
-                            <p class="message-summary">Documents were left behind. Requesting them for tomorrow's meeting.</p>
+                            <p class="message-summary">Jessica reports documents were left behind, requesting them for tomorrow's meeting.</p>
                         </div>
                     </div>
                 </div>
@@ -3318,7 +3317,7 @@
 
             <!-- Clarification Box -->
             <div class="pricing-clarification">
-                <p><strong>How it works:</strong> You subscribe and get AI protection. The person you communicate with is automatically added to the free tier. They can message you through the secure app and upgrade to Pro anytime for full filtering features.</p>
+                <p><strong>How it works:</strong> You subscribe and get full AI protection. Your co-parent is automatically added on the free tier — no cost, no separate signup. They message securely through the app and can upgrade to Pro anytime for full filtering.</p>
             </div>
         </div>
     </section>
@@ -3499,13 +3498,16 @@
             moodBadge: document.getElementById('demo-mood-badge'),
             summary: document.getElementById('demo-summary'),
             bulletsList: document.getElementById('demo-bullets'),
-            actionsSection: document.getElementById('demo-actions-section'),
-            actionList: document.getElementById('demo-action-list'),
             responsesSection: document.getElementById('demo-responses-section'),
             responseOptions: document.getElementById('demo-response-options'),
             originalToggle: document.getElementById('demo-original-toggle'),
-            originalContent: document.getElementById('demo-original-content'),
+            originalToggleText: document.getElementById('demo-original-toggle-text'),
+            originalIconEye: document.getElementById('demo-original-icon-eye'),
+            originalIconEyeOff: document.getElementById('demo-original-icon-eyeoff'),
             originalMessage: document.getElementById('demo-original-message'),
+            originalConfirmOverlay: document.getElementById('demo-original-confirm-overlay'),
+            originalConfirmCancel: document.getElementById('demo-confirm-cancel'),
+            originalConfirmView: document.getElementById('demo-confirm-view'),
             ctaBtn: document.getElementById('demo-cta-btn'),
             // New elements for enhanced features
             emergencyBanner: document.getElementById('demo-emergency-banner'),
@@ -3702,23 +3704,6 @@
                 }
             }
 
-            // Action items - use escapeHtml for XSS prevention
-            elements.actionList.innerHTML = '';
-            if (data.actions && data.actions.length > 0) {
-                elements.actionsSection.style.display = 'block';
-                data.actions.forEach(action => {
-                    const li = document.createElement('li');
-                    li.className = 'demo-action-item';
-                    li.innerHTML = '<div class="demo-action-checkbox"></div>' +
-                        '<span class="demo-action-text">' + escapeHtml(action.text) +
-                        (action.deadline ? '<span class="demo-action-deadline">Due: ' + escapeHtml(action.deadline) + '</span>' : '') +
-                        '</span>';
-                    elements.actionList.appendChild(li);
-                });
-            } else {
-                elements.actionsSection.style.display = 'none';
-            }
-
             // Suggested response - show only ONE response (simplified)
             elements.responseOptions.innerHTML = '';
             if (data.responses && data.responses.length > 0) {
@@ -3730,13 +3715,11 @@
                 elements.responsesSection.style.display = 'none';
             }
 
-            // Original message
+            // Original message content (revealed via the View Original flow below)
             elements.originalMessage.textContent = data.original;
 
-            // Reset toggle state
-            elements.originalContent.hidden = true;
-            elements.originalToggle.setAttribute('aria-expanded', 'false');
-            DemoState.originalVisible = false;
+            // Reset the View Original button/content to its default (hidden) state
+            hideOriginal();
         }
 
         // ========================================
@@ -3781,7 +3764,6 @@
                             mood: 'hostile',
                             moodText: 'Safety Alert',
                             summary: data.message + ' Please consider reaching out for support.',
-                            actions: [],
                             responses: [],
                             safetyResources: data.resources
                         };
@@ -3808,10 +3790,7 @@
                     original: message,
                     mood: message.length > 200 ? 'hostile' : 'tense',
                     moodText: message.length > 200 ? 'Hostile' : 'Tense',
-                    summary: 'The sender expresses frustration. Consider focusing on any specific requests or actionable items when responding.',
-                    actions: [
-                        { text: 'Identify any specific requests in the message', deadline: null }
-                    ],
+                    summary: 'The sender expresses frustration. Consider focusing on any specific requests when responding.',
                     responses: [
                         "I understand. Is there something specific you need me to address?"
                     ]
@@ -3835,12 +3814,64 @@
         }
 
         // ========================================
-        // ORIGINAL MESSAGE TOGGLE
+        // VIEW ORIGINAL — matches the app: tap opens a confirm dialog, confirming
+        // swaps the summary/bullets inline for the raw text and flips the button
+        // to an amber "Hide Original" state. Hiding again needs no re-confirmation.
         // ========================================
+        function showOriginal() {
+            DemoState.originalVisible = true;
+            elements.summary.style.display = 'none';
+            elements.bulletsList.style.display = 'none';
+            elements.originalMessage.style.display = 'block';
+            elements.originalToggle.classList.add('active');
+            elements.originalToggle.setAttribute('aria-pressed', 'true');
+            elements.originalIconEye.style.display = 'none';
+            elements.originalIconEyeOff.style.display = '';
+            elements.originalToggleText.textContent = 'Hide Original';
+        }
+
+        function hideOriginal() {
+            DemoState.originalVisible = false;
+            elements.originalMessage.style.display = 'none';
+            elements.originalToggle.classList.remove('active');
+            elements.originalToggle.setAttribute('aria-pressed', 'false');
+            elements.originalIconEye.style.display = '';
+            elements.originalIconEyeOff.style.display = 'none';
+            elements.originalToggleText.textContent = 'View Original';
+            // Restore whichever of summary/bullets was showing before
+            displayCurrentSummary();
+        }
+
+        function displayCurrentSummary() {
+            const hasBullets = elements.bulletsList.querySelector('.demo-bullet-item');
+            if (hasBullets) {
+                elements.bulletsList.style.display = 'block';
+                elements.summary.style.display = 'none';
+            } else {
+                elements.summary.style.display = 'block';
+                elements.bulletsList.style.display = 'none';
+            }
+        }
+
         function toggleOriginal() {
-            DemoState.originalVisible = !DemoState.originalVisible;
-            elements.originalContent.hidden = !DemoState.originalVisible;
-            elements.originalToggle.setAttribute('aria-expanded', DemoState.originalVisible.toString());
+            if (DemoState.originalVisible) {
+                hideOriginal();
+            } else {
+                openOriginalConfirm();
+            }
+        }
+
+        function openOriginalConfirm() {
+            elements.originalConfirmOverlay.hidden = false;
+        }
+
+        function closeOriginalConfirm() {
+            elements.originalConfirmOverlay.hidden = true;
+        }
+
+        function confirmViewOriginal() {
+            closeOriginalConfirm();
+            showOriginal();
         }
 
         // ========================================
@@ -3867,6 +3898,16 @@
 
             // Original message toggle
             elements.originalToggle.addEventListener('click', toggleOriginal);
+
+            // View Original confirm dialog
+            elements.originalConfirmCancel.addEventListener('click', closeOriginalConfirm);
+            elements.originalConfirmView.addEventListener('click', confirmViewOriginal);
+            elements.originalConfirmOverlay.addEventListener('click', (e) => {
+                if (e.target === elements.originalConfirmOverlay) closeOriginalConfirm();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !elements.originalConfirmOverlay.hidden) closeOriginalConfirm();
+            });
 
             // CTA button analytics
             if (elements.ctaBtn) {
