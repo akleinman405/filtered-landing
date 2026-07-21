@@ -23,7 +23,6 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="2;url=https://play.google.com/store/apps/details?id=com.filteredapp.app">
     <title>Download Filtered App</title>
     <meta name="description" content="Download the Filtered app for Android from Google Play.">
     <meta name="robots" content="noindex, nofollow">
@@ -128,21 +127,6 @@
             margin-bottom: 2rem;
         }
 
-        .spinner {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            border: 3px solid var(--gray-200, #E5E7EB);
-            border-top-color: var(--primary-500);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 1rem;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
         .play-store-btn {
             display: inline-flex;
             align-items: center;
@@ -238,9 +222,8 @@
         </div>
 
         <div class="card">
-            <div class="spinner"></div>
-            <h1>Taking you to Google Play...</h1>
-            <p class="subtitle">You'll be redirected automatically.</p>
+            <h1>Download Filtered</h1>
+            <p class="subtitle">Get it on Google Play, or grab an APK for testing.</p>
 
             <a href="https://play.google.com/store/apps/details?id=com.filteredapp.app" class="play-store-btn" id="play-store-link">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="24" height="24">
@@ -250,17 +233,12 @@
             </a>
 
             <div class="apk-fallback">
-                <a href="/filtered-v1.5.10.apk">Need the APK instead? Download v1.5.10</a>
+                <a href="/filtered-v1.5.11.apk">Need the APK instead? Download v1.5.11</a>
+                &nbsp;&bull;&nbsp;
+                <a href="/versions.html">All versions</a>
             </div>
         </div>
     </div>
-
-    <script>
-        // JS redirect as backup for meta refresh
-        setTimeout(function() {
-            window.location.href = 'https://play.google.com/store/apps/details?id=com.filteredapp.app';
-        }, 2000);
-    </script>
 
     <footer>
         <a href="/">Back to Home</a> &bull;
